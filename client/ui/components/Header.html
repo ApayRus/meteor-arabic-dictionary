@@ -1,0 +1,42 @@
+<template name="Header">
+    <header>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a class="navbar-brand" href="/"><img src="/img/logo.png" height=30 width=30></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="/">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                            &nbsp;Home</a></li>
+                        <li>
+                            <a href="/articles/add">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                &nbsp;Add
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/users">
+                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                &nbsp;Users
+                            </a>
+                        </li>                        
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a id="login-link">
+                                <span class="glyphicon glyphicon-log-in"></span>
+                                &nbsp;&nbsp;{{> loginButtons}}
+                            </a>
+                        </li>
+                    </ul>                              
+                </div>
+            </div>    
+        </nav>
+    </header>
+</template>

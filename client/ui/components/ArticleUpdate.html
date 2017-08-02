@@ -1,0 +1,23 @@
+<template name="ArticleUpdate">
+    <div class="container">
+        {{#if Template.subscriptionsReady}}
+            {{#autoForm 
+                collection=articles 
+                class="article-form" 
+                id="articleForm" 
+                type=mode.type 
+                doc=mode.doc
+            }}
+                {{> afQuickField name='category'}}
+                {{#if poroda1}}
+                    {{> afQuickField name='middleHarakat'}}
+                {{/if}}
+                {{> afQuickField name='words'}}
+                {{> afQuickField name='translations'}}
+                <button class="btn btn-primary" type="submit">Submit</button>
+            {{/autoForm}}
+        {{else}}
+            <p>Loading...</p>
+        {{/if}}
+    </div>
+</template>

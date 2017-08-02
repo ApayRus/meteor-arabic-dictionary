@@ -1,0 +1,7 @@
+<template name="word">
+  <li class="{{#if checked}} checked {{/if}}">
+    {{word}} - {{translation}}
+    <button class="delete">&times;</button>
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked">
+  </li>
+</template>

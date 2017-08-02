@@ -1,0 +1,9 @@
+<template name="UsersList">
+    <div class="container">
+        <section class="row users-list">
+            {{#each users}}
+                {{> UserSingle}}
+            {{/each}}            
+        </section>
+    </div>
+</template>

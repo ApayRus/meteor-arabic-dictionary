@@ -1,0 +1,21 @@
+<body>
+
+        {{> HeadNavbar}}
+ 
+    <div class="container-fluid">
+        <!--    {{> WordsList}}-->
+        <section class="row">
+            <div class="col-sm-4">
+                {{#if currentUser}}
+                    {{> NewArticle}}
+                {{/if}}
+            </div>
+            <div class="col-sm-4">
+                <p>live preview</p>
+            </div>
+            <div class="col-sm-4">
+                {{> ArticlesList}}
+            </div>            
+        </section>
+    </div>
+</body>

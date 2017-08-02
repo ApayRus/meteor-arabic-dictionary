@@ -1,0 +1,13 @@
+<template name="WordsList">
+    <h3>Simple words list (checked: {{checkedWordsCount}})</h3>
+    {{> NewWord}}
+    <label class="hide-unchecked">
+        <input type="checkbox">
+        Hide unchecked words
+    </label>    
+    <ul>
+      {{#each words}}
+        {{> word}}
+      {{/each}}
+    </ul>
+</template>

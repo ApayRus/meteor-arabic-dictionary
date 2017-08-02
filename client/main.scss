@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Scheherazade');
+
+$big-arabic-font-size: 40px; 
+$mid-arabic-font-size: 30px; 
+$arabic-font-style: 'Scheherazade'; 
+
+.examples {
+     .example, .translation {
+         display: inline-block; 
+    }
+} 
+
+.examples .example, .words .word, #srch-term {
+        font-family: $arabic-font-style; 
+    }
+
+.words .word, #srch-term {
+    font-size: $big-arabic-font-size; 
+}
+
+.words .note.middleHaracat {
+    padding-right: 10px;
+    padding-left: 5px;
+}
+
+.examples .example {
+    font-size: $mid-arabic-font-size; 
+}
+
+.examples .example, .words .word {
+    direction: rtl; 
+}
+
+.search-form {
+
+    padding-left: 0px;
+    margin-bottom: 5px; 
+
+    button {
+        padding: 15px; 
+    }
+
+    input {
+        direction: rtl;
+        padding: 25px 15px;
+    }    
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #222;
+}
+
+
+
+.article-form {
+    input[name$='word'], input[name$='example'] {
+        font-family: $arabic-font-style; 
+        font-size: $mid-arabic-font-size; 
+        direction: rtl;
+    }
+
+    >.panel.panel-default:nth-child(4)>.list-group>.list-group-item.autoform-array-item>div>.autoform-array-item-body>.panel.panel-default>.panel-body>.form-group{
+        width: 100%;
+    }
+
+
+    .form-group {
+        width: 49%; 
+        display: inline-block;
+        margin-bottom: 0px;
+    }
+    .autoform-array-item {
+        .autoform-array-item-body {
+            .panel-heading {
+                display: none;
+            }
+            .panel-body {
+                padding: 0px;
+            }
+            .panel-default {
+                border: none; 
+            }
+            .panel {
+                margin-bottom: 0px;
+                box-shadow: none;                
+            }
+        }
+    }
+    .list-group-item, {
+        border: none;
+        padding: 0px 15px; 
+    }
+    .list-group {
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+}
+
+
+.search-page, .article-page, .article-form, .users-list {
+    margin-top: 66px;
+}
+
+.navbar-brand {
+    padding: 10px 15px;
+}
+
+.navbar-nav {
+    #login-dropdown-list {
+       left: -140px; 
+    }
+}

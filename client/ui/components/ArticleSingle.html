@@ -1,0 +1,92 @@
+<template name="ArticleSingle">
+
+<div class="panel panel-default article">
+  <div class="panel-heading">
+        <div class="panel-title words">
+            {{#if middleHarakat}}
+                <span class="note">{{words.[0].note}}</span>
+                <span class="word" title="прошедшее время, 3-е лицо, ед.ч., м.р">
+                    {{words.[0].word}} 
+                </span>
+                <span class="note middleHaracat" title="среднекорневая гласная настоящего времени">
+                    {{middleHarakat}} 
+                </span>
+                <span class="note">{{words.[1].note}}</span>
+                <span class="word" title="масдар - отглагольное действие">
+                    {{words.[1].word}}
+                </span>
+                <span class="note">{{words.[2].note}}</span>
+                <span class="word">
+                    {{words.[2].word}}
+                </span>
+                <span class="note">{{words.[3].note}}</span>
+                <span class="word">
+                    {{words.[3].word}}
+                </span>                                 
+            {{else}}
+                {{#each words}}
+                    <span class="note">{{note}} </span>
+                    <span class="word">{{word}}</span>
+                {{/each}}
+            {{/if}}
+            <span class="label label-info">{{category}}</span>
+        </div>
+  </div>
+  <div class="panel-body">
+        <ol class="translations">
+            {{#each translations}}
+                <li class="translation">
+                        {{translation}}
+                    <ul class="examples">
+                        {{#each examples}}
+                            <li>
+                                <div class="example">{{example}}</div>
+                                <div class="translation">{{translation}}</div>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </li>
+            {{/each}}
+        </ol>
+  </div>
+  <div class="panel-footer">
+    <a class="delete" title="delete" href="#">
+        <span class="glyphicon glyphicon-remove"></span>
+    </a>
+    <a class="edit" href="/articles/edit/{{_id}}" title="edit">
+        <span class="glyphicon glyphicon-edit"></span>
+    </a>
+    <small>added by: 
+        <a href="#"> <span class="glyphicon glyphicon-user"></span> {{author}}</a>
+    </small>
+    <small>
+        <a href="#"> <span class="glyphicon glyphicon-time"></span> {{createdAt}}</a>
+    </small>    
+  </div>
+</div>
+
+</template>
+
+<!--<script>
+    const atrtcl = { 
+        "_id" : "se4AcxaRqAzeb2Mdy", 
+        "words" : [ 
+            { "note" : "note1", "word" : "word1" }, 
+            { "note" : "note2", "word" : "word2" } 
+        ], 
+        "translations" : [ 
+            { "translation" : "translation1", 
+                "examples" : [ 
+                    { "example" : "exmpl1", "translation" : "exmpl1-tr1" }, 
+                    { "example" : "exmpl2", "translation" : "exmpl2-tr1" } 
+                ] 
+            }, 
+            { "translation" : "translation2", 
+                "examples" : [ 
+                    { "example" : "exmpl1", "translation" : "exmpl1-tr2" }, 
+                    { "example" : "exmpl2", "translation" : "exmpl2-tr2" } 
+                ] 
+            } 
+        ] 
+    }; 
+</script>-->

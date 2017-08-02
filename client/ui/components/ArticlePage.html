@@ -1,0 +1,9 @@
+<template name="ArticlePage">
+    <div class="container article-page">
+        {{#if Template.subscriptionsReady}}
+          {{> ArticleSingle article}}
+        {{else}}
+            <p>Loading...</p>
+        {{/if}}
+    </div>
+</template>
