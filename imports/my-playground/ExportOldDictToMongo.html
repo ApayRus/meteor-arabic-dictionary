@@ -90,6 +90,7 @@ function parseDict( text ){
     //var tr_template = /(\d.+?\).+?)\d.+?\)/g; 
 
     var articles0 = text.split("\n"); // array with whole phrases 
+    var date = new Date(); 
 
     articles0.forEach( function(article0){
 
@@ -108,10 +109,10 @@ function parseDict( text ){
         //if (article0[2] || article[3] || article[4] || article[5] )
         if(article0.slice(2,6).join("").trim()) {
             if(article0[2].match(/[IVX]/)){
-                category = "глагол "+article0[2]+"-й породы"; 
+                category = "глагол, "+article0[2]+" порода"; 
                 middleHarakat = article0[3];
                 words.push({
-                    note: article0.slice(2,5).join(" "), 
+                    note: "", 
                     word: article0[5].trim()
                 });                
             }
@@ -149,11 +150,13 @@ function parseDict( text ){
         article._id = article0[0];
         article.words = words;
         article.translations = translations;
-        article.owner = "ghZegnrrKqnNFaFxb";
+        //article.createdBy = "ghZegnrrKqnNFaFxb"; //aparus
+        article.createdBy = "c6BKQpLZkKANiGx2p"; //msaif
         article.category = category; 
         if(middleHarakat)
             article.middleHarakat = middleHarakat; 
-        article.createdAt = new Date(); 
+        
+        article.createdAt = date; 
 
         var artstr = JSON.stringify(article);
         articles.push( artstr ); 

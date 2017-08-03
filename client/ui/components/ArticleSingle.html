@@ -3,30 +3,32 @@
 <div class="panel panel-default article">
   <div class="panel-heading">
         <div class="panel-title words">
+            <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
+            особый шаблон его вывода, например, среднекорневую глассную и масдары -->
             {{#if middleHarakat}}
                 <span class="note">{{words.[0].note}}</span>
-                <span class="word" title="прошедшее время, 3-е лицо, ед.ч., м.р">
+                <span class="word -arabic-text-big" title="прошедшее время, 3-е лицо, ед.ч., м.р">
                     {{words.[0].word}} 
                 </span>
                 <span class="note middleHaracat" title="среднекорневая гласная настоящего времени">
                     {{middleHarakat}} 
                 </span>
                 <span class="note">{{words.[1].note}}</span>
-                <span class="word" title="масдар - отглагольное действие">
+                <span class="word -arabic-text-big" title="масдар - отглагольное действие">
                     {{words.[1].word}}
                 </span>
                 <span class="note">{{words.[2].note}}</span>
-                <span class="word">
+                <span class="word -arabic-text-big" title="масдар - отглагольное действие">
                     {{words.[2].word}}
                 </span>
                 <span class="note">{{words.[3].note}}</span>
-                <span class="word">
+                <span class="word -arabic-text-big" title="масдар - отглагольное действие">
                     {{words.[3].word}}
                 </span>                                 
             {{else}}
                 {{#each words}}
                     <span class="note">{{note}} </span>
-                    <span class="word">{{word}}</span>
+                    <span class="word -arabic-text-big">{{word}}</span>
                 {{/each}}
             {{/if}}
             <span class="label label-info">{{category}}</span>
@@ -40,7 +42,7 @@
                     <ul class="examples">
                         {{#each examples}}
                             <li>
-                                <div class="example">{{example}}</div>
+                                <div class="example -arabic-text-mid">{{example}}</div>
                                 <div class="translation">{{translation}}</div>
                             </li>
                         {{/each}}
@@ -56,12 +58,9 @@
     <a class="edit" href="/articles/edit/{{_id}}" title="edit">
         <span class="glyphicon glyphicon-edit"></span>
     </a>
-    <small>added by: 
+    <small>
         <a href="#"> <span class="glyphicon glyphicon-user"></span> {{author}}</a>
     </small>
-    <small>
-        <a href="#"> <span class="glyphicon glyphicon-time"></span> {{createdAt}}</a>
-    </small>    
   </div>
 </div>
 

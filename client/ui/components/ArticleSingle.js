@@ -4,10 +4,14 @@ import './ArticleSingle.html';
 import './ArticleUpdate.js'; */
 import { Articles } from '/imports/api/articles.js';
 
+Template.ArticleSingle.onCreated(function(){
+    Meteor.subscribe("users"); //надо переделать на подписку на 1го человека, автора статьи
+});
+
 Template.ArticleSingle.helpers({
-    author() {
-        const username = Meteor.users.findOne({_id: this.owner}, {username: 1}).username; 
-        return username;
+    author() { 
+        return Meteor.users.findOne({_id:this.createdBy}, { fields:{username:1} }).username;
+        
     },
 });
 

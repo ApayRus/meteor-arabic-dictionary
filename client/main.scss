@@ -10,40 +10,26 @@ $arabic-font-style: 'Scheherazade';
     }
 } 
 
-.examples .example, .words .word, #srch-term {
-        font-family: $arabic-font-style; 
-    }
-
-.words .word, #srch-term {
-    font-size: $big-arabic-font-size; 
-}
-
 .words .note.middleHaracat {
-    padding-right: 10px;
+    padding-right: 15px;
     padding-left: 5px;
 }
 
-.examples .example {
-    font-size: $mid-arabic-font-size; 
-}
-
-.examples .example, .words .word {
-    direction: rtl; 
-}
-
 .search-form {
-
     padding-left: 0px;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
+    padding-right: 0px;
+    margin-right: 0px;
+    margin-left: 0px; 
 
-    button {
-        padding: 15px; 
-    }
+        button {
+            padding: 15px; 
+        }
 
-    input {
-        direction: rtl;
-        padding: 25px 15px;
-    }    
+        input {
+            direction: rtl;
+            padding: 25px 15px;
+        }    
 }
 
 html {
@@ -63,8 +49,23 @@ body {
   background-color: #222;
 }
 
+// #HELPERS 
 
+.-arabic-text-mid {
+        font-family: $arabic-font-style; 
+        font-size: $mid-arabic-font-size; 
+        direction: rtl;
+}
 
+.-arabic-text-big {
+        font-family: $arabic-font-style; 
+        font-size: $big-arabic-font-size; 
+        direction: rtl;
+}
+
+// /HELPERS
+
+// #AUTOFORM 
 .article-form {
     input[name$='word'], input[name$='example'] {
         font-family: $arabic-font-style; 
@@ -72,16 +73,20 @@ body {
         direction: rtl;
     }
 
-    >.panel.panel-default:nth-child(4)>.list-group>.list-group-item.autoform-array-item>div>.autoform-array-item-body>.panel.panel-default>.panel-body>.form-group{
+    >.panel.panel-default:nth-child(3)>.list-group>.list-group-item.autoform-array-item>div>.autoform-array-item-body>.panel.panel-default>.panel-body>.form-group{
         width: 100%;
     }
 
 
     .form-group {
         width: 49%; 
+        @media (max-width: 768px) {
+            width: 100%;
+        }
         display: inline-block;
         margin-bottom: 0px;
     }
+
     .autoform-array-item {
         .autoform-array-item-body {
             .panel-heading {
@@ -108,7 +113,7 @@ body {
         margin-bottom: 15px;
     }
 }
-
+// /AUTOFORM
 
 .search-page, .article-page, .article-form, .users-list {
     margin-top: 66px;
