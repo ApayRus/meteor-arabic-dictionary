@@ -27,7 +27,7 @@ Template.ArticleUpdate.helpers({
         return id; 
     },
     poroda1() {
-    if(AutoForm.getFieldValue('category')=="глагол I-й породы")
+    if(AutoForm.getFieldValue('category')=="глагол, I порода")
         return true
     else 
         return false
