@@ -195,7 +195,7 @@ ArticleSchema = new SimpleSchema({
         optional: true,
         autoValue() {
                 if (this.isInsert && (!this.isSet || this.value.length === 0)) {
-                    return Meteor.userId()||"somebody";
+                    return Meteor.userId()||"Anonymous";
                 }
         },
         autoform: {
