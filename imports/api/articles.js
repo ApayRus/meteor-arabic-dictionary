@@ -111,16 +111,16 @@ const SpeachParts = [
       {
         optgroup: "глагол",
         options: [
-          {label: "порода I", value: "глагол I-й породы"},
-          {label: "порода II", value: "глагол II-й породы"},
-          {label: "порода III", value: "глагол III-й породы"},
-          {label: "порода IV", value: "глагол IV-й породы"},
-          {label: "порода V", value: "глагол V-й породы"},
-          {label: "порода VI", value: "глагол VI-й породы"},
-          {label: "порода VII", value: "глагол VII-й породы"},
-          {label: "порода VIII", value: "глагол VIII-й породы"},
-          {label: "порода IX", value: "глагол IX-й породы"},
-          {label: "порода X", value: "глагол X-й породы"},                             
+          {label: "порода I", value: "глагол, I порода"},
+          {label: "порода II", value: "глагол, II порода"},
+          {label: "порода III", value: "глагол, III порода"},
+          {label: "порода IV", value: "глагол, IV порода"},
+          {label: "порода V", value: "глагол, V порода"},
+          {label: "порода VI", value: "глагол, VI порода"},
+          {label: "порода VII", value: "глагол, VII порода"},
+          {label: "порода VIII", value: "глагол, VIII порода"},
+          {label: "порода IX", value: "глагол, IX порода"},
+          {label: "порода X", value: "глагол, X порода"},                             
         ]
       },
       {
