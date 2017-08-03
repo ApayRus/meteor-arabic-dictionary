@@ -181,7 +181,7 @@ ArticleSchema = new SimpleSchema({
 
     editedAt: {
         type: Date, 
-        label: "Created At", 
+        label: "Edited At", 
         autoValue() {
                     return new Date();
         }, 
@@ -195,7 +195,7 @@ ArticleSchema = new SimpleSchema({
         optional: true,
         autoValue() {
                 if (this.isInsert && (!this.isSet || this.value.length === 0)) {
-                    return Meteor.userId();
+                    return Meteor.userId()||"somebody";
                 }
         },
         autoform: {
