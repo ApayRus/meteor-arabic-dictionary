@@ -25,11 +25,13 @@ if (Meteor.isServer) {
 Articles.allow({
   insert: function(userId, doc) {
     // only allow posting if you are logged in
-    return !! userId; 
+    //return !! userId;
+    return true
   },
   update: function(userId, doc) {
     // only allow updating if you are owner
-    return doc.createdBy === Meteor.userId();
+    //return doc.createdBy === Meteor.userId();
+    return true
   },
   remove: function(userID, doc) {
     //only allow deleting if you are owner
