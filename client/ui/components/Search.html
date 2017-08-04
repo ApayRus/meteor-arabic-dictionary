@@ -1,7 +1,8 @@
 <template name="Search">
     <div class="container search-page">
         <section class="row">
-            <div class="col-sm-6">        
+            <div class="col-sm-6">
+                {{> AlertMessage}}
                 <form class="navbar-form search-form" role="search">
                     <div class="input-group add-on">
                         <input class="form-control col-sm-2 -arabic-text-big" placeholder="Search" name="searchFor" id="searchFor" type="text" value="{{searchFor}}">
