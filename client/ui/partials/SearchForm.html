@@ -1,0 +1,18 @@
+<template name="SearchForm">
+    <form class="search-form">
+        <div class="input-group">
+            <input class="form-control col-sm-2 -arabic-text-big" 
+                placeholder="Search: Arabic -> Russian" 
+                name="searchFor" 
+                id="searchFor"
+                type="text" 
+                value="{{searchFor}}">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="label label-default articles-found-count">Найдено результатов: {{result.count}}</div>
+    </form>
+</template>

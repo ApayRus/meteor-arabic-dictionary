@@ -17,7 +17,7 @@ $arabic-font-style: 'Scheherazade';
 
 .search-form { 
         margin-left: 16px;
-        
+
         button {
             padding: 15px; 
         }
@@ -121,6 +121,11 @@ body {
 
 .navbar-nav {
     #login-dropdown-list {
-       left: -140px; 
+        top: -150px;
+        @media (min-width: 768px) {
+                    left: -140px;
+                    top: -1px;
+                }         
     }
+    
 }
