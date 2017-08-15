@@ -1,43 +1,11 @@
 import { Mongo } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker'; 
 SimpleSchema.extendOptions(['autoform']);
+import { Events } from '/imports/api/events.js';
 
 export const Articles = new Mongo.Collection('articles');
-
-// PUBLICATIONS
-if (Meteor.isServer) {
-  // This code only runs on the server
-  Meteor.publish('articles', function() {
-    return Articles.find();
-  });
-
-  Meteor.publish('articleSingle', function(id) {
-    return Articles.find({_id: id});
-  });
-  
-  Meteor.publish('articlesSearchResult', function(searchFor) {
-    return Articles.find( { "words.word" : new RegExp(searchFor) }, { limit: 50 } );
-  });
-}
-
-// METHODS
-Articles.allow({
-  insert: function(userId, doc) {
-    // only allow posting if you are logged in
-    //return !! userId;
-    return true
-  },
-  update: function(userId, doc) {
-    // only allow updating if you are owner
-    //return doc.createdBy === Meteor.userId();
-    return true
-  },
-  remove: function(userID, doc) {
-    //only allow deleting if you are owner
-    return doc.createdBy === Meteor.userId();
-  }
-});
 
 // SCHEMES 
 WordSchema = new SimpleSchema({
@@ -45,17 +13,21 @@ WordSchema = new SimpleSchema({
         type: String,
         optional: true,
         trim: true,
+        label: "примечание",
         autoform: {
             label: false,
-            placeholder: "schemaLabel"
+            placeholder: "schemaLabel", 
+            class: "note"
         }        
-    }, 
+    },
     word: {
         type: String,
         trim: true,
+        label: "словоформа",
         autoform: {
             label: false,
-            placeholder: "schemaLabel"
+            placeholder: "schemaLabel", 
+            class: "word"
         }        
     },    
 });
@@ -65,6 +37,7 @@ ExampleSchema = new SimpleSchema({
         type: String,
         optional: true,
         trim: true,
+        label: "пример",
         autoform: {
             label: false,
             placeholder: "schemaLabel", 
@@ -75,9 +48,11 @@ ExampleSchema = new SimpleSchema({
         type: String,
         optional: true,
         trim: true,
+        label: "перевод примера",
         autoform: {
             label: false,
-            placeholder: "schemaLabel"
+            placeholder: "schemaLabel", 
+            class: "example-translation"
         }        
     }, 
 });
@@ -85,18 +60,22 @@ ExampleSchema = new SimpleSchema({
 TranslationSchema = new SimpleSchema({
     translation: {
         type: String,
-        label: "Translation",
+        label: "Перевод",
         optional: true,
         trim: true,
         autoform: {
             label: false,
             placeholder: "schemaLabel",
+            class: "translation"
         }        
     }, 
     examples: {
         type: Array, 
         label: "Examples", 
-        optional: true, 
+        optional: true,
+        autoform: {
+            class: "examples"
+        }
     }, 
     'examples.$': ExampleSchema,
 });
@@ -136,7 +115,7 @@ const SpeachParts = [
 
 ArticleSchema = new SimpleSchema({
 
-    category: {
+    speachPart: {
         type: String,
         optional: true,
         label: false,        
@@ -147,8 +126,12 @@ ArticleSchema = new SimpleSchema({
     },
 
     words: {
-        type: Array, 
-        label: "Words"
+        type: Array,
+        optional: true,
+        label: "Словоформы",
+        autoform: {
+            class: "words"
+        }
     }, 
     'words.$': WordSchema,
     
@@ -161,14 +144,15 @@ ArticleSchema = new SimpleSchema({
 
     translations: {
         type: Array, 
-        label: "Translations", 
+        label: "Переводы", 
         optional: true,
     }, 
     'translations.$': TranslationSchema,
 
     createdAt: {
         type: Date, 
-        label: "Created At", 
+        label: "Created At",
+        optional: true, 
         autoValue() {
                 if (this.isInsert && (!this.isSet || this.value.length === 0)) {
                     return new Date();
@@ -181,7 +165,8 @@ ArticleSchema = new SimpleSchema({
 
     editedAt: {
         type: Date, 
-        label: "Edited At", 
+        label: "Edited At",
+        optional: true, 
         autoValue() {
                     return new Date();
         }, 
@@ -190,12 +175,12 @@ ArticleSchema = new SimpleSchema({
         }            
     },    
 
-    createdBy: {
+    createdByUserId: {
         type: String,
         optional: true,
         autoValue() {
                 if (this.isInsert && (!this.isSet || this.value.length === 0)) {
-                    return Meteor.userId()||"Anonymous";
+                    return Meteor.userId()||"anonymous";
                 }
         },
         autoform: {
@@ -203,8 +188,271 @@ ArticleSchema = new SimpleSchema({
             label: false,
         },
     },
-}); 
+    createdByUserName: {
+        type: String,
+        optional: true,
+        autoValue() {
+                let username = "anonymous"
+                if (this.isInsert && (!this.isSet || this.value.length === 0)) {
+                    if (Meteor.user())
+                        username = Meteor.user().username 
+                    return username
+                }
+        },
+        autoform: {
+            type: "hidden",
+            label: false,
+        },
+    },    
+    editedByUserId: {
+        type: String,
+        optional: true,
+        autoValue() {
+                    return Meteor.userId()||"anonymous";
+        },
+        autoform: {
+            type: "hidden",
+            label: false,
+        },
+    },
+    editedByUserName: {
+        type: String,
+        optional: true,
+        autoValue() {
+                let username = "anonymous"
+                if (Meteor.user())
+                    username = Meteor.user().username 
+                return username
+        },
+        autoform: {
+            type: "hidden",
+            label: false,
+        },
+    },    
+    corrections: {
+        type: Array,
+        optional: true,
+        defaultValue: []  
+    }, 
+    'corrections.$': {
+        type: Object,
+        optional: true, 
+        blackbox: true,
+    },
+    lastEvent: {
+        type: Object, 
+        optional: true, 
+        blackbox: true,
+        defaultValue: {},
+    }, 
+    deleted: {
+        type: Boolean,
+        optional:true, 
+        defaultValue: false,
+    }, 
+    published: {
+        type: Boolean,
+        optional: true, 
+        defaultValue: true,
+    }
+});
 
 
 
 Articles.attachSchema(ArticleSchema);
+
+////////////---------METHODS---------------//////////////////
+Meteor.methods({
+
+  'articles.update'(doc) {
+    check(doc, Object);
+//    Articles.update({_id: doc._id}, doc.modifier );
+    const userId = Meteor.userId()||'anonymous';
+    let correction = doc.modifier.$set;
+    correction._id = doc._id
+    correction.lastEvent = {}
+
+    //if user is Admin, we apply he's correction directly to db, 
+    if (userId == "ghZegnrrKqnNFaFxb") {
+        
+        correction.lastEvent.type = "изменил статью"
+        //console.log('inside method doc', doc)
+        Articles.update({_id: doc._id}, 
+                        doc.modifier, 
+                        {upsert: true});
+    }
+    //if user is not Admin - just save it to corrections, to accept or reject in the future by admin
+    else {
+        correction.published = false
+        Articles.update(
+            {_id: doc._id},
+            { $set: { 
+                    lastEvent : {type: "предложил правку" }, 
+                    corrections: changedCorrections(doc._id, userId, correction)
+             },
+         }
+         );
+    }
+
+  },
+  'articles.accept'(doc_id, correction){
+      if (Meteor.userId() == "ghZegnrrKqnNFaFxb") {
+            correction.lastEvent = {}
+            correction.lastEvent.type = "одобрил статью"
+            correction.lastEvent.user2id = correction.editedByUserId
+            correction.lastEvent.user2name = correction.editedByUserName
+            correction.published = true
+
+            Articles.update({_id: doc_id}, 
+                                {$set: correction},
+                                {upsert: true});
+      }
+      else {
+          console.log("У вас недостаточно прав одобрять правки"); 
+      }
+  },
+  'articles.reject'(doc_id, correction){
+      if (Meteor.userId() == "ghZegnrrKqnNFaFxb") {
+            correction.lastEvent = {}
+            correction.lastEvent.type = "отклонил статью"
+            correction.lastEvent.user2id = correction.editedByUserId
+            correction.lastEvent.user2name = correction.editedByUserName
+            correction.deleted = true
+
+            Articles.update({_id: doc_id}, 
+                                {$set: correction},
+                                {upsert: true});
+      }
+      else {
+          console.log("У вас недостаточно прав одобрять правки"); 
+      }
+  },  
+  'articles.accept_correction'(doc_id, correction){
+      if (Meteor.userId() == "ghZegnrrKqnNFaFxb") {
+            correction.lastEvent = {}
+            correction.lastEvent.type = "одобрил правку"
+            correction.lastEvent.user2id = correction.editedByUserId
+            correction.lastEvent.user2name = correction.editedByUserName
+            correction.published = true 
+
+            Articles.update({_id: doc_id}, 
+                                {$set: correction, $unset: {corrections: []}},
+                                {upsert: true});
+      }
+      else {
+          console.log("У вас недостаточно прав одобрять правки"); 
+      }
+  },
+
+  'articles.reject_correction'(doc_id, correction){
+      if (Meteor.userId() == "ghZegnrrKqnNFaFxb") {
+            correction.lastEvent = {}
+            correction.lastEvent.type = "отклонил правку"
+            correction.lastEvent.user2id = correction.editedByUserId
+            correction.lastEvent.user2name = correction.editedByUserName
+            Articles.update(
+                {_id: doc_id },
+                { $set:{lastEvent: correction.lastEvent}, $pull: { corrections : { editedByUserId: correction.editedByUserId } } },
+                );
+      }
+      else {
+          console.log("У вас недостаточно прав удалять правки"); 
+      }
+  },  
+
+  'articles.insert'(doc) {
+    check(doc, Object);
+    //if user is Admin, he can add new articles directly
+    if(Meteor.userId() == "ghZegnrrKqnNFaFxb") {
+        doc.modifier.$set.lastEvent = {}
+        doc.modifier.$set.lastEvent.type = "создал статью"
+        Articles.insert(doc.modifier.$set);
+        //function(error, result){}
+    }
+    //if user is not Admin, he can add draft of article, for approving by Admin
+    else {
+        doc.modifier.$set.lastEvent = {}
+        doc.modifier.$set.lastEvent.type = "предложил статью"
+        doc.modifier.$set.published = false
+        Articles.insert(doc.modifier.$set);
+    }
+
+
+  },
+
+  'articles.remove'(docId) {
+    check(docId, String);
+    //if user is admin he can remove articles
+    if (Meteor.userId() == "ghZegnrrKqnNFaFxb") {
+        Articles.update({_id: docId}, {$set: 
+                                        { deleted: true, 
+                                        lastEvent: {type: "удалил статью"} },} 
+                );
+    }
+    else {
+        console.log("у вас недостаточно прав для удаления статей"); 
+    }
+  },
+
+});
+
+///////////////----HOOKS------/////////////////////
+Articles.after.insert(function (userId, doc) {
+
+    Meteor.call('events.insert', lastEvent(doc));
+
+    FlowRouter.go('articles',{ id: doc._id});
+});
+
+Articles.after.update(function(userId, doc, fieldNames, modifier, options){
+
+        Meteor.call('events.insert', lastEvent(doc));
+        if(doc.lastEvent.type != "удалил статью")
+            FlowRouter.go('articles',{ id: doc._id});
+});
+
+function articleTitle(words){
+    let title = ""; 
+
+    words.forEach( function(elem) {
+        let note = elem.note||"";
+        let word = elem.word||"";
+        title += `${note} ${word} `
+    });
+    return title
+}
+
+function lastEvent(doc){
+    const event = {
+            type: doc.lastEvent.type,
+            user1id: doc.editedByUserId, 
+            user1name: doc.editedByUserName, 
+            articleId: doc._id, 
+            articleTitle: articleTitle(doc.words), 
+            happenedAt:doc.editedAt,
+            user2id: doc.lastEvent.user2id,
+            user2name : doc.lastEvent.user2name
+        };
+    console.log('event',event)
+        
+    return event
+}
+
+function changedCorrections(docId, userId, correction){
+    let corrections = Articles.findOne({'_id': docId}, {fields: {corrections: 1}}).corrections||[];
+    let count = 0;
+    //console.log('old corrections', corrections); 
+
+    let new_corrections = corrections.map(function(elem){
+        if(elem.editedByUserId == userId){
+            count++
+            return correction
+        }
+        else
+            return elem
+    });
+    if(count==0)
+        new_corrections.push(correction)
+    //console.log('corrections', corrections);
+    return new_corrections
+}

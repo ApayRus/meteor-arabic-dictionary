@@ -2,25 +2,22 @@
     <div class="container search-page">
         <section class="row">
             <div class="col-sm-6">
-                {{> AlertMessage}}
-                {{> SearchForm}}
+                {{> SearchForm resultCount=result.count searchFor=searchFor}}
+                <div class="articles-list">
+                    {{#if Template.subscriptionsReady}}
+                                    {{#each result.articles}}
+                                                {{> ArticleSingle}}
+                                    {{/each}}
+                    {{else}}
+                        <p>Loading...</p>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                {{> EventsBlock}}
             </div>
         </section>
-
-        <div class="atricles-list">
-            {{#if Template.subscriptionsReady}}
-                    <section>                        
-                        <div class="col-sm-6">
-                            {{#each result.articles}}
-                                        {{> ArticleSingle}}
-                            {{/each}}
-                        </div>
-                    </section>
-
-            {{else}}
-                <p>Loading...</p>
-            {{/if}}
-        </div>
+        
         
     </div>
 </template>

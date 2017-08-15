@@ -1,0 +1,39 @@
+<template name="AlertMessage">
+    <div class="alert alert-warning alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Это демо-версия!</strong> Все сделанные изменения вскоре будут удалены. 
+    </div>
+</template>
+
+<template name="AlertMessageDeleteCorrections">
+    <div class="alert alert-warning alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Внимание!</strong>
+        При принятия любой из правок произойдет следующее: 
+        <ol>
+            <li>Основная статья будет заменена на правку</li>
+            <li>Все остальные правки изчезнут как больше не нужные</li>
+        </ol>
+    </div>
+</template>
+
+<template name="AlertMessageAddArticleAnonymous">
+    <div class="alert alert-warning alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Внимание!</strong>
+        Вы находитесь на сайте как Аноним. 
+        Для добавления новых статей нужно залогиниться.
+        Эта форма для ознакомления. 
+    </div>
+</template>
+
+<template name="AlertMessageEditArticleAnonymous">
+    <div class="alert alert-warning alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Внимание!</strong>
+        Вы находитесь на сайте как Аноним. 
+        Ваши правки будут сохранены.
+        Но пока админ не одобрит ваши правки, любой другой аноним может изменить их или удалить.
+        Поэтому, лучше залогиниться. 
+    </div>
+</template>

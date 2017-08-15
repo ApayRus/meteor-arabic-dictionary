@@ -1,0 +1,17 @@
+<template name="SelectSpeachParts">
+    <div class="form-group speachPart">
+        !!!{{showMiddleHarakat}}
+        <select firstoption="Часть речи" name="category" data-schema-key="category" autocomplete="off" class="form-control">
+            <option value="">Часть речи</option>
+            {{#each group in speachParts}}
+                <optgroup label="{{group.optgroup}}">
+                    {{#each option in group.options}}
+                        <option value="{{option.value}}" {{isSelected option.value }}>
+                            {{option.label}}
+                        </option>
+                    {{/each}}
+                </optgroup>
+            {{/each}}
+        </select>
+    </div>
+</template>

@@ -5,12 +5,21 @@
                 collection=articles 
                 class="article-form" 
                 id="articleForm" 
-                type=mode.type 
-                doc=mode.doc
+                type="method-update"
+                meteormethod=mode.method
+                doc=mode.doc                
             }}
-                {{> AlertMessage}}
-                
-                {{> afQuickField name='category'}}
+                {{#if currentUser}}
+                {{else}}
+                    {{#if isAdding}}
+                        {{> AlertMessageAddArticleAnonymous}}
+                    {{/if}}
+                    {{#if isEditing}}
+                        {{> AlertMessageEditArticleAnonymous}}
+                    {{/if}}                    
+                {{/if}}
+
+                {{> afQuickField name='speachPart'}}
                 {{#if poroda1}}
                     {{> afQuickField name='middleHarakat'}}
                 {{/if}}

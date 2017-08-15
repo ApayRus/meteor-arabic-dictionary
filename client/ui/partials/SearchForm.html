@@ -1,8 +1,8 @@
 <template name="SearchForm">
     <form class="search-form">
-        <div class="input-group">
+        <div class="input-group info">
             <input class="form-control col-sm-2 -arabic-text-big" 
-                placeholder="Search: Arabic -> Russian" 
+                placeholder="Arabic → Russian" 
                 name="searchFor" 
                 id="searchFor"
                 type="text" 
@@ -13,6 +13,6 @@
                 </button>
             </div>
         </div>
-        <div class="label label-default articles-found-count">Найдено результатов: {{result.count}}</div>
+        <div class="label label-default articles-found-count">Найдено результатов: {{resultCount}}</div>
     </form>
 </template>

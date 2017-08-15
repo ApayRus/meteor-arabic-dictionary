@@ -1,9 +1,32 @@
 <template name="ArticlePage">
     <div class="container article-page">
-        {{#if Template.subscriptionsReady}}
-          {{> ArticleSingle article}}
-        {{else}}
-            <p>Loading...</p>
-        {{/if}}
+        <section class="row">
+            {{#if Template.subscriptionsReady}}
+                <div class="col-sm-6">
+                    {{#if article.showCorrections}}
+                        <h3>Основная статья</h3>
+                    {{/if}}
+                    <div class="main-article">
+                        {{> ArticleSingle article.article}}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    {{#if article.showCorrections}}
+                            <h3>Правки, ожидающие админа</h3>
+                            {{#if isAdmin}}
+                                {{> AlertMessageDeleteCorrections}}
+                            {{/if}}
+
+                            {{#each article.corrections}}
+                                <div class="correction">
+                                    {{> ArticleSingle}}
+                                </div>
+                            {{/each}}
+                    {{/if}}
+                </div>
+            {{else}}
+                <p>Loading...</p>
+            {{/if}}
+        </section>
     </div>
 </template>

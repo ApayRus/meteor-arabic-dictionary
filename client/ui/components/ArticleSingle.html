@@ -1,6 +1,6 @@
 <template name="ArticleSingle">
 
-<div class="panel panel-default article">
+<div class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
   <div class="panel-heading">
         <div class="panel-title words">
             <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
@@ -31,7 +31,7 @@
                     <span class="word -arabic-text-big">{{word}}</span>
                 {{/each}}
             {{/if}}
-            <span class="label label-info">{{category}}</span>
+            <span class="label label-info">{{speachPart}}</span>
         </div>
   </div>
   <div class="panel-body">
@@ -52,15 +52,11 @@
         </ol>
   </div>
   <div class="panel-footer">
-    <a class="delete" title="delete" href="#">
-        <span class="glyphicon glyphicon-remove"></span>
-    </a>
-    <a class="edit" href="/articles/edit/{{_id}}" title="edit">
-        <span class="glyphicon glyphicon-edit"></span>
-    </a>
-    <small>
-        <a href="#"> <span class="glyphicon glyphicon-user"></span> {{author}}</a>
-    </small>
+        {{> ArticleMenu }}
+        {{> ArticleCorrectionMenu}}
+        {{#if showApproveButtons}}
+            {{> ApproveButtons}}
+        {{/if}}
   </div>
 </div>
 

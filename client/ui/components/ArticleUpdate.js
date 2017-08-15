@@ -22,44 +22,94 @@ Template.ArticleUpdate.helpers({
     articles() {
         return Articles;
     },
-    updateArticleId() {
+/*    updateArticleId() {
         const id = FlowRouter.getParam('id');
         return id; 
-    },
+    },*/
     poroda1() {
-    if(AutoForm.getFieldValue('category')=="глагол, I порода")
+    if(AutoForm.getFieldValue('speachPart')=="глагол, I порода")
         return true
     else 
         return false
     }, 
     mode() {
-        const route = FlowRouter.getRouteName(); 
+        const route = FlowRouter.getRouteName();
+
         if (route == "article-add") 
             return {
-                type: "insert", 
+                method: "articles.insert", 
                 doc: null
             }
+
         if (route == "article-edit" ) {
             const id = FlowRouter.getParam('id');
-            const doc = Articles.findOne({'_id': id});
-            const type = "update"; 
-            return { type, doc }
+            const method = "articles.update";
+            let doc = {}; 
+            const correctionBy = FlowRouter.getQueryParam('correctionBy');
+
+            //whe should find proper correction for this user 
+            if(correctionBy){
+                doc = findUserCorrection(id, correctionBy); 
+            }
+            else
+                doc = Articles.findOne({'_id': id});
+            return { method, doc }
         }
-    }
+    },
+    isAdding(){
+        return FlowRouter.getRouteName() == "article-add"
+    }, 
+    isEditing(){
+        return FlowRouter.getRouteName() == "article-edit"
+    },
 });
+
+function findUserCorrection(article_id, user_id){
+    let corrections = Articles.findOne({'_id': article_id }, { fields: {'corrections': 1 } } ).corrections;
+    let correction = corrections.filter(function(elem){
+        return elem.editedByUserId == user_id;
+    })[0]; 
+    return correction
+}
 
 AutoForm.hooks({
   articleForm: {
     after: {
           update: function(error, result){
-                if(result)
-                  FlowRouter.go('articles',{ id: this.docId });
+                if(result) {
+                    console.log('currentDoc',this.currentDoc)
+                    console.log('updateDoc', this.updateDoc)
+                    FlowRouter.go('articles',{ id: this.docId });
+                }
                 else
                     console.log(result, error)
           },
           insert: function(error, result){
                   FlowRouter.go('articles',{ id: result }); 
           }
-      }    
+      },
   }
 });
+
+Template.ArticleUpdate.events({
+    'submit form'(event){
+        event.preventDefault(); 
+        //console.log(event.target)
+/*        const word = event.target.word.value; 
+        const translation = event.target.translation.value; 
+
+        Words.insert({
+            word, 
+            translation, 
+            createdAt: new Date(),
+        }); 
+
+        event.target.word.value = '';
+        event.target.translation.value = ''; */
+    },
+});
+
+/*Template.ArticleUpdate.onRendered( function(){
+  // we're using the template instance scoped jQuery
+  $("input.translation").parent().addClass("-width-100");
+});*/

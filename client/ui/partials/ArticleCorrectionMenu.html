@@ -1,0 +1,17 @@
+<template name="ArticleCorrectionMenu">
+    <div class="article-correction-menu">
+<!--        <a class="delete" title="delete" href="#">
+            <span class="glyphicon glyphicon-remove"></span>
+        </a>-->
+        <a class="edit" href="/articles/edit/{{_id}}?correctionBy={{editedByUserId}}" 
+            title="edit correction">
+            <span class="glyphicon glyphicon-edit"></span>
+        </a>
+        <small>
+            <a href="/users/{{editedByUserId}}" title="автор правки"> 
+            <span class="glyphicon glyphicon-user"></span> 
+                {{editedByUserName}}
+            </a>
+        </small>
+    </div>
+</template>

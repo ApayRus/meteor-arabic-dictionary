@@ -17,7 +17,7 @@
 
 <body>
  
-<div class="page-header"><h1>Subtitles splitter & converter</h1></div>  
+<div class="page-header"><h1>Text file arabic dict base TO mongodb import json</h1></div>  
       
 <div class="content" ng-controller="MyController">
     <div class="row">
@@ -98,7 +98,7 @@ function parseDict( text ){
         var article = {}; 
         var words = [];
         var translations = [];
-        var category = ""; 
+        var speachPart = ""; 
         var middleHarakat = "";
 
         words.push({ 
@@ -109,7 +109,7 @@ function parseDict( text ){
         //if (article0[2] || article[3] || article[4] || article[5] )
         if(article0.slice(2,6).join("").trim()) {
             if(article0[2].match(/[IVX]/)){
-                category = "глагол, "+article0[2]+" порода"; 
+                speachPart = "глагол, "+article0[2]+" порода"; 
                 middleHarakat = article0[3];
                 words.push({
                     note: "", 
@@ -151,17 +151,19 @@ function parseDict( text ){
         article.words = words;
         article.translations = translations;
         //article.createdBy = "ghZegnrrKqnNFaFxb"; //aparus
-        article.createdBy = "c6BKQpLZkKANiGx2p"; //msaif
-        article.category = category; 
+        article.createdByUserId = "c6BKQpLZkKANiGx2p"; //msaif
+        article.createdByUserName = "msaif";
+        article.speachPart = speachPart; 
         if(middleHarakat)
             article.middleHarakat = middleHarakat; 
         
-        article.createdAt = date; 
+        article.createdAt = new Date();
+        article.published = true;
 
         var artstr = JSON.stringify(article);
-        articles.push( artstr ); 
+        articles.push( artstr );
 
-        category = "";
+        speachPart = "";
         middleHarakat = "";
         
     }); 
