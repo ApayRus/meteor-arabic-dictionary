@@ -75,12 +75,12 @@ $arabic-font-style: 'Scheherazade';
             /*margin-left: 16px;*/
 
             button {
-                padding: 15px; 
+                padding: 18.5px; 
             }
 
             input {
                 direction: rtl;
-                padding: 25px 15px;
+                padding: 0px 15px;
             }
     }    
 }
@@ -150,9 +150,9 @@ body {
     
 }
 
-
-
-
+.form-control{
+    height: auto;
+}
 
 .article-form {
     
@@ -162,6 +162,11 @@ body {
         direction: rtl;
     }
 
+    .form-control {
+        &.word, &.example {
+            padding: 0px 12px;
+        }
+    }
 
 /*    .panel>.list-group>.list-group-item.autoform-array-item>div>.autoform-array-item-body>.panel.panel-default>.panel-body>.form-group{
         width: 100%;
@@ -205,6 +210,7 @@ body {
     }
 }
 
+
 .about-page {
     .page-header{
         margin-top:0px;
@@ -215,4 +221,3 @@ body {
         }
     }
 }
-
