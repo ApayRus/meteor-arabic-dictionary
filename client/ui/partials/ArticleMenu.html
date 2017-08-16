@@ -1,8 +1,10 @@
 <template name="ArticleMenu">
     <div class="article-menu">
-        <a class="delete" title="delete" href="#">
-            <span class="glyphicon glyphicon-remove"></span>
-        </a>
+        {{#if isAdmin}}
+            <a class="delete" title="delete" href="#">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        {{/if}}
         <a class="edit" href="/articles/edit/{{_id}}" title="edit">
             <span class="glyphicon glyphicon-edit"></span>
         </a>

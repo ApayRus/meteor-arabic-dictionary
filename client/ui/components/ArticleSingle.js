@@ -23,16 +23,16 @@ Template.ArticleSingle.helpers({
 });
 
 Template.ArticleMenu.helpers({
-/*    author() { 
-        return Meteor.users.findOne({_id:this.createdBy}, { fields:{username:1} }).username;
-        
-    },*/
+
     correctionsCount(){
         return this.corrections.length||0
     }, 
     showCorrectionsCount(){
         return this.corrections.length > 0
     },
+    isAdmin(){
+        return Meteor.userId() == "ghZegnrrKqnNFaFxb"
+    }    
 
 });
 
