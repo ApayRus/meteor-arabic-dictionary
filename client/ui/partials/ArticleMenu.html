@@ -8,11 +8,6 @@
         <a class="edit" href="/articles/edit/{{_id}}" title="edit">
             <span class="glyphicon glyphicon-edit"></span>
         </a>
-        <small>
-            <a href="/users/{{createdByUserId}}"> <span class="glyphicon glyphicon-user"></span> 
-                {{createdByUserName}}
-            </a>
-        </small>
 
         <small>
             {{#if showCorrectionsCount}}            
@@ -29,5 +24,10 @@
         {{#if deleted}}
             <span class="glyphicon glyphicon-trash" title="статья удалена"></span>
         {{/if}}
+        <small>
+            <a href="/users/{{createdByUserId}}"> <span class="glyphicon glyphicon-user"></span> 
+                {{createdByUserName}}
+            </a>
+        </small>        
     </div>
 </template>
