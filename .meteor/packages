@@ -30,3 +30,6 @@ matb33:collection-hooks
 markdown
 yasinuslu:metrika
 okgrow:analytics
+ostrio:files
+ostrio:autoform-files
+dburles:mongo-collection-instances

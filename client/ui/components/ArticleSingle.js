@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import './ArticleSingle.html'; 
 import './ArticleUpdate.js'; */
 import { Articles } from '/imports/api/articles.js';
-
+import { Images } from '/imports/api/images.js';
 /*Template.ArticleSingle.onCreated(function(){
     Meteor.subscribe("users"); //надо переделать на подписку на 1го человека, автора статьи
 });*/
@@ -19,16 +19,24 @@ Template.ArticleSingle.helpers({
     }, 
     notPublished(){
         return this.published === false
+    },
+    image(){
+        const image = Images.findOne({_id: this.picture});
+        return image
     }
 });
 
 Template.ArticleMenu.helpers({
 
     correctionsCount(){
-        return this.corrections.length||0
+        if(this.corrections) 
+            return this.corrections.length
+        else 
+            return 0
     }, 
     showCorrectionsCount(){
-        return this.corrections.length > 0
+        if(this.corrections)
+            return this.corrections.length > 0
     },
     isAdmin(){
         return Meteor.userId() == "ghZegnrrKqnNFaFxb"

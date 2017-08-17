@@ -3,7 +3,17 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker'; 
 SimpleSchema.extendOptions(['autoform']);
+SimpleSchema.setDefaultMessages({
+  initialLanguage: 'ru',
+  messages: {
+    ru: {
+      uploadError: '{{value}}', //File-upload
+    },
+  }
+});
+
 import { Events } from '/imports/api/events.js';
+import { Images } from '/imports/api/images.js';
 
 export const Articles = new Mongo.Collection('articles');
 
@@ -54,7 +64,7 @@ ExampleSchema = new SimpleSchema({
             placeholder: "schemaLabel", 
             class: "example-translation"
         }        
-    }, 
+    },
 });
 
 TranslationSchema = new SimpleSchema({
@@ -146,6 +156,11 @@ ArticleSchema = new SimpleSchema({
         type: Array, 
         label: "Переводы", 
         optional: true,
+        autoform: {
+            afFieldInput: {
+                class: "translations"
+            }
+        }
     }, 
     'translations.$': TranslationSchema,
 
@@ -254,8 +269,20 @@ ArticleSchema = new SimpleSchema({
         type: Boolean,
         optional: true, 
         defaultValue: true,
+    }, 
+    picture: {
+        type: String,
+        optional: true,
+        autoform: {
+            afFieldInput: {
+                type: 'fileUpload',
+                collection: 'Images',
+                }
+            }
     }
 });
+
+
 
 
 

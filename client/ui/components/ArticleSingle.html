@@ -50,6 +50,9 @@
                 </li>
             {{/each}}
         </ol>
+        {{#if image.link}}
+            <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage">
+        {{/if}}
   </div>
   <div class="panel-footer">
         {{> ArticleMenu }}
@@ -59,7 +62,6 @@
         {{/if}}
   </div>
 </div>
-
 </template>
 
 <!--<script>
