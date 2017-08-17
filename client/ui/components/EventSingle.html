@@ -1,5 +1,5 @@
 <template name="EventSingle">
-    <li class="list-group-item">
+    <li class="list-group-item event">
         <a href="#">
             <span class="glyphicon glyphicon-time" title="{{happenedAt}}"></span>
         </a>
@@ -9,9 +9,9 @@
             {{user1name}}
         </a> 
         {{type}}
-        <a href="/articles/{{articleId}}">
-            <span class="glyphicon glyphicon-file"></span>
+        <a href="/article/{{articleId}}" class="article">
             {{articleTitle}}
+            <span class="glyphicon glyphicon-file"></span>
         </a>
         {{#if user2id}}
             <a href="/users/{{user2id}}">

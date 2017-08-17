@@ -10,6 +10,9 @@ $arabic-font-style: 'Scheherazade';
             display: inline-block; 
         }
     }
+    .panel-title.words {
+        direction: rtl;
+    }
 
     .words .note.middleHaracat {
         padding-right: 15px;
@@ -223,5 +226,12 @@ body {
         img {
             margin: 50px auto;
         }
+    }
+}
+
+.event {
+    .article {
+        direction: rtl;
+        display: inline-block;
     }
 }

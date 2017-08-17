@@ -5,18 +5,18 @@
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
         {{/if}}
-        <a class="edit" href="/articles/edit/{{_id}}" title="edit">
+        <a class="edit" href="/article/edit/{{_id}}" title="edit">
             <span class="glyphicon glyphicon-edit"></span>
         </a>
 
         <small>
             {{#if showCorrectionsCount}}            
-                <a class="edit" href="/articles/{{_id}}" title="ожидают одобрения админа">
+                <a class="edit" href="/article/{{_id}}" title="ожидают одобрения админа">
                     <span class="glyphicon glyphicon-check"></span>
                     Правки: {{correctionsCount}}
                 </a>
             {{else}}
-                <a class="edit" href="/articles/{{_id}}" title="ссылка на статью">
+                <a class="edit" href="/article/{{_id}}" title="ссылка на статью">
                     <span class="glyphicon glyphicon-link"></span>
                 </a>
             {{/if}}

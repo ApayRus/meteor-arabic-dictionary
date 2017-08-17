@@ -1,13 +1,13 @@
-<template name="Search">
-    <div class="container search-page">
+<template name="ArticlesPage">
+    <div class="container articles-page -page">
+        <h2>Articles page</h2>
         <section class="row">
             <div class="col-sm-6">
-                {{> SearchForm resultCount=result.count searchFor=searchFor}}
                 <div class="articles-list">
                     {{#if Template.subscriptionsReady}}
-                                    {{#each result.articles}}
-                                                {{> ArticleSingle}}
-                                    {{/each}}
+                        {{#each articles}}
+                            {{> ArticleSingle}}
+                        {{/each}}
                     {{else}}
                         <p>Loading...</p>
                     {{/if}}

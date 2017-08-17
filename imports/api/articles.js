@@ -401,14 +401,14 @@ Articles.after.insert(function (userId, doc) {
 
     Meteor.call('events.insert', lastEvent(doc));
 
-    FlowRouter.go('articles',{ id: doc._id});
+    FlowRouter.go('article',{ id: doc._id});
 });
 
 Articles.after.update(function(userId, doc, fieldNames, modifier, options){
 
         Meteor.call('events.insert', lastEvent(doc));
         if(doc.lastEvent.type != "удалил статью")
-            FlowRouter.go('articles',{ id: doc._id});
+            FlowRouter.go('article',{ id: doc._id});
 });
 
 function articleTitle(words){
@@ -433,8 +433,6 @@ function lastEvent(doc){
             user2id: doc.lastEvent.user2id,
             user2name : doc.lastEvent.user2name
         };
-    console.log('event',event)
-        
     return event
 }
 
