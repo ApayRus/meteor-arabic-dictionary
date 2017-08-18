@@ -2,5 +2,11 @@
   "public": {
     "analyticsSettings": { "Google Analytics" : {"trackingId": "UA-64772448-2"}}, 
     "yandex": {"id":"45635820"}
-  }
+  },  
+    "s3": {
+      "key": "AKIAJPRKXXUA2734BM3Q",
+      "secret": "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",
+      "bucket": "meteor.arabic.dictionary",
+      "region": "us-west-1"
+    }    
 }
