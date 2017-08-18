@@ -6,32 +6,32 @@
             <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
             особый шаблон его вывода, например, среднекорневую глассную и масдары -->
             {{#if middleHarakat}}
-                <span class="note">{{words.[0].note}}</span>
-                <span class="word -arabic-text-big" title="прошедшее время, 3-е лицо, ед.ч., м.р">
+                <div class="note">{{words.[0].note}}</div>
+                <div class="word -arabic-text-big" title="прошедшее время, 3-е лицо, ед.ч., м.р">
                     {{words.[0].word}} 
-                </span>
-                <span class="note middleHaracat" title="среднекорневая гласная настоящего времени">
+                </div>
+                <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
                     {{middleHarakat}} 
-                </span>
-                <span class="note">{{words.[1].note}}</span>
-                <span class="word -arabic-text-big" title="масдар - отглагольное действие">
+                </div>
+                <div class="note">{{words.[1].note}}</div>
+                <div class="word -arabic-text-big" title="масдар - отглагольное действие">
                     {{words.[1].word}}
-                </span>
-                <span class="note">{{words.[2].note}}</span>
-                <span class="word -arabic-text-big">
+                </div>
+                <div class="note">{{words.[2].note}}</div>
+                <div class="word -arabic-text-big">
                     {{words.[2].word}}
-                </span>
-                <span class="note">{{words.[3].note}}</span>
-                <span class="word -arabic-text-big">
+                </div>
+                <div class="note">{{words.[3].note}}</div>
+                <div class="word -arabic-text-big">
                     {{words.[3].word}}
-                </span>                                 
+                </div>                                 
             {{else}}
                 {{#each words}}
-                    <span class="note">{{note}} </span>
-                    <span class="word -arabic-text-big">{{word}}</span>
+                    <div class="note">{{note}} </div>
+                    <div class="word -arabic-text-big">{{word}}</div>
                 {{/each}}
             {{/if}}
-            <span class="label label-info">{{speachPart}}</span>
+            <div class="label label-info">{{speachPart}}</div>
         </div>
   </div>
   <div class="panel-body">

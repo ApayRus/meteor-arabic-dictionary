@@ -10,12 +10,12 @@ $arabic-font-style: 'Scheherazade';
             display: inline-block; 
         }
     }
-    .panel-title.words {
+/*    .panel-title.words {
         direction: rtl;
-    }
+    }*/
 
     .words .note.middleHaracat {
-        padding-right: 15px;
+        //padding-right: 15px;
         padding-left: 5px;
     }
     .article-correction-menu{
@@ -30,6 +30,9 @@ $arabic-font-style: 'Scheherazade';
         float: right;
         margin-top: -5px;
         margin-right: -10px;
+    } 
+    .note, .word {
+        display: inline-block;
     }
 
 /*    .glyphicon-edit, .glyphicon-link {
