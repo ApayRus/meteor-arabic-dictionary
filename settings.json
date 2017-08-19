@@ -8,5 +8,9 @@
       "secret": "DiIsljndJcwVHHG2cW+ar92mh79vv9Zhijw7FljW",
       "bucket": "meteor.arabic.dictionary",
       "region": "us-west-1"
-    }    
+    }, 
+    "AWSAccessKeyId": "AKIAJPRKXXUA2734BM3Q",
+    "AWSSecretAccessKey": "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",
+    "AWSRegion": "us-west-1",
+    "AWSBucket": "meteor.arabic.dictionary"    
 }

@@ -11,9 +11,10 @@ SimpleSchema.setDefaultMessages({
     },
   }
 });
+import { Images } from '/imports/api/images.js';
 
 import { Events } from '/imports/api/events.js';
-import { Images } from '/imports/api/images.js';
+
 
 export const Articles = new Mongo.Collection('articles');
 
