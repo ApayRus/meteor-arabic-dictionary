@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import './ArticleSingle.html'; 
 import './ArticleUpdate.js'; */
 import { Articles } from '/imports/api/articles.js';
+import transcription from '/imports/transcription.js';
 /*Template.ArticleSingle.onCreated(function(){
     Meteor.subscribe("users"); //надо переделать на подписку на 1го человека, автора статьи
 });*/
@@ -25,6 +26,10 @@ Template.ArticleSingle.helpers({
     }, 
     examplesCount : function(examples){
         return (examples.length || 0);
+    }, 
+    transcr: function(text){
+        if (text.trim())
+            return '[ '+transcription(text)+' ]';
     }
 });
 

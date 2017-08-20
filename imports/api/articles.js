@@ -278,7 +278,7 @@ ArticleSchema = new SimpleSchema({
             afFieldInput: {
                 type: 'fileUpload',
                 collection: 'Images',
-                /*uploadTemplate: 'myFileUpload'*/
+                //uploadTemplate: 'myFileUpload'
                 }
             }
     },

@@ -19,6 +19,16 @@ $arabic-font-style: 'Scheherazade';
         }
 
     }
+
+    .panel-heading {
+        position: relative;
+        .btn-transcript {
+            position: absolute;
+            right: 1px;
+            bottom: 1px;
+        }
+    }
+
 /*    .panel-title.words {
         direction: rtl;
     }*/
@@ -40,9 +50,20 @@ $arabic-font-style: 'Scheherazade';
         margin-top: -5px;
         margin-right: -10px;
     } 
-    .note, .word {
+    .note, .word, .transcription {
         display: inline-block;
     }
+
+    .transcription.collapse.in {
+        display: inline-block;
+    }
+    .transcription.collapse {
+        display: none;
+    }
+    .transcription {
+        color: #337ab7;
+    }
+
 
 /*    .glyphicon-edit, .glyphicon-link {
         font-size: 150%;

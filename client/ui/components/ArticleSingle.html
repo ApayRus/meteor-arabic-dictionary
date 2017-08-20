@@ -1,6 +1,6 @@
 <template name="ArticleSingle">
 
-<div class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
+<div id="article-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
   <div class="panel-heading">
         <div class="panel-title words">
             <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
@@ -10,27 +10,41 @@
                 <div class="word -arabic-text-big" title="прошедшее время, 3-е лицо, ед.ч., м.р">
                     {{words.[0].word}} 
                 </div>
+                <div class="collapse transcription">{{transcr words.[0].word}}</div>
+                
                 <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
                     {{middleHarakat}} 
                 </div>
+
                 <div class="note">{{words.[1].note}}</div>
                 <div class="word -arabic-text-big" title="масдар - отглагольное действие">
                     {{words.[1].word}}
                 </div>
+                <div class="collapse transcription">{{transcr words.[1].word}}</div>
+                
                 <div class="note">{{words.[2].note}}</div>
                 <div class="word -arabic-text-big">
                     {{words.[2].word}}
                 </div>
+                <div class="collapse transcription">{{transcr words.[2].word}}</div>
+                
                 <div class="note">{{words.[3].note}}</div>
                 <div class="word -arabic-text-big">
                     {{words.[3].word}}
-                </div>                                 
+                </div>
+                <div class="collapse transcription">{{transcr words.[3].word}}</div>
             {{else}}
                 {{#each words}}
                     <div class="note">{{note}} </div>
                     <div class="word -arabic-text-big">{{word}}</div>
+                    <div class="collapse transcription">{{transcr word}}</div>
                 {{/each}}
             {{/if}}
+            <button type="button" class="btn btn-default btn-xs btn-transcript" 
+                data-toggle="collapse" data-target="#article-{{_id}} .transcription">
+                Транскрипция
+            </button>
+
             <div class="label label-info">{{speachPart}}</div>
         </div>
   </div>
