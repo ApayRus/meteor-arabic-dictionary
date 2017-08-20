@@ -10,6 +10,15 @@ $arabic-font-style: 'Scheherazade';
             display: inline-block; 
         }
     }
+
+    .image {
+        text-align: center;
+        img {
+            max-height: 300px;
+            margin: 0 auto;
+        }
+
+    }
 /*    .panel-title.words {
         direction: rtl;
     }*/

@@ -278,9 +278,23 @@ ArticleSchema = new SimpleSchema({
             afFieldInput: {
                 type: 'fileUpload',
                 collection: 'Images',
+                /*uploadTemplate: 'myFileUpload'*/
                 }
             }
-    }
+    },
+/*    tags: {
+        type: Array, 
+        optional: true,
+        defaultValue: [],
+    }, 
+    'tags.$': {
+        type: String,
+        label: 'Tag',
+        autoform: {
+            type: 'tagsTypeahead',
+            'tag-set': 'default'      //optional. Default is 'default'.
+        }        
+    }*/
 });
 
 

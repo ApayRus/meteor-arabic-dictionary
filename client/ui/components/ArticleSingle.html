@@ -38,20 +38,28 @@
         <ol class="translations">
             {{#each translations}}
                 <li class="translation">
-                        {{translation}}
-                    <ul class="examples">
-                        {{#each examples}}
-                            <li>
-                                <div class="example -arabic-text-mid">{{example}}</div>
-                                <div class="translation">{{translation}}</div>
-                            </li>
-                        {{/each}}
-                    </ul>
+                    {{translation}}
+                    {{#if examplesCount examples}}
+                        <a href="#examples-{{@index}}" data-toggle="collapse" title="примеры">
+                            <small><i class="glyphicon glyphicon-asterisk"></i> 
+                            {{examplesCount examples}}</small>
+                        </a>
+                        <ul id="examples-{{@index}}" class="examples collapse">
+                            {{#each examples}}
+                                <li>
+                                    <div class="example -arabic-text-mid">{{example}}</div>
+                                    <div class="translation">{{translation}}</div>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    {{/if}}
                 </li>
             {{/each}}
         </ol>
         {{#if image.link}}
-            <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage">
+            <div class="image">
+                <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage">
+            </div>
         {{/if}}
   </div>
   <div class="panel-footer">

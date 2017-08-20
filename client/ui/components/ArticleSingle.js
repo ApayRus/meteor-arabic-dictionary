@@ -22,6 +22,9 @@ Template.ArticleSingle.helpers({
     image(){
         const image = Images.findOne({_id: this.picture});
         return image
+    }, 
+    examplesCount : function(examples){
+        return (examples.length || 0);
     }
 });
 
