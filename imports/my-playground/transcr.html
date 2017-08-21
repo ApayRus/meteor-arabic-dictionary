@@ -1,4 +1,5 @@
-export default function transcription(text){
+<script>
+function transcription(text){
     console.log('text', text)
     var a = new Array(); //алфавит
 
@@ -61,48 +62,23 @@ export default function transcription(text){
     for (let i = 0; i<letters.length; i++) {
         if(letters[i] == "ّ") 
             result += a[letters[i-1]];
-
-        if(
-            (i > 0) && 
-            ( 
-              (letters[i]=="ا")||
-              (letters[i]=="ٰ")||
-              (letters[i]=="ى") 
-            ) && 
-            (letters[i-1]==fatha) && 
-            ( 
-              (letters[i+1]!= fatha)&&
-              (letters[i+1]!= kasra)&&
-              (letters[i+1]!= damma)&&
-              (letters[i+1]!= sukun)
-            )
-        )
+            
+        if((i > 0) && ((letters[i]=="ا")||(letters[i]=="ٰ")||(letters[i]=="ى")) && (letters[i-1]==fatha) && ((letters[i+1]!= fatha)||(letters[i+1]!= kasra)||(letters[i+1]!= damma)||(letters[i+1]!= sukun)))
             result += "а";
             
         else if (
             (i > 0) && 
             (letters[i]=="ي") && 
             (letters[i-1]==kasra) && 
-                ( 
-                  (letters[i+1]!= fatha)&&
-                  (letters[i+1]!= kasra)&&
-                  (letters[i+1]!= damma)&&
+                ( (letters[i+1]!= fatha)||
+                  (letters[i+1]!= kasra)||
+                  (letters[i+1]!= damma)||
                   (letters[i+1]!= sukun)
                 )
             )
             result += "и";
             
-        else if (
-            (i > 0) && 
-            (letters[i]=="و") && 
-            (letters[i-1]==damma) && 
-            (
-              (letters[i+1]!= fatha)&&
-              (letters[i+1]!= kasra)&&
-              (letters[i+1]!= damma)&&
-              (letters[i+1]!= sukun) 
-            )
-        )
+        else if ((i > 0) && (letters[i]=="و") && (letters[i-1]==damma) && ((letters[i+1]!= fatha)||(letters[i+1]!= kasra)||(letters[i+1]!= damma)||(letters[i+1]!= sukun)))
             result += "у";
         
         else if ((i > 0)&&(letters[i]=="ل")&&((letters[i-1]=="أ")||(letters[i-1]=="ا"))&(letters[i+2]=="ّ")&&((letters[i+1]!= fatha)||(letters[i+1]!= kasra)||(letters[i+1]!= damma)||(letters[i+1]!= sukun)))
@@ -118,3 +94,4 @@ export default function transcription(text){
         
     return result||""
 }
+</script>

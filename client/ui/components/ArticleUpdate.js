@@ -64,6 +64,14 @@ Template.ArticleUpdate.helpers({
     },
 });
 
+Template.myFilePreview.helpers({
+    isAdmin(){
+        return Meteor.userId() == "ghZegnrrKqnNFaFxb"
+    }
+});
+
+
+
 function findUserCorrection(article_id, user_id){
     let corrections = Articles.findOne({'_id': article_id }, { fields: {'corrections': 1 } } ).corrections;
     let correction = corrections.filter(function(elem){
