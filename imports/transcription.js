@@ -1,5 +1,5 @@
-export default function transcription(text){
-    console.log('text', text)
+export function transcription(text){
+
     var a = new Array(); //алфавит
 
 
@@ -26,7 +26,7 @@ export default function transcription(text){
     a["ض"] = "д̣";
     a["ط"] = "т̣";
     a["ظ"] = "з̣";
-    a["ع"] = "ʾ";
+    a["ع"] = "ʿ";
     a["غ"] = "г̣";
     a["ف"] = "ф";
     a["ق"] = "к̣";
@@ -54,54 +54,43 @@ export default function transcription(text){
     var kasra="ِ";
     var damma="ُ";
     var sukun="ْ";
+    var tashdid="ّ";
+/*    var tanwin_damma="ٌ"
+    var tanwin_kasra="ٍ"
+    var tanwin_fatha="ً"*/
 
     let letters = text.split("");
     let result = "";
 
     for (let i = 0; i<letters.length; i++) {
-        if(letters[i] == "ّ") 
+        if(letters[i] == tashdid) 
             result += a[letters[i-1]];
 
         if(
             (i > 0) && 
             ( 
-              (letters[i]=="ا")||
-              (letters[i]=="ٰ")||
-              (letters[i]=="ى") 
+              letters[i]=="ا"||
+              letters[i]=="ٰ"||
+              letters[i]=="ى" 
             ) && 
-            (letters[i-1]==fatha) && 
-            ( 
-              (letters[i+1]!= fatha)&&
-              (letters[i+1]!= kasra)&&
-              (letters[i+1]!= damma)&&
-              (letters[i+1]!= sukun)
-            )
+            letters[i-1]==fatha && 
+            isNotDiacritic(letters[i+1])
         )
             result += "а";
             
         else if (
-            (i > 0) && 
-            (letters[i]=="ي") && 
-            (letters[i-1]==kasra) && 
-                ( 
-                  (letters[i+1]!= fatha)&&
-                  (letters[i+1]!= kasra)&&
-                  (letters[i+1]!= damma)&&
-                  (letters[i+1]!= sukun)
-                )
+            i > 0 && 
+            letters[i]=="ي" && 
+            letters[i-1]==kasra && 
+            isNotDiacritic(letters[i+1])
             )
             result += "и";
             
         else if (
-            (i > 0) && 
-            (letters[i]=="و") && 
-            (letters[i-1]==damma) && 
-            (
-              (letters[i+1]!= fatha)&&
-              (letters[i+1]!= kasra)&&
-              (letters[i+1]!= damma)&&
-              (letters[i+1]!= sukun) 
-            )
+            i > 0 && 
+            letters[i]=="و" && 
+            letters[i-1]==damma && 
+            isNotDiacritic(letters[i+1])
         )
             result += "у";
         
@@ -112,9 +101,15 @@ export default function transcription(text){
             result += a[letters[i]];
     }
 
-    result = result.replace("аа", "а̄");
-    result = result.replace("ии", "ӣ");
-    result = result.replace("уу", "ӯ");
+    result = result.replace(/аа/g, "а̄");
+    result = result.replace(/ии/g, "ӣ");
+    result = result.replace(/уу/g, "ӯ");
         
     return result||""
+}
+
+export function isNotDiacritic(letter){
+
+    var diacritics = [ "َ", "ِ", "ُ", "ْ", "ّ", "ٌ", "ٍ", "ً" ]
+    return diacritics.indexOf(letter) < 0
 }

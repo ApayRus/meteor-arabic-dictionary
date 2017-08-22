@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import './ArticleSingle.html'; 
 import './ArticleUpdate.js'; */
 import { Articles } from '/imports/api/articles.js';
-import transcription from '/imports/transcription.js';
+import {transcription, isNotDiacritic} from '/imports/transcription.js';
 /*Template.ArticleSingle.onCreated(function(){
     Meteor.subscribe("users"); //надо переделать на подписку на 1го человека, автора статьи
 });*/

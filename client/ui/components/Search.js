@@ -14,7 +14,7 @@ Template.Search.onCreated(function(){
 Template.Search.events({
     'submit'(event, instance){
         event.preventDefault();
-        let searchFor = event.target.searchFor.value;  
+        let searchFor = event.target.searchFor.value.trim();  
         FlowRouter.go('search', { searchFor });
 
     }, 

@@ -31,9 +31,9 @@ Template.ArticlePage.helpers({
 
         return { article, corrections, showCorrections, published};
     },
-/*    isAdmin() {
+    isAdmin() {
         return Meteor.userId() == "ghZegnrrKqnNFaFxb"
-    }*/
+    }
 
 });
 
