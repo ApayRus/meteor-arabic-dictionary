@@ -24,11 +24,12 @@ Meteor.startup(() => {
     });
 
     Meteor.publish('articles', function(startIndex, endIndex) {
+
       return Articles.find( { deleted: {$ne: true},
                               published: {$ne: false},
                             }, 
                             { skip: startIndex, 
-                              limit: endIndex, 
+                              limit: endIndex-startIndex, 
                               sort: { createdAt: 1, _id: 1 } });
     });
 
