@@ -58,10 +58,13 @@ Template.ArticleUpdate.helpers({
     },
     isAdding(){
         return FlowRouter.getRouteName() == "article-add"
-    }, 
+    },
     isEditing(){
         return FlowRouter.getRouteName() == "article-edit"
     },
+    isAdmin(){
+        return Meteor.userId() == "ghZegnrrKqnNFaFxb"
+    }
 });
 
 Template.myFilePreview.helpers({

@@ -29,6 +29,10 @@
                 </div>
                 {{> afQuickField name="picture"}}
                 <br />
+                {{#if isAdmin}}
+                    {{> afQuickField name='deleted'}}
+                {{/if}}
+                <br />
                 <button class="btn btn-primary" type="submit">Сохранить</button>
             {{/autoForm}}
         {{else}}

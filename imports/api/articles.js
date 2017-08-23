@@ -263,6 +263,7 @@ ArticleSchema = new SimpleSchema({
     }, 
     deleted: {
         type: Boolean,
+        label: 'Удаленная',
         optional:true, 
         defaultValue: false,
     }, 
