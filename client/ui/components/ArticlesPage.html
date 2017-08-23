@@ -3,6 +3,7 @@
         <h2>Articles page</h2>
         <section class="row">
             <div class="col-sm-6">
+                {{> AlertMessageArticlesPage}}
                 <div class="articles-list">
                     {{#if Template.subscriptionsReady}}
                         {{#each articles}}
