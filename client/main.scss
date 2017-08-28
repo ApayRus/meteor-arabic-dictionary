@@ -5,6 +5,11 @@ $mid-arabic-font-size: 30px;
 $arabic-font-style: 'Scheherazade'; 
 
 .article {
+    .translations {
+        .showExamplesButton {
+            display: inline-block;
+        }
+    }
     .examples {
         .example, .translation {
             display: inline-block; 
