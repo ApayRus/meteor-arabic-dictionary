@@ -33,8 +33,18 @@ Meteor.startup(() => {
                               sort: { createdAt: 1, _id: 1 } });
     });
 
+    Meteor.publish('articlesWithActiveCorrections', function(startIndex, endIndex) {
+
+      return Articles.find( { 
+                              corrections: {$gt: {$size: 0}}
+                            }, 
+                            { skip: startIndex, 
+                              limit: endIndex-startIndex, 
+                              sort: { editedAt: 1 } });
+    });
+
     Meteor.publish('events.startIndex.endIndex', function(startIndex, endIndex) {
-      return Events.find( {}, {skip: startIndex, limit: endIndex, sort: {happenedAt: -1}});
+      return Events.find( {}, {skip: startIndex, limit: endIndex-startIndex, sort: {happenedAt: -1}});
     });
 
 
