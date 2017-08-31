@@ -37,7 +37,7 @@ Meteor.startup(() => {
 
       return Articles.find( { $or: [
                                     { corrections: {$gt: {$size: 0}} }, 
-                                    { published:false }
+                                    { published:false, deleted: false }
                                   ]
                             }, 
                             { skip: startIndex, 
