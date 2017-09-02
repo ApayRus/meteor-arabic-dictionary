@@ -36,7 +36,7 @@ Meteor.startup(() => {
     Meteor.publish('articlesWithActiveCorrections', function(startIndex, endIndex) {
 
       return Articles.find( { $or: [
-                                    { corrections: {$gt: {$size: 0}} }, 
+                                    { corrections: {$gt: {$size: 0}}, deleted: false }, 
                                     { published:false, deleted: false }
                                   ]
                             }, 
