@@ -29,7 +29,7 @@ WordSchema = new SimpleSchema({
             label: false,
             placeholder: "schemaLabel", 
             class: "note"
-        }        
+        }
     },
     word: {
         type: String,
@@ -321,8 +321,9 @@ Meteor.methods({
         correction.lastEvent.type = "изменил статью"
         //console.log('inside method doc', doc)
         Articles.update({_id: doc._id}, 
-                        doc.modifier, 
-                        {upsert: true});
+                        doc.modifier,
+                        {upsert: true},
+                    );
     }
     //if user is not Admin - just save it to corrections, to accept or reject in the future by admin
     else {
@@ -437,7 +438,7 @@ Meteor.methods({
     }
   },
 
-});
+}); //end of Meteor.methods
 
 ///////////////----HOOKS------/////////////////////
 Articles.after.insert(function (userId, doc) {
@@ -478,6 +479,11 @@ function lastEvent(doc){
         };
     return event
 }
+
+/* function handleUpdateError(error, result){
+        console.log('Error while updating article', error);
+        console.log('Success while updateing article', result)
+} */
 
 function changedCorrections(docId, userId, correction){
     let corrections = Articles.findOne({'_id': docId}, {fields: {corrections: 1}}).corrections||[];
