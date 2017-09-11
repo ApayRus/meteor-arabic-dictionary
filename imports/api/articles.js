@@ -343,8 +343,7 @@ Meteor.methods({
   'article.autoCorrection'(doc_id, oldTranslation, words){
     //console.log('addAutoCorrection', doc_id, correction)
     const userId = Meteor.userId()||'anonymous';
-    let correction = {}
-    correction._id = doc_id
+    let correction = Articles.findOne({_id: doc_id});
     correction.editedAt = new Date()
     correction.editedByUserId = userId
     if(Meteor.user())
@@ -364,7 +363,8 @@ Meteor.methods({
          },
      }
      );
-        },
+    },
+
   'articles.accept'(doc_id, correction){
       if (Meteor.userId() == "ghZegnrrKqnNFaFxb") {
             correction.lastEvent = {}
