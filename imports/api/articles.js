@@ -536,11 +536,11 @@ function parseArticle( text, word ){
     
         var newTranslations = []
     
-        translations0 = text.split(/\d+\)/g); //raw array with translations
+        translations0 = text.split(/\d+\s*?\)/g); //raw array with translations
     
         var match = "";
     
-        var example_pattern = /;([\s]+?[\*\~ا-ي]+?[\s\S]+?)(;|$)/ig
+        var example_pattern = /;([\s]+?[\!\?\*\~ا-ي]+?[\s\S]+?)(;|$)/ig
 
         //в исходной базе словаря тильда стоит "зеркально", 
         //её надо переместить из начала в конец и наоборот и заменить основным словом статьи
