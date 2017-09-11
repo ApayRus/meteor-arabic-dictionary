@@ -545,7 +545,7 @@ function parseArticle( text, word ){
         //в исходной базе словаря тильда стоит "зеркально", 
         //её надо переместить из начала в конец и наоборот и заменить основным словом статьи
         var reverseAndReplaceTilda = function(str, word){
-            var strArray = str.split(" ")
+            var strArray = str.split("")
             if(strArray[0] == "~"){
                 strArray.shift();
                 strArray.push("~");
@@ -554,7 +554,7 @@ function parseArticle( text, word ){
                 strArray.pop();
                 strArray.unshift("~");
             }
-            var result = strArray.join(" ").replace("~", word)
+            var result = strArray.join("").replace("~", word).replace(/ـ/g, "")
             return result 
         }
     

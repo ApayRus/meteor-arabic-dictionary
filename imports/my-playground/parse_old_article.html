@@ -78,20 +78,20 @@ $('#helping').popover()
 
 //this function gets old formated article (when all translations was in one field), 
 //and parse it to object with separated translations and their examples
-function parseArticle( text ){
+function parseArticle( text, word ){
     
         var newTranslations = []
     
-        translations0 = text.split(/\d+\)/g); //raw array with translations
+        translations0 = text.split(/\d+\s*?\)/g); //raw array with translations
     
         var match = "";
     
-        var example_pattern = /;([\s]+?[\*\~ا-ي]+?[\s\S]+?)(;|$)/ig
+        var example_pattern = /;([\s]+?[\!\?\*\~ا-ي]+?[\s\S]+?)(;|$)/ig
 
         //в исходной базе словаря тильда стоит "зеркально", 
-        //её надо переместить из начала в конец и наоборот
-        var reverseAndReplaceTilda = function(str){
-            var strArray = str.split(" ")
+        //её надо переместить из начала в конец и наоборот и заменить основным словом статьи
+        var reverseAndReplaceTilda = function(str, word){
+            var strArray = str.split("")
             if(strArray[0] == "~"){
                 strArray.shift();
                 strArray.push("~");
@@ -100,7 +100,8 @@ function parseArticle( text ){
                 strArray.pop();
                 strArray.unshift("~");
             }
-            return strArray.join(" ")
+            var result = strArray.join(" ").replace("~", word)
+            return result 
         }
     
         translations0.forEach(function(elem, index){
@@ -117,7 +118,7 @@ function parseArticle( text ){
                         var exampleString = match[1]
                         translationBeginningIndex = exampleString.search(/\(?[а-я]/)
                         var example = exampleString.substring(0, translationBeginningIndex).trim();
-                        example = reverseAndReplaceTilda(example); 
+                        example = reverseAndReplaceTilda(example, word); 
                         var exTranslation = exampleString.substring(translationBeginningIndex).trim();
                         examples.push({example, translation: exTranslation}); 
                         example_pattern.lastIndex --;
