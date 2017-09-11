@@ -29,5 +29,10 @@
                 {{createdByUserName}}
             </a>
         </small>
+        {{#if isArticlePage}}
+            <a href="" class="autoCorrection" title="Автоматическая правка">
+                <span class="glyphicon glyphicon-fire"></span>
+            </a>
+        {{/if}}
     </div>
 </template>

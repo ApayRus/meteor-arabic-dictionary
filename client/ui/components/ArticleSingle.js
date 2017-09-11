@@ -47,7 +47,11 @@ Template.ArticleMenu.helpers({
     },
     isAdmin(){
         return Meteor.userId() == "ghZegnrrKqnNFaFxb"
-    }    
+    },
+    isArticlePage(){
+        return FlowRouter.getRouteName() == "article"
+    }
+
 
 });
 
@@ -55,4 +59,10 @@ Template.ArticleMenu.events({
     'click .delete'(){
         Meteor.call('articles.remove', this._id);
     },
+    'click .autoCorrection'(){
+        if(this.translations.length == 1 && !this.translations[0].examples)
+         Meteor.call('article.autoCorrection', this._id, this.translations[0].translation, this.words)
+        else
+            console.log("нельзя применить автоправки, в этой статье уже есть правки")
+    }
 });

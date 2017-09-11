@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Rashidu">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+
+
+
+<body>
+ 
+<div class="page-header"><h1>old article to new format (one field -> many fields)</h1></div>  
+      
+<div class="content" ng-controller="MyController">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <h3>Input: <span role="button" tabindex="0" class="glyphicon glyphicon-question-sign" id="helping" data-toggle="popover" data-trigger="focus" data-placement="right" title="Подсказка" data-content="Разместите текст словаря в поле ниже, затем нажмите кнопку Split, внизу"></span></h3>
+           <textarea ng-model="inputArticle">{{1+1}}</textarea>
+           <button class="btn btn-primary" ng-click="splitButtonClicked()">Split <span class="glyphicon glyphicon-chevron-right"></span>    </button> 
+
+        </div>
+        <div class="col-xs-12 col-sm-6" ng-show="showOutput">
+           <h3>Output JSON:</h3>
+            <textarea ng-model="outputJson">{{xxx}}</textarea>
+        </div>
+    </div>
+</div> 
+       
+          
+             
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>                
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+ 
+    <style>
+        textarea {
+            width: 100%; 
+            height: 200px;
+        }
+        body {
+            padding: 10px;
+        }
+        .glyphicon-question-sign {
+            font-size: 14px;
+            cursor:pointer;
+        }
+
+    </style>  
+    
+    
+<script>
+    
+angular.module('Rashidu', [])
+    .controller('MyController', ['$scope', function($scope) {
+
+    $scope.splitButtonClicked = function () {
+
+        var article = parseArticle($scope.inputArticle)
+        $scope.outputJson = JSON.stringify(article);
+        $scope.showOutput = true 
+    }
+
+    }]);
+    
+$('#helping').popover()
+
+
+//this function gets old formated article (when all translations was in one field), 
+//and parse it to object with separated translations and their examples
+function parseArticle( text ){
+    
+        var newTranslations = []
+    
+        translations0 = text.split(/\d+\)/g); //raw array with translations
+    
+        var match = "";
+    
+        var example_pattern = /;([\s]+?[\*\~ا-ي]+?[\s\S]+?)(;|$)/ig
+
+        //в исходной базе словаря тильда стоит "зеркально", 
+        //её надо переместить из начала в конец и наоборот
+        var reverseAndReplaceTilda = function(str){
+            var strArray = str.split(" ")
+            if(strArray[0] == "~"){
+                strArray.shift();
+                strArray.push("~");
+            }
+            else if(strArray[strArray.length-1] == "~"){
+                strArray.pop();
+                strArray.unshift("~");
+            }
+            return strArray.join(" ")
+        }
+    
+        translations0.forEach(function(elem, index){
+    
+                if(elem.trim()) {
+                    var examples = []
+                    var translation = ""
+                    var examplesBeginnigIndex = elem.search(example_pattern);
+                    if(examplesBeginnigIndex > -1)
+                        translation = elem.substring(0,examplesBeginnigIndex);
+                    else
+                        translation = elem.trim()
+                    while (match = example_pattern.exec(elem)) {
+                        var exampleString = match[1]
+                        translationBeginningIndex = exampleString.search(/\(?[а-я]/)
+                        var example = exampleString.substring(0, translationBeginningIndex).trim();
+                        example = reverseAndReplaceTilda(example); 
+                        var exTranslation = exampleString.substring(translationBeginningIndex).trim();
+                        examples.push({example, translation: exTranslation}); 
+                        example_pattern.lastIndex --;
+                    }
+    
+                    newTranslations.push( {translation, examples} )
+                }
+            });
+        return newTranslations
+    }
+
+
+
+var example_translation = {
+    "translations" : [ 
+            { "translation" : "translation1", 
+                "examples" : [ 
+                    { "example" : "exmpl1", "translation" : "exmpl1-tr1" }, 
+                    { "example" : "exmpl2", "translation" : "exmpl2-tr1" } 
+                ] 
+            }, 
+            { "translation" : "translation2", 
+                "examples" : [ 
+                    { "example" : "exmpl1", "translation" : "exmpl1-tr2" }, 
+                    { "example" : "exmpl2", "translation" : "exmpl2-tr2" } 
+                ] 
+            } 
+        ]    
+}
+
+var x = {"translations":[
+    {"translation":
+        " плата, зароботная плата, гонорар",
+        "examples":[
+            " السفر ~ плата за проезд",
+            " العمل ~ плата за труд",
+            " يوميّة ~ подённая плата",
+            " ~ بال за плату "]},
+    {"translation":
+        " стоимость",
+        "examples":[
+            " نقل البضائع ~ стоимость перевозки товаров "]},
+    {"translation":" арендная плата;","examples":[]}]}
+
+</script>
+
+</body>
+
+
+
+</html>

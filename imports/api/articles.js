@@ -307,6 +307,7 @@ Articles.attachSchema(ArticleSchema);
 ////////////---------METHODS---------------//////////////////
 Meteor.methods({
 
+    //this method works in Article Update form/
   'articles.update'(doc) {
     check(doc, Object);
 //    Articles.update({_id: doc._id}, doc.modifier );
@@ -337,8 +338,33 @@ Meteor.methods({
          }
          );
     }
-
   },
+
+  'article.autoCorrection'(doc_id, oldTranslation, words){
+    //console.log('addAutoCorrection', doc_id, correction)
+    const userId = Meteor.userId()||'anonymous';
+    let correction = {}
+    correction._id = doc_id
+    correction.editedAt = new Date()
+    correction.editedByUserId = userId
+    if(Meteor.user())
+        correction.editedByUserName = Meteor.user().username
+    else
+        correction.editedByUserName = 'anonymous'
+    let word = words[0].word.replace(/[ًٌٍٍَُِّْ]/gi, "") //removes all diacritics 
+    correction.translations = parseArticle(oldTranslation, word)
+    correction.words = words
+    correction.published = false
+    console.log(correction)
+    Articles.update(
+        {_id: doc_id},
+        { $set: { 
+                lastEvent : {type: "предложил авто правку" }, 
+                corrections: changedCorrections(doc_id, userId, correction)
+         },
+     }
+     );
+        },
   'articles.accept'(doc_id, correction){
       if (Meteor.userId() == "ghZegnrrKqnNFaFxb") {
             correction.lastEvent = {}
@@ -503,3 +529,57 @@ function changedCorrections(docId, userId, correction){
     //console.log('corrections', corrections);
     return new_corrections
 }
+
+//this function gets old formated article (when all translations was in one field), 
+//and parse it to object with separated translations and their examples
+function parseArticle( text, word ){
+    
+        var newTranslations = []
+    
+        translations0 = text.split(/\d+\)/g); //raw array with translations
+    
+        var match = "";
+    
+        var example_pattern = /;([\s]+?[\*\~ا-ي]+?[\s\S]+?)(;|$)/ig
+
+        //в исходной базе словаря тильда стоит "зеркально", 
+        //её надо переместить из начала в конец и наоборот и заменить основным словом статьи
+        var reverseAndReplaceTilda = function(str, word){
+            var strArray = str.split(" ")
+            if(strArray[0] == "~"){
+                strArray.shift();
+                strArray.push("~");
+            }
+            else if(strArray[strArray.length-1] == "~"){
+                strArray.pop();
+                strArray.unshift("~");
+            }
+            var result = strArray.join(" ").replace("~", word)
+            return result 
+        }
+    
+        translations0.forEach(function(elem, index){
+    
+                if(elem.trim()) {
+                    var examples = []
+                    var translation = ""
+                    var examplesBeginnigIndex = elem.search(example_pattern);
+                    if(examplesBeginnigIndex > -1)
+                        translation = elem.substring(0,examplesBeginnigIndex);
+                    else
+                        translation = elem.trim()
+                    while (match = example_pattern.exec(elem)) {
+                        var exampleString = match[1]
+                        translationBeginningIndex = exampleString.search(/\(?[а-я]/)
+                        var example = exampleString.substring(0, translationBeginningIndex).trim();
+                        example = reverseAndReplaceTilda(example, word); 
+                        var exTranslation = exampleString.substring(translationBeginningIndex).trim();
+                        examples.push({example, translation: exTranslation}); 
+                        example_pattern.lastIndex --;
+                    }
+    
+                    newTranslations.push( {translation, examples} )
+                }
+            });
+        return newTranslations
+    }
