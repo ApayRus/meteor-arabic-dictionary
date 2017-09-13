@@ -548,13 +548,17 @@ function parseArticle( text, word ){
             var strArray = str.split("")
             if(strArray[0] == "~"){
                 strArray.shift();
+                if(strArray[0]==" ") 
+                    strArray.push(" ");
                 strArray.push("~");
             }
             else if(strArray[strArray.length-1] == "~"){
                 strArray.pop();
+                if(strArray[strArray.length-1] == " ")
+                    strArray.unshift(" ")
                 strArray.unshift("~");
             }
-            var result = strArray.join("").replace("~", word).replace(/ـ/g, "")
+            var result = strArray.join("").replace("~",word).replace(/ـ/g, "")
             return result 
         }
     
