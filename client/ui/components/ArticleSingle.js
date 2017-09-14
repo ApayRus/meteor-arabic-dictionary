@@ -36,20 +36,21 @@ Template.ArticleSingle.helpers({
 Template.ArticleMenu.helpers({
 
     correctionsCount(){
-        if(this.corrections) 
-            return this.corrections.length
+        if(this.corrections.length > 0) 
+            return "Правки: "+this.corrections.length
         else 
-            return 0
+            return ""
     }, 
-    showCorrectionsCount(){
-        if(this.corrections)
-            return this.corrections.length > 0
-    },
     isAdmin(){
         return Meteor.userId() == "ghZegnrrKqnNFaFxb"
     },
-    isArticlePage(){
-        return FlowRouter.getRouteName() == "article"
+    //we show autoCorrection button only if article have only 1 field with translation
+    //and haven't examples
+    showAutoCorrection(){
+        return (
+            this.translations.length == 1 && 
+            !this.translations[0].examples
+        )
     }
 
 

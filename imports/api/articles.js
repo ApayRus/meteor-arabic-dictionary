@@ -539,8 +539,8 @@ function parseArticle( text, word ){
         translations0 = text.split(/\d+\s*?\)/g); //raw array with translations
     
         var match = "";
-    
-        var example_pattern = /;([\s]+?[\!\?\*\~ا-ي]+?[\s\S]+?)(;|$)/ig
+        //\u0621-\u064A - arabic symbols 
+        var example_pattern = /;([\s]+?[\!\?\*\~\u0621-\u064A]+?[\s\S]+?)(;|$)/ig
 
         //в исходной базе словаря тильда стоит "зеркально", 
         //её надо переместить из начала в конец и наоборот и заменить основным словом статьи
@@ -574,7 +574,8 @@ function parseArticle( text, word ){
                         translation = elem.trim()
                     while (match = example_pattern.exec(elem)) {
                         var exampleString = match[1]
-                        translationBeginningIndex = exampleString.search(/\(?[а-я]/)
+                        //\u0400-\u04FF - cyrillic symbols
+                        translationBeginningIndex = exampleString.search(/\(?[\u0400-\u04FF]/)
                         var example = exampleString.substring(0, translationBeginningIndex).trim();
                         example = reverseAndReplaceTilda(example, word); 
                         var exTranslation = exampleString.substring(translationBeginningIndex).trim();
