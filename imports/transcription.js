@@ -69,10 +69,10 @@ export function transcription(text){
 
         if(
             (i > 0) && 
-            ( 
+            ( // alif like symbols
               letters[i]=="ا"||
               letters[i]=="ٰ"||
-              letters[i]=="ى" 
+              letters[i]=="ى"
             ) && 
             letters[i-1]==fatha && 
             isNotDiacritic(letters[i+1])
