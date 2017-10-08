@@ -69,7 +69,7 @@ export function transcription(text){
 
         if(
             (i > 0) && 
-            ( 
+            ( // alif like symbols
               letters[i]=="ا"||
               letters[i]=="ٰ"||
               letters[i]=="ى"||
