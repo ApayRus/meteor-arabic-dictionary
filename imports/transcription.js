@@ -72,7 +72,8 @@ export function transcription(text){
             ( 
               letters[i]=="ا"||
               letters[i]=="ٰ"||
-              letters[i]=="ى" 
+              letters[i]=="ى"||
+              letters[i]=="ٰ"
             ) && 
             letters[i-1]==fatha && 
             isNotDiacritic(letters[i+1])
