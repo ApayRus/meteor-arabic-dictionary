@@ -1,0 +1,85 @@
+<template name="ArticleForm">
+        
+        <div id="article-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
+          <div class="panel-heading">
+                <div class="panel-title words">
+                    <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
+                    особый шаблон его вывода, например, среднекорневую глассную и масдары -->
+                    
+                        {{#each words}}
+                                <div class="wordEdit editField" id="{{wordId}}">
+                                    <input type="text" placeholder="примечание" value="{{note}}" name="{{wordId}}.note" class="form-control note">
+                                    <input type="text" placeholder="слово" value="{{word}}" name="{{wordId}}.word" class="form-control word -arabic-text-big">
+                                </div>
+                            
+                            {{#if showMiddleHarakat @index ../middleHarakat}}
+                                <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
+                                        {{../middleHarakat}}
+                                </div>
+                            {{/if}}
+        
+                        {{/each}}
+        
+                    <div class="label label-info">{{speachPart}}</div>
+                </div>
+          </div>
+          <div class="panel-body">
+                <ol class="translations">
+                    {{#each translations}}
+                        <li class="translation">
+                                <div class="editField" id="{{translationId}}">
+                                    <input type="text" name="{{translationId}}" value="{{translation}}" class="form-control" placeholder="перевод">
+                                </div>
+        
+                                <ul class="examples collapse examples-{{../_id}}-{{@index}}">
+                                        {{#each examples}}
+                                            <li>
+                                                    <div class="exampleEdit editField" id="{{exampleId}}">
+                                                            <input type="text" placeholder="пример" value="{{example}}" name="{{exampleId}}.example" class="form-control example -arabic-text-mid">
+                                                            <input type="text" placeholder="перевод примера" value="{{translation}}" name="{{exampleId}}.translation" class="form-control translation">
+                                                    </div>
+                                            </li>
+                                        {{/each}}
+                                </ul>
+                        </li>
+                    {{/each}}
+                </ol>
+                {{#if image.link}}
+                    <div class="image">
+                        <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage">
+                    </div>
+                {{/if}}
+          </div>
+          <div class="panel-footer">
+                {{> ArticleMenu }}
+                {{> ArticleCorrectionMenu}}
+                {{#if showApproveButtons}}
+                    {{> ApproveButtons}}
+                {{/if}}
+          </div>
+        </div>
+        </template>
+        
+        <!--<script>
+            const atrtcl = { 
+                "_id" : "se4AcxaRqAzeb2Mdy", 
+                "words" : [ 
+                    { "note" : "note1", "word" : "word1" }, 
+                    { "note" : "note2", "word" : "word2" } 
+                ], 
+                "translations" : [ 
+                    { "translation" : "translation1", 
+                        "examples" : [ 
+                            { "example" : "exmpl1", "translation" : "exmpl1-tr1" }, 
+                            { "example" : "exmpl2", "translation" : "exmpl2-tr1" } 
+                        ] 
+                    }, 
+                    { "translation" : "translation2", 
+                        "examples" : [ 
+                            { "example" : "exmpl1", "translation" : "exmpl1-tr2" }, 
+                            { "example" : "exmpl2", "translation" : "exmpl2-tr2" } 
+                        ] 
+                    } 
+                ] 
+            }; 
+        </script>-->
