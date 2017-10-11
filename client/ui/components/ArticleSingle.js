@@ -20,6 +20,9 @@ Template.ArticleSingle.helpers({
     notPublished(){
         return this.published === false
     },
+    isMiddleHarakat(middleHarakat, index){
+        return middleHarakat && index == 0
+    },
     image(){
         const image = Images.findOne({_id: this.picture});
         return image

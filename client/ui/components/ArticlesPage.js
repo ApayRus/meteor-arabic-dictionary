@@ -12,7 +12,7 @@ Template.ArticlesPage.onCreated(function(){
 Template.ArticlesPage.helpers({
   articles() {
     const articles = Articles.find( {} );
-    console.log(articles)
+    console.log('articles',articles)
     return articles
   },
 });

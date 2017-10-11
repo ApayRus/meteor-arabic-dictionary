@@ -23,6 +23,7 @@ Template.Search.events({
 Template.Search.helpers({
   result() {
     const articles = Articles.find({});
+    console.log('articles', articles)
     const count = articles.count(); 
     return { articles, count }
   },
