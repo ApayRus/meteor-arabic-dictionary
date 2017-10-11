@@ -3,19 +3,24 @@
         <section class="row">
             <div class="col-sm-6">
                 {{> SearchForm resultCount=result.count searchFor=searchFor}}
-                <div class="articles-list">
-                    {{#if Template.subscriptionsReady}}
-                                    {{#each result.articles}}
-                                                {{> ArticleSingle}}
-                                    {{/each}}
-                    {{else}}
-                        <p>Loading...</p>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="col-sm-6">
-                {{> EventsBlock}}
             </div>
         </section>
+        {{#if Template.subscriptionsReady}}
+            <div class="articles-list">
+                {{#each result.articles}}
+                    <section class="row">
+                        <div class="col-sm-6">
+                                {{> ArticleSingle}}
+                        </div>
+                        <div class="col-sm-6">
+                            {{> ArticleForm}}
+                        </div>
+                    </section>
+                {{/each}}
+            </div>
+        {{else}}
+            <p>Loading...</p>
+                    {{/if}}
+                
     </div>
 </template>

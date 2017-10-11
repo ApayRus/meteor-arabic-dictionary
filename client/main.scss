@@ -75,6 +75,13 @@ $arabic-font-style: 'Scheherazade';
     }*/
 }
 
+form.article {
+    .wordEdit {
+        width:120px;
+        display: inline-block;
+    }
+}
+
 .article-page {
     .correction {
         .correction-approve {

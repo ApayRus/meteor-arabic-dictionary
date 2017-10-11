@@ -1,31 +1,28 @@
 <template name="ArticleForm">
+        {{testHelper}}
         
-        <div id="article-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
+        <form id="articleForm-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
           <div class="panel-heading">
                 <div class="panel-title words">
+                    <div class="label label-info">{{speachPart}}</div><br />
                     <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
                     особый шаблон его вывода, например, среднекорневую глассную и масдары -->
-                    
-                        {{#each words}}
+                        {{#each article.words}}
                                 <div class="wordEdit editField" id="{{wordId}}">
                                     <input type="text" placeholder="примечание" value="{{note}}" name="{{wordId}}.note" class="form-control note">
                                     <input type="text" placeholder="слово" value="{{word}}" name="{{wordId}}.word" class="form-control word -arabic-text-big">
                                 </div>
                             
-                            {{#if showMiddleHarakat @index ../middleHarakat}}
                                 <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
                                         {{../middleHarakat}}
                                 </div>
-                            {{/if}}
-        
                         {{/each}}
-        
-                    <div class="label label-info">{{speachPart}}</div>
+                        <i class="glyphicon glyphicon-plus add-word"></i>
                 </div>
           </div>
           <div class="panel-body">
                 <ol class="translations">
-                    {{#each translations}}
+                    {{#each article.translations}}
                         <li class="translation">
                                 <div class="editField" id="{{translationId}}">
                                     <input type="text" name="{{translationId}}" value="{{translation}}" class="form-control" placeholder="перевод">
@@ -57,8 +54,8 @@
                     {{> ApproveButtons}}
                 {{/if}}
           </div>
-        </div>
-        </template>
+        </form>
+</template>
         
         <!--<script>
             const atrtcl = { 
