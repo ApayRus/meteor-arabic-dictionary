@@ -3,6 +3,7 @@
 <div id="article-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
   <div class="panel-heading">
         <div class="panel-title words">
+            <div class="label label-info speach-part">{{speachPart}}</div>
             <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
             особый шаблон его вывода, например, среднекорневую глассную и масдары -->
 
@@ -20,8 +21,6 @@
                 data-toggle="collapse" data-target="#article-{{_id}} .transcription">
                 Транскрипция
             </button>
-
-            <div class="label label-info">{{speachPart}}</div>
         </div>
   </div>
   <div class="panel-body">

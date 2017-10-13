@@ -1,46 +1,54 @@
 <template name="ArticleForm">
-        {{testHelper}}
-        
         <form id="articleForm-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
           <div class="panel-heading">
                 <div class="panel-title words">
-                    <div class="label label-info">{{speachPart}}</div><br />
+                    <div class="label label-info speach-part">{{speachPart}}</div><br />
                     <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
                     особый шаблон его вывода, например, среднекорневую глассную и масдары -->
                         {{#each article.words}}
                                 <div class="wordEdit editField" id="{{wordId}}">
-                                    <input type="text" placeholder="примечание" value="{{note}}" name="{{wordId}}.note" class="form-control note">
-                                    <input type="text" placeholder="слово" value="{{word}}" name="{{wordId}}.word" class="form-control word -arabic-text-big">
+                                    <i class="glyphicon glyphicon-remove remove-word -remove" id="remove.{{wordId}}"></i>
+                                    <input type="text" placeholder="прим." value="{{note}}" name="{{wordId}}.note" class="form-control note">
+                                    <input type="text" placeholder="слово" value="{{word}}" name="{{wordId}}.word" class="form-control word -arabic-text-mid">
                                 </div>
-                            
-                                <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
-                                        {{../middleHarakat}}
+                            {{#if showMiddleHarakat ../speachPart @index}}
+                                <div class="note middleHarakat" title="среднекорневая гласная настоящего времени">
+                                        <input type="text" placeholder="скгнв" value="{{../middleHarakat}}" name="middleHarakat" class="form-control note">
                                 </div>
+                            {{/if}}
                         {{/each}}
-                        <i class="glyphicon glyphicon-plus add-word"></i>
+                        <div class="add-word">
+                                <i class="glyphicon glyphicon-plus"></i>
+                        </div>
                 </div>
           </div>
           <div class="panel-body">
-                <ol class="translations">
+                <div class="translations">
                     {{#each article.translations}}
-                        <li class="translation">
-                                <div class="editField" id="{{translationId}}">
+                        <div class="translation">
+                                <div class="editField editTranslation" id="{{translationId}}">
                                     <input type="text" name="{{translationId}}" value="{{translation}}" class="form-control" placeholder="перевод">
+                                    <i class="glyphicon glyphicon-remove remove-translation -remove" id="remove.{{translationId}}"></i>
                                 </div>
         
-                                <ul class="examples collapse examples-{{../_id}}-{{@index}}">
+                                <div class="examples examples-form-{{../_id}}-{{@index}}">
                                         {{#each examples}}
-                                            <li>
-                                                    <div class="exampleEdit editField" id="{{exampleId}}">
-                                                            <input type="text" placeholder="пример" value="{{example}}" name="{{exampleId}}.example" class="form-control example -arabic-text-mid">
-                                                            <input type="text" placeholder="перевод примера" value="{{translation}}" name="{{exampleId}}.translation" class="form-control translation">
-                                                    </div>
-                                            </li>
+                                            <div class="exampleEdit editField" id="{{exampleId}}">
+                                                    <input type="text" placeholder="пример" value="{{example}}" name="{{exampleId}}.example" class="form-control example -arabic-text-mid">
+                                                    <input type="text" placeholder="перевод примера" value="{{translation}}" name="{{exampleId}}.translation" class="form-control translation">
+                                                    <i class="glyphicon glyphicon-remove remove-example -remove" id="remove.{{exampleId}}"></i>
+                                            </div>
                                         {{/each}}
-                                </ul>
-                        </li>
+                                        <button class="btn btn-default btn-xs add-example" id="addExampleFor.{{translationId}}">
+                                                <i class="glyphicon glyphicon-plus"></i>Пример
+                                        </button>
+                                </div>
+                        </div>
                     {{/each}}
-                </ol>
+                    <button class="btn btn-default btn-sm add-translation">
+                            <i class="glyphicon glyphicon-plus"></i>Перевод
+                    </button>
+                </div>
                 {{#if image.link}}
                     <div class="image">
                         <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage">
@@ -48,11 +56,8 @@
                 {{/if}}
           </div>
           <div class="panel-footer">
-                {{> ArticleMenu }}
-                {{> ArticleCorrectionMenu}}
-                {{#if showApproveButtons}}
-                    {{> ApproveButtons}}
-                {{/if}}
+            <button class="btn btn-primary">Сохранить</button>
+            <button class="btn btn-default">Отмена</button>
           </div>
         </form>
 </template>

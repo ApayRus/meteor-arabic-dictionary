@@ -5,6 +5,11 @@ $mid-arabic-font-size: 30px;
 $arabic-font-style: 'Scheherazade'; 
 
 .article {
+    .speach-part {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+    }
     .translations {
         .showExamplesButton {
             display: inline-block;
@@ -77,8 +82,90 @@ $arabic-font-style: 'Scheherazade';
 
 form.article {
     .wordEdit {
-        width:120px;
         display: inline-block;
+        margin-bottom:5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 2px;
+    }
+    .remove-word {
+        position: absolute;
+        top:1px;
+        left:1px;
+    }
+    .-remove {
+        font-size: 15px;
+        color:#ddd;
+        cursor: pointer;
+        &:hover{
+            color:#363636;
+        }
+    }
+    .add-word {
+        position: absolute;
+        right: 1px;
+        bottom: 1px;
+        cursor: pointer;
+        &:hover{
+            color:#5bc0de;
+        }
+    }
+    .editField {
+        position: relative;
+        input {
+            display: inline-block;
+        }
+    }
+    .editTranslation>input{
+        width:96%;
+    }
+    .note{
+        padding: 0px 5px;
+        width: 50px;
+        vertical-align: bottom;
+    }
+    .word{
+        width:100px;
+        padding: 0 5px;
+    }
+    .exampleEdit {
+        margin: 5px 20px 10px 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        input {
+            width: 96%;
+        }
+        .translation{
+            text-align: right;
+            border-bottom: none;
+            border-left: none;
+            border-top: none;
+        }
+        .example {
+            border-top: none;
+            border-left: none;
+        }
+        .-remove {
+            position: absolute;
+            top: 38px;
+            right: 3px;
+        }
+    }
+    .examples {
+        position: relative;
+        padding-bottom: 30px;
+        padding-top: 5px;
+    }
+    .add-example {
+        position: absolute;
+        bottom: 1px;
+        right: 1px;
+        margin: 5px 20px;
+    }
+    .middleHarakat{
+        width: 50px;
+        position: relative;
+        padding: 8px 0px;
     }
 }
 
