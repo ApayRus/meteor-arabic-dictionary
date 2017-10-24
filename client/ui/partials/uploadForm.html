@@ -1,0 +1,26 @@
+<template name="uploadForm">
+        {{#with currentUpload}}
+          Uploading <b>{{file.name}}</b>: 
+          <span id="progress">{{progress.get}}%</span>
+        {{else}}
+          <input id="fileInput" type="file" name="picture" />
+          <p><small>Upload file in <code>jpeg</code> or <code>png</code> format, with size less or equal to 10MB</small></p>
+        {{/with}}
+        currentUpload: {{fileURL uploadedFile}}
+        <img src="{{fileURL uploadedFile}}" />
+        fileObj: {{fileObj}}
+</template>
+      
+<template name="uploadedFiles">
+    {{#if uploadedFiles.count}}
+        <ul>
+        {{#each file in uploadedFiles.each}}
+            <li>
+                <a href="{{file.link}}?download=true" download="{{file.name}}">{{file.name}}</a>
+            </li>
+        {{/each}}
+        </ul>
+    {{else}}
+        <div>No files uploaded, yet</div>
+    {{/if}}
+</template>

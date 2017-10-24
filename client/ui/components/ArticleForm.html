@@ -49,14 +49,11 @@
                             <i class="glyphicon glyphicon-plus"></i>Перевод
                     </button>
                 </div>
-                {{#if image.link}}
-                    <div class="image">
-                        <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage">
-                    </div>
-                {{/if}}
+                {{> uploadForm}}
+                picture: {{picture}}
           </div>
           <div class="panel-footer">
-            <button class="btn btn-primary">Сохранить</button>
+            <button class="btn btn-primary article-save">Сохранить</button>
             <button class="btn btn-default">Отмена</button>
           </div>
         </form>

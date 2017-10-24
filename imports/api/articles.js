@@ -320,7 +320,7 @@ Meteor.methods({
     if (userId == "ghZegnrrKqnNFaFxb") {
         
         correction.lastEvent.type = "изменил статью"
-        //console.log('inside method doc', doc)
+        console.log('inside method doc', doc)
         Articles.update({_id: doc._id}, 
                         doc.modifier,
                         {upsert: true},
@@ -477,8 +477,8 @@ Articles.after.insert(function (userId, doc) {
 Articles.after.update(function(userId, doc, fieldNames, modifier, options){
 
         Meteor.call('events.insert', lastEvent(doc));
-        if(doc.lastEvent.type != "удалил статью")
-            FlowRouter.go('article',{ id: doc._id});
+        //if(doc.lastEvent.type != "удалил статью")
+            //FlowRouter.go('article',{ id: doc._id});
 });
 
 function articleTitle(words){

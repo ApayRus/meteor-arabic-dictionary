@@ -33,3 +33,4 @@ okgrow:analytics
 ostrio:files
 ostrio:autoform-files@2.0.2
 dburles:mongo-collection-instances
+session

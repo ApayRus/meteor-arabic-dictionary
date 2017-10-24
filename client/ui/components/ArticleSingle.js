@@ -25,7 +25,13 @@ Template.ArticleSingle.helpers({
     },
     image(){
         const image = Images.findOne({_id: this.picture});
+        console.log('image', image)
         return image
+    },
+    imageJSON(){
+        const image = Images.findOne({_id: this.picture});
+        image0 = JSON.stringify(image.fetch())
+        return image0
     }, 
     examplesCount : function(examples){
         return (examples.length || 0);

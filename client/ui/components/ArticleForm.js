@@ -2,6 +2,7 @@ import { Articles } from '/imports/api/articles.js';
 
 Template.ArticleForm.onCreated(function(){
     this.reactiveForm = new ReactiveDict();
+    Session.set('picture', this.data.picture);
 });
 
 Template.ArticleForm.helpers({
@@ -27,13 +28,17 @@ Template.ArticleForm.helpers({
 
         this.words = newWords
         this.translations = newTranslations
+        this.picture = Session.get('picture')
         Template.instance().reactiveForm.set("article", this)
         const article = Template.instance().reactiveForm.get("article"); 
         return article
     },
     showMiddleHarakat(speachPart, index){
         return speachPart == "глагол, I порода" && index == 0
-    }
+    }, 
+    picture(){
+        return Session.get('picture')
+    },
 });
 
 Template.ArticleForm.events({ 
@@ -64,6 +69,14 @@ Template.ArticleForm.events({
         console.log('event.target', event.target)
         removeExample(event, template)
     },
+    'click .article-save'(event, template){
+        event.preventDefault()
+        const doc = {_id:"", modifier:{$set:{}}}
+        doc._id = template.data._id
+        doc.modifier.$set = template.data
+        Meteor.call('articles.update', doc)
+        console.log("template.data", template.data)
+    }
 /*     'change select'(event, template){
         console.log('change select', event.target)
     }     */
