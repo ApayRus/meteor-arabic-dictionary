@@ -58,24 +58,31 @@ Template.ArticleForm.events({
         changeTemplateData(event, template);
     },
     'click .remove-word'(event, template){
-        console.log('event.target', event.target)
         removeWord(event,template)
     },
     'click .remove-translation'(event, template){
-        console.log('event.target', event.target)
         removeTranslation(event, template)
     },
     'click .remove-example'(event, template){
-        console.log('event.target', event.target)
         removeExample(event, template)
     },
     'click .article-save'(event, template){
         event.preventDefault()
         const doc = {_id:"", modifier:{$set:{}}}
         doc._id = template.data._id
+        //we call ArticleSchema.clean - for set AutoValues like editedBy, editedAt etc
+        template.data = ArticleSchema.clean(template.data);
+        delete template.data["corrections"];
+        //console.log('template.data', template.data)
         doc.modifier.$set = template.data
+
+        //doc.modifier.$set delete 
         Meteor.call('articles.update', doc)
-        console.log("template.data", template.data)
+        Session.set('showEditFormForArticle', "") // after saving we hide the edit form 
+    }, 
+    'click .article-edit-cancel'(event, template){
+        event.preventDefault()
+        Session.set('showEditFormForArticle', "") // after saving we hide the edit form 
     }
 /*     'change select'(event, template){
         console.log('change select', event.target)

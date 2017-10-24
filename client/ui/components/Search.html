@@ -6,21 +6,9 @@
             </div>
         </section>
         {{#if Template.subscriptionsReady}}
-            <div class="articles-list">
-                {{#each result.articles}}
-                    <section class="row">
-                        <div class="col-sm-6">
-                                {{> ArticleSingle}}
-                        </div>
-                        <div class="col-sm-6">
-                            {{> ArticleForm}}
-                        </div>
-                    </section>
-                {{/each}}
-            </div>
+            {{> ArticlesList articles=result.articles}}
         {{else}}
             <p>Loading...</p>
-                    {{/if}}
-                
+        {{/if}}
     </div>
 </template>

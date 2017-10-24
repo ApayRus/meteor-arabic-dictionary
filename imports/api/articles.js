@@ -328,6 +328,7 @@ Meteor.methods({
     }
     //if user is not Admin - just save it to corrections, to accept or reject in the future by admin
     else {
+        console.log('inside method doc , correction', correction)
         correction.published = false
         Articles.update(
             {_id: doc._id},

@@ -1,0 +1,22 @@
+<template name="ArticlesList">
+    <div class="articles-list">
+        {{#each articles}}
+            <section class="row">
+                <div class="col-sm-6">
+                        {{> ArticleSingle}}
+                </div>
+                <div class="col-sm-6">
+                    {{#if showEditForm _id}}
+                        {{> ArticleForm}}
+                    {{else}}
+                        {{#each correction}}
+                            <div class="correction">
+                                    {{> ArticleSingle}}
+                            </div>
+                        {{/each}}
+                    {{/if}}
+                </div>
+            </section>
+        {{/each}}
+    </div>
+</template>
