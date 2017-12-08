@@ -7,13 +7,14 @@
                 </div>
                 <div class="col-sm-6">
                     {{#if showEditForm _id}}
-                        {{> ArticleForm}}
+                        {{> ArticleForm }}
                     {{else}}
-                        {{#each correction}}
-                            <div class="correction">
-                                    {{> ArticleSingle}}
-                            </div>
-                        {{/each}}
+                        <div class="correction">
+                            {{#each corrections}}
+                            {{> ArticleSingle}}
+                            {{> ArticleForm }}
+                            {{/each}}
+                        </div>
                     {{/if}}
                 </div>
             </section>

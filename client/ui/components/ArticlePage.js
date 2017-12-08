@@ -18,6 +18,7 @@ Template.ArticlePage.helpers({
     article() {
         const id = FlowRouter.getParam('id');
         const article = Articles.findOne({'_id': id});
+        //Session.set('DocumentTitle', article.words.join(" ").toString())
         let published = true; 
         let showCorrections = false;
         const corrections = article.corrections||[]
