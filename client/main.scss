@@ -75,6 +75,7 @@ $arabic-font-style: 'Scheherazade';
     }
 
 
+
 /*    .glyphicon-edit, .glyphicon-link {
         font-size: 150%;
     }*/
@@ -276,6 +277,10 @@ body {
 .-page {
     margin-top: 66px;
 }
+.-sticky {
+    position: sticky;
+    top: 55px;
+}
 
 // /HELPERS
 
@@ -381,3 +386,4 @@ body {
         display: inline-block;
     }
 }
+
