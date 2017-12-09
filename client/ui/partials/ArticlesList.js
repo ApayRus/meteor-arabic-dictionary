@@ -5,6 +5,11 @@ Template.ArticlesList.onCreated(function() {
 Template.ArticlesList.helpers({
   showEditForm(articleId) {
     return articleId == Session.get("showEditFormForArticle");
+  },
+  corrections() {
+    return this.corrections.map(elem => {
+      return { ...elem, _id: elem._id + "-by-" + elem.editedByUserName };
+    });
   }
   /*     
   correction(){

@@ -1,22 +1,11 @@
 <template name="ArticlesCorrectionsPage">
     <div class="container articles-page -page">
-        <h2>Правки, ожидающие админа:</h2>
-        <section class="row">
-            <div class="col-sm-6">
-                {{> AlertMessageCorrectionsPage}}
-                <div class="articles-list">
-                    {{#if Template.subscriptionsReady}}
-                        {{#each articles}}
-                            {{> ArticleSingle}}
-                        {{/each}}
-                    {{else}}
-                        <p>Loading...</p>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="col-sm-6">
-                {{> EventsBlock}}
-            </div>
-        </section>
+        <h2>{{result.count}} правок, ожидающих админа:</h2>
+            {{> AlertMessageCorrectionsPage}}
+            {{#if Template.subscriptionsReady}}
+                {{> ArticlesList articles=result.articles}}
+            {{else}}
+                <p>Loading...</p>
+            {{/if}}
     </div>
 </template>

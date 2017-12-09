@@ -10,9 +10,12 @@
                         {{> ArticleForm }}
                     {{else}}
                         <div class="correction">
-                            {{#each corrections}}
-                            {{> ArticleSingle}}
-                            {{> ArticleForm }}
+                            {{#each corrections }}
+                                {{#if showEditForm _id}}
+                                    {{> ArticleForm }}
+                                {{else}}
+                                    {{> ArticleSingle }}
+                                {{/if}}
                             {{/each}}
                         </div>
                     {{/if}}

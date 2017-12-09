@@ -39,7 +39,7 @@ Template.ArticleMenu.events({
 Template.ArticleCorrectionMenu.events({
   "click .edit-correction"(event) {
     event.preventDefault();
-    // Session.set("showEditFormForArticle", this._id);
-    console.log("correction edit button clicked: this", this);
+    Session.set("showEditFormForArticle", this._id);
+    // console.log("correction edit button clicked: this", this);
   }
 });

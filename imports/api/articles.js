@@ -309,25 +309,27 @@ Meteor.methods({
     check(doc, Object);
     //    Articles.update({_id: doc._id}, doc.modifier );
     const userId = Meteor.userId() || "anonymous";
+    const docId = doc._id.split("-")[0];
     let correction = doc.modifier.$set;
-    correction._id = doc._id;
+    correction._id = docId;
     correction.lastEvent = {};
 
     //if user is Admin, we apply he's correction directly to db,
     if (userId == "ghZegnrrKqnNFaFxb") {
       correction.lastEvent.type = "изменил статью";
+      correction.published = true;
       // console.log('inside method doc', doc)
-      Articles.update({ _id: doc._id }, doc.modifier, { upsert: true });
+      Articles.update({ _id: docId }, doc.modifier, { upsert: true });
     } else {
       //if user is not Admin - just save it to corrections, to accept or reject in the future by admin
       // console.log('inside method doc , correction', correction)
       correction.published = false;
       Articles.update(
-        { _id: doc._id },
+        { _id: docId },
         {
           $set: {
             lastEvent: { type: "предложил правку" },
-            corrections: changedCorrections(doc._id, userId, correction)
+            corrections: changedCorrections(docId, userId, correction)
           }
         }
       );
