@@ -2,6 +2,8 @@
     <div class="container article-page">
         <section class="row">
             {{#if Template.subscriptionsReady}}
+                {{> ArticlesList articles=articles}}
+<!-- 
                 <div class="col-sm-6">
                     {{#if article.showCorrections}}
                         <h3>Основная статья</h3>
@@ -24,6 +26,7 @@
                             {{/each}}
                     {{/if}}
                 </div>
+                 -->
             {{else}}
                 <p>Loading...</p>
             {{/if}}

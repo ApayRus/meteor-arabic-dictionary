@@ -2,21 +2,12 @@
     <div class="container articles-page -page">
         <h2>Articles page</h2>
         <section class="row">
-            <div class="col-sm-6">
-                {{> AlertMessageArticlesPage}}
-                <div class="articles-list">
-                    {{#if Template.subscriptionsReady}}
-                        {{#each articles}}
-                            {{> ArticleSingle}}
-                        {{/each}}
-                    {{else}}
-                        <p>Loading...</p>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="col-sm-6">
-                {{> EventsBlock}}
-            </div>
+            {{> AlertMessageArticlesPage}}
+            {{#if Template.subscriptionsReady}}
+                {{> ArticlesList articles=articles}}
+            {{else}}
+                <p>Loading...</p>
+            {{/if}}
         </section>
     </div>
 </template>

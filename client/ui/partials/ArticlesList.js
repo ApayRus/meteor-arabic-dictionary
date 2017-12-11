@@ -24,4 +24,21 @@ Template.ArticlesList.helpers({
     */
 });
 
-Template.ArticlesList.events({});
+Template.ArticlesList.events({
+  "click .correction .btn-success"() {
+    let doc_id = this._id.split("-")[0];
+    Meteor.call("articles.accept_correction", doc_id, this);
+  },
+  "click .correction .btn-danger"() {
+    let doc_id = this._id.split("-")[0];
+    Meteor.call("articles.reject_correction", doc_id, this);
+  },
+  "click .main-article .btn-success"() {
+    let doc_id = this._id.split("-")[0];
+    Meteor.call("articles.accept", doc_id, this);
+  },
+  "click .main-article .btn-danger"() {
+    let doc_id = this._id.split("-")[0];
+    Meteor.call("articles.reject", doc_id, this);
+  }
+});

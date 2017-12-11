@@ -1,20 +1,19 @@
-import { Articles } from '/imports/api/articles.js';
+import { Articles } from "/imports/api/articles.js";
 
-Template.ArticlesPage.onCreated(function(){
-    var self = this; 
-    self.autorun(function(){
-        const startIndex = parseInt(FlowRouter.getParam('startIndex'));
-        const endIndex = parseInt(FlowRouter.getParam('endIndex'));
-        self.subscribe('articles', startIndex, endIndex);
-    });
+Template.ArticlesPage.onCreated(function() {
+  var self = this;
+  self.autorun(function() {
+    const startIndex = parseInt(FlowRouter.getParam("startIndex"));
+    const endIndex = parseInt(FlowRouter.getParam("endIndex"));
+    self.subscribe("articles", startIndex, endIndex);
+  });
 });
 
 Template.ArticlesPage.helpers({
   articles() {
-    const articles = Articles.find( {} );
-    console.log('articles',articles)
-    return articles
-  },
+    const articles = Articles.find({});
+    return articles;
+  }
 });
 
 /*Template.ArticlesPage.events({

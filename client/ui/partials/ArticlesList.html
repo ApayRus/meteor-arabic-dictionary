@@ -3,21 +3,23 @@
         {{#each articles}}
             <section class="row">
                 <div class="col-sm-6 -sticky">
+                    <div class="main-article">
                         {{> ArticleSingle}}
+                    </div>
                 </div>
                 <div class="col-sm-6">
                     {{#if showEditForm _id}}
                         {{> ArticleForm }}
                     {{else}}
+                        {{#each corrections }}
                         <div class="correction">
-                            {{#each corrections }}
-                                {{#if showEditForm _id}}
-                                    {{> ArticleForm }}
-                                {{else}}
-                                    {{> ArticleSingle }}
-                                {{/if}}
-                            {{/each}}
+                            {{#if showEditForm _id}}
+                                {{> ArticleForm }}
+                            {{else}}
+                                {{> ArticleSingle }}
+                            {{/if}}
                         </div>
+                        {{/each}}
                     {{/if}}
                 </div>
             </section>
