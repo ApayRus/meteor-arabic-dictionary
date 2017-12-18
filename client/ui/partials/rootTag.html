@@ -1,0 +1,12 @@
+<template name="rootTag">
+
+    <label for="rootTag">
+        Root:
+        <input type="text" id="rootTag" class="form-control">
+    </label>
+    <ul>
+        {{#each roots}}
+        <li>_id: {{_id}}, {{words.[0].word}}</li>
+        {{/each}}
+    </ul>
+</template>

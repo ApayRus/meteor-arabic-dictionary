@@ -1,12 +1,13 @@
 import { Articles } from "/imports/api/articles.js";
+import { arabicWordToRegExPatern } from "/imports/regexPatterns";
 
 Template.Search.onCreated(function() {
   var self = this;
   self.autorun(function() {
-    const searchFor = FlowRouter.getParam("searchFor");
-    if (searchFor) {
-      const regexp_searchFor = arabicWordToRegExPatern(searchFor);
-      self.subscribe("articlesSearchResult", regexp_searchFor.source);
+    self.searchFor = FlowRouter.getParam("searchFor");
+    if (self.searchFor) {
+      self.searchFor = arabicWordToRegExPatern(self.searchFor).source;
+      self.subscribe("articlesSearchResult", self.searchFor);
     }
   });
 });
@@ -21,7 +22,13 @@ Template.Search.events({
 
 Template.Search.helpers({
   result() {
-    const articles = Articles.find({});
+    const template = Template.instance();
+    const searchFor = new RegExp(template.searchFor);
+    const articles = Articles.find({
+      "words.word": searchFor,
+      deleted: { $ne: true },
+      published: { $ne: false }
+    });
     const count = articles.count();
     return { articles, count };
   },
@@ -29,37 +36,3 @@ Template.Search.helpers({
     return FlowRouter.getParam("searchFor");
   }
 });
-
-function arabicWordToRegExPatern(word) {
-  const haracats = ["َ", "ِ", "ُ", "ً", "ٍ", "ٌ", "ْ"];
-  const haracat = "[" + haracats.join("") + "]?";
-  const tashdid = "[" + "ّ" + "]?";
-
-  let regexp_template = word
-    .split("")
-    .map(function(letter, index) {
-      //if next simbol or current is haracat we don't need to add [haracat] to regexp
-      if (
-        haracats.indexOf(word[index + 1]) > -1 ||
-        haracats.indexOf(word[index]) > -1
-      ) {
-        return letterAlternatives(letter);
-      } else
-        //we add [haracat] only if after this letter going letter too
-        return letterAlternatives(letter) + tashdid + haracat;
-    })
-    .join("");
-
-  regexp_template = new RegExp("^" + regexp_template + "$");
-
-  return regexp_template;
-}
-
-//some arabic letters may have alternatives, like alif ا : إ أ آ  and we should change it to group of alts
-function letterAlternatives(letter) {
-  const alifs = ["ا", "أ", "إ", "آ", "ى"];
-  const alif = "[" + alifs.join("") + "]";
-
-  if (letter == "ا") return alif;
-  else return letter;
-}
