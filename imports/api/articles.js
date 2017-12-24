@@ -284,6 +284,10 @@ ArticleSchema = new SimpleSchema({
         previewTemplate: "myFilePreview"
       }
     }
+  },
+  rootId: {
+    type: String,
+    optional: true
   }
   /*    tags: {
         type: Array, 

@@ -2,6 +2,7 @@
 
 $big-arabic-font-size: 40px; 
 $mid-arabic-font-size: 30px; 
+$sml-arabic-font-size: 25px;
 $arabic-font-style: 'Scheherazade'; 
 
 .article {
@@ -74,7 +75,11 @@ $arabic-font-style: 'Scheherazade';
         color: #337ab7;
     }
 
-
+    .root {
+        a:hover {
+            text-decoration: none;
+        }
+    }
 
 /*    .glyphicon-edit, .glyphicon-link {
         font-size: 150%;
@@ -130,14 +135,22 @@ form.article {
     .editTranslation>input{
         width:93%;
     }
-    .note{
-        padding: 0px 5px;
-        width: 50px;
-        vertical-align: bottom;
-    }
-    .word{
-        width:100px;
-        padding: 0 5px;
+    input{
+
+        &.note{
+            padding: 0px 5px;
+            width: 50px;
+            vertical-align: bottom;
+        }
+        &.word{
+            width:100px;
+            padding: 0 5px;
+        }
+        &.middleHarakat{
+            width: 50px;
+            position: relative;
+            padding: 8px 0px;
+        }    
     }
     .exampleEdit {
         margin: 5px 20px 10px 10px;
@@ -173,11 +186,7 @@ form.article {
         right: 1px;
         margin: 5px 20px;
     }
-    .middleHarakat{
-        width: 50px;
-        position: relative;
-        padding: 8px 0px;
-    }
+
 }
 
 
@@ -280,6 +289,33 @@ body {
 .-sticky {
     position: sticky;
     top: 55px;
+}
+.-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.-dropdown-content {
+    display: block;
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 235px;
+    bottom: 40px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1000;
+    border-radius: 10px;
+    li {
+        list-style: none;
+    }
+}
+
+.-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.-displayNone {
+    display: none;
 }
 
 // /HELPERS
@@ -387,3 +423,20 @@ body {
     }
 }
 
+.rootTag{
+    .rootTagsList {
+        li:hover {
+            background-color: blue;
+            color: whitesmoke;
+        }
+    .-arabic-text-big {
+        font-size: $sml-arabic-font-size;
+    }
+    .word {
+        width: "";
+    }
+    .note {
+        width: ""
+    }
+    }
+}

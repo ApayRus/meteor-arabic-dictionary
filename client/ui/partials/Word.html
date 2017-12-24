@@ -1,0 +1,11 @@
+<template name="Word">
+    {{#each words}}
+        <div class="note">{{note}} </div>
+        <div class="word -arabic-text-mid">{{word}}</div>
+        {{#if isMiddleHarakat ../middleHarakat @index}}
+            <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
+                    {{../middleHarakat}} 
+            </div>
+        {{/if}}
+    {{/each}}
+</template>

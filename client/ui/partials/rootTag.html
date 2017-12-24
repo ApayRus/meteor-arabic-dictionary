@@ -1,12 +1,26 @@
 <template name="rootTag">
+    Корень:
+    {{#with root.article}}
+        {{>Word}}
+    {{/with}}
+    <a class="link" href="/article/{{rootId}}" title="ссылка на статью">
+        <span class="glyphicon glyphicon-link"></span>
+    </a>
+    {{#if isEditMode}}
+        <div class="rootTag -dropdown">
+                <input type="text" id="rootInput" class="form-control word -arabic-text-mid">
+                <ul class="rootTagsList -dropdown-content">
+                    {{#each roots}}
+                        <li data-id="{{_id}}">
+                            {{> Word}}
+                        </li>
+                    {{/each}}
+                </ul>
+        </div>
+    {{else}}
+            <a href="#" id="editRoot">
+                <span  class="glyphicon glyphicon-edit"></span>
+            </a>
+    {{/if}}
 
-    <label for="rootTag">
-        Root:
-        <input type="text" id="rootTag" class="form-control">
-    </label>
-    <ul>
-        {{#each roots}}
-        <li>_id: {{_id}}, {{words.[0].word}}</li>
-        {{/each}}
-    </ul>
 </template>

@@ -3,20 +3,19 @@ import { arabicWordToRegExPatern } from "/imports/regexPatterns";
 
 Template.rootTag.onCreated(function() {
   var self = this;
-  this.rootTag = new ReactiveVar("xyz");
-  self.autorun(function() {
-    /*     if (this.searchFor) {
-      //const regexp_searchFor = arabicWordToRegExPatern(searchFor);
-      //self.subscribe("articlesSearchResult", regexp_searchFor.source);
-      //   self.subscribe("articlesSearchResult", searchFor);
-    } */
-  });
+  this.rootResults = new ReactiveVar([]);
+  this.rootInput = new ReactiveVar("xyz");
+  this.rootId = new ReactiveVar(this.data.rootId);
+  //   console.log('this.data.rootId',this.data.rootId)
+  this.isEditMode = new ReactiveVar(false);
 });
 
 Template.rootTag.helpers({
   roots() {
     const template = Template.instance();
-    const searchFor = new RegExp(template.rootTag.get());
+    let searchFor = template.rootInput.get();
+    // if (!searchFor.trim()) return [];
+    searchFor = new RegExp(template.rootInput.get());
     const articles = Articles.find(
       {
         "words.word": searchFor,
@@ -25,19 +24,42 @@ Template.rootTag.helpers({
       },
       { limit: 5 }
     );
-    /*     const count = articles.count();
-    console.log("template.rootTag", template.rootTag.get());
-    console.log("articles", articles); */
+
     return articles;
+  },
+  root() {
+    const template = Template.instance();
+    const id = template.rootId.get();
+    const article = Articles.findOne({ _id: id });
+    return { id, article };
+  },
+  isEditMode() {
+    return Template.instance().isEditMode.get();
   }
 });
 
 Template.rootTag.events({
-  "keydown #rootTag"(event, template) {
+  "click #editRoot"(event, template) {
+    event.preventDefault();
+    template.isEditMode.set(true);
+    console.log(template.isEditMode.get());
+  },
+  "keydown #rootInput"(event, template) {
     setTimeout(() => {
-      template.rootTag.set(arabicWordToRegExPatern(event.target.value).source);
-      Meteor.subscribe("articlesSearchResult", template.rootTag.get());
-      //   console.log("template.searchFor", template.searchFor);
+      template.rootInput.set(
+        arabicWordToRegExPatern(event.target.value).source
+      );
+      Meteor.subscribe("articlesSearchResult", template.rootInput.get());
+      console.log("template.rootInput.get()", template.rootInput.get());
     }, 100);
+  },
+  "blur #rootInput"(event, template) {
+    setTimeout(() => template.isEditMode.set(false), 200);
+  },
+  "click .rootTagsList li"(event, template) {
+    // console.log("click rootTagsList li", event.target.dataset.id);
+    template.data.rootId = event.currentTarget.dataset.id;
+    template.rootId.set(template.data.rootId);
+    template.isEditMode.set(false);
   }
 });
