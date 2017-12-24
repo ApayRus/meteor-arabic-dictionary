@@ -50,16 +50,18 @@
                 <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage">
             </div>
         {{/if}}
-        <div class="root">
-            <div class="label label-default">
-                Корень:
-            </div>  
+        {{#if rootArticle}}
             {{#with rootArticle}}
-                <a href="/article/{{_id}}">
-                    {{> Word}}
-                </a>
-            {{/with}}
-        </div>
+                <div class="root">
+                    <div class="label label-default">
+                        Корень:
+                    </div>  
+                    <a href="/article/{{_id}}">
+                        {{> Word}}
+                    </a>
+                </div>
+                {{/with}}
+        {{/if}}
         <!-- 
         picture: {{picture}}
         Image link: {{imageJSON}}
