@@ -39,12 +39,8 @@ Template.rootTag.helpers({
 });
 
 Template.rootTag.events({
-  "click #editRoot"(event, template) {
-    event.preventDefault();
-    template.isEditMode.set(true);
-    console.log(template.isEditMode.get());
-  },
   "keydown #rootInput"(event, template) {
+    template.isEditMode.set(true);
     setTimeout(() => {
       template.rootInput.set(
         arabicWordToRegExPatern(event.target.value).source

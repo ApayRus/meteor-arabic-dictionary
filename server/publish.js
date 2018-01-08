@@ -1,5 +1,6 @@
 import { Articles } from "/imports/api/articles.js";
 import { Events } from "/imports/api/events.js";
+import { Subjects } from "/imports/api/subjects.js";
 
 Meteor.startup(() => {
   Meteor.publish("user", function(id) {
@@ -67,5 +68,8 @@ Meteor.startup(() => {
         sort: { happenedAt: -1 }
       }
     );
+  });
+  Meteor.publish("subjects", function() {
+    return Subjects.find({});
   });
 });

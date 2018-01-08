@@ -288,6 +288,15 @@ ArticleSchema = new SimpleSchema({
   rootId: {
     type: String,
     optional: true
+  },
+  subjects: {
+    type: Array,
+    optional: true,
+    label: "Тематики",
+    defaultValue: []
+  },
+  "subjects.$": {
+    type: String
   }
   /*    tags: {
         type: Array, 

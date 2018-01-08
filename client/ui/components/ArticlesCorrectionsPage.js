@@ -11,7 +11,12 @@ Template.ArticlesCorrectionsPage.onCreated(function() {
 
 Template.ArticlesCorrectionsPage.helpers({
   result() {
-    const articles = Articles.find({});
+    const articles = Articles.find({
+      $or: [
+        { corrections: { $gt: { $size: 0 } }, deleted: { $ne: true } },
+        { published: false, deleted: { $ne: true } }
+      ]
+    });
     console.log("result.articles", articles);
     const count = articles.count();
     return { articles, count };
