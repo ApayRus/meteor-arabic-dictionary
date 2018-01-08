@@ -16,13 +16,15 @@ Template.Tag.helpers({
   tagsAutocomplete() {
     const template = Template.instance();
     let searchFor = template.tagInput.get();
+    const selectedTagIds = template.tagIds.get();
     // if (!searchFor.trim()) return [];
     searchFor = new RegExp(template.tagInput.get(), "i");
     const tagsAutocomplete = Subjects.find(
       {
         title: searchFor,
         deleted: { $ne: true },
-        published: { $ne: false }
+        published: { $ne: false },
+        _id: { $nin: selectedTagIds }
       },
       { limit: 5 }
     );
