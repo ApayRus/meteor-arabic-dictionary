@@ -1,22 +1,15 @@
 <template name="Tag">
-    <div class="selected-tags">
-        Tags:
-        {{#each tags}}
-            <div class="tag">
-                <span class="glyphicon glyphicon-tag"></span>
-                {{title}}
-                <i class="glyphicon glyphicon-remove -remove" data-tagid="{{@index}}"></i>
-            </div>
-        {{/each}}
-    </div>
+    {{> SelectedTags  removeButton=true tags=tags}}
     <div class="rootTag -dropdown">
         <input type="text" id="tagInput" class="form-control">
         {{#if isEditMode}}
         <ul class="tagsList -dropdown-content">
             {{#each tagsAutocomplete}}
-            <li data-id="{{_id}}">
+            <li class="existingTag" data-id="{{_id}}">
                 {{title}}
             </li>
+            {{else}}
+            <li id="createTag">Создать тэг</li>
             {{/each}}
         </ul>
         {{/if}}

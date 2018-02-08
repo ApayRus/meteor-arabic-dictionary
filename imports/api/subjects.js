@@ -50,6 +50,7 @@ Meteor.methods({
   },
   "subjects.insert"(doc) {
     check(doc, Object);
-    Subjects.insert(doc);
+    const newDocId = Subjects.insert(doc);
+    return newDocId;
   }
 });

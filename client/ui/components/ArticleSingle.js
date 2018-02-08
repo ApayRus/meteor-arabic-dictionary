@@ -3,10 +3,16 @@ import { Template } from 'meteor/templating';
 import './ArticleSingle.html'; 
 import './ArticleUpdate.js'; */
 import { Articles } from "/imports/api/articles.js";
+import { Subjects } from "/imports/api/subjects.js";
 import { transcription, isNotDiacritic } from "/imports/transcription.js";
 /*Template.ArticleSingle.onCreated(function(){
     Meteor.subscribe("users"); //надо переделать на подписку на 1го человека, автора статьи
 });*/
+
+Template.ArticleSingle.onCreated(function() {
+  Meteor.subscribe("subjects");
+  console.log("template.data", this);
+});
 
 Template.ArticleSingle.helpers({
   /*    showApproveButtons(){
@@ -46,5 +52,18 @@ Template.ArticleSingle.helpers({
   },
   transcr: function(text) {
     if (text.trim()) return "[ " + transcription(text) + " ]";
+  },
+  tags() {
+    const ids = this.subjects;
+    const tags = [];
+    let tagsUnordered = Subjects.find({ _id: { $in: ids } }).fetch(); // эта шляпа возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
+    ids.forEach(tagId => {
+      tags.push(
+        tagsUnordered.filter(elem => {
+          return elem._id == tagId;
+        })[0]
+      );
+    });
+    return tags;
   }
 });

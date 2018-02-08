@@ -1,0 +1,14 @@
+<template name="SelectedTags">
+    <div class="selected-tags">
+        Tags:
+        {{#each tags}}
+            <div class="tag">
+                <span class="glyphicon glyphicon-tag"></span>
+                {{title}}
+                {{#if ../removeButton}}
+                <i class="glyphicon glyphicon-remove -remove" data-tagid="{{@index}}"></i>
+                {{/if}}
+            </div>
+        {{/each}}
+    </div>
+</template>

@@ -2,13 +2,12 @@ import { Articles } from "/imports/api/articles.js";
 import { Subjects } from "/imports/api/subjects.js";
 
 Template.Tag.onCreated(function() {
+  Meteor.subscribe("subjects");
   var self = this;
   this.tagResults = new ReactiveVar([]);
   this.tagInput = new ReactiveVar("xyz");
   if (this.data.subjects == undefined) this.data.subjects = [];
-  // this.data.subjects = this.data.subjects != undefined ? this.data.subjects : [];
   this.tagIds = new ReactiveVar(this.data.subjects);
-  //   console.log('this.data.rootId',this.data.rootId)
   this.isEditMode = new ReactiveVar(false);
 });
 
@@ -17,7 +16,6 @@ Template.Tag.helpers({
     const template = Template.instance();
     let searchFor = template.tagInput.get();
     const selectedTagIds = template.tagIds.get();
-    // if (!searchFor.trim()) return [];
     searchFor = new RegExp(template.tagInput.get(), "i");
     const tagsAutocomplete = Subjects.find(
       {
@@ -55,25 +53,37 @@ Template.Tag.events({
     template.isEditMode.set(true);
     setTimeout(() => {
       template.tagInput.set(event.target.value);
-      Meteor.subscribe("subjects");
-      console.log("template", template);
     }, 100);
   },
   "blur #tagInput"(event, template) {
     setTimeout(() => template.isEditMode.set(false), 200);
   },
-  "click .tagsList li"(event, template) {
-    // console.log("click rootTagsList li", event.target.dataset.id);
-    template.data.subjects.push(event.currentTarget.dataset.id);
-    console.log("template.data.subjects:", template.data.subjects);
-    template.tagIds.set(template.data.subjects);
-    console.log("template.tagIds:", template.tagIds.get());
-    template.isEditMode.set(false);
+  "click .tagsList .existingTag"(event, template) {
+    let tagId = event.currentTarget.dataset.id;
+    addTag(tagId, template);
+  },
+  "click .tagsList #createTag"(event, template) {
+    Meteor.call(
+      "subjects.insert",
+      {
+        title: template.tagInput.get()
+      },
+      (error, result) => {
+        if (error) console.log("не получилось создать тэг", error);
+        let tagId = result;
+        addTag(tagId, template);
+      }
+    );
   },
   "click .tag .-remove"(event, template) {
-    // console.log("tagId for delete", event.currentTarget.dataset.tagid);
     const tagId = +event.currentTarget.dataset.tagid;
     template.data.subjects.splice(tagId, 1);
     template.tagIds.set(template.data.subjects);
   }
 });
+
+function addTag(tagId, template) {
+  template.data.subjects.push(tagId);
+  template.tagIds.set(template.data.subjects);
+  template.isEditMode.set(false);
+}
