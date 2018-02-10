@@ -1,17 +1,20 @@
-<template name="Tag">
-    {{> SelectedTags  removeButton=true tags=tags}}
+<template name="TagsSynonyms">
+    <div class="synonyms">
+        {{> SelectedTags  removeButton=true tags=tags label="Синонимы"}}
+    
     <div class="rootTag -dropdown">
-        <input type="text" id="tagInput" class="form-control">
+        <input type="text" class="form-control tagInput">
         {{#if isEditMode}}
         <ul class="tagsList -dropdown-content">
             {{#each tagsAutocomplete}}
             <li class="existingTag" data-id="{{_id}}">
                 {{title}}
             </li>
-            {{else}}
-            <li id="createTag">Создать тэг</li>
+<!--             {{else}}
+            <li class="createTag">Создать тэг</li> -->
             {{/each}}
         </ul>
         {{/if}}
     </div>
+</div>
 </template>

@@ -1,17 +1,17 @@
 <template name="SelectedTags">
     {{#if tags}}
         <div class="selected-tags">
-            Tags:
+            {{label}}:
             {{#each tags}}
-            <a href="/subject/{{_id}}">
                 <div class="tag">
-                    <span class="glyphicon glyphicon-tag"></span>
-                    {{title}}
+                    <a href="/subject/{{_id}}">
+                        <span class="glyphicon glyphicon-tag"></span>
+                        {{title}}
+                    </a>
                     {{#if ../removeButton}}
                     <i class="glyphicon glyphicon-remove -remove" data-tagid="{{@index}}"></i>
                     {{/if}}
                 </div>
-            </a>
             {{/each}}
         </div>
     {{/if}}

@@ -46,7 +46,7 @@ Template.rootTag.events({
         arabicWordToRegExPatern(event.target.value).source
       );
       Meteor.subscribe("articlesSearchResult", template.rootInput.get());
-      console.log("template.rootInput.get()", template.rootInput.get());
+      //console.log("template.rootInput.get()", template.rootInput.get());
     }, 100);
   },
   "blur #rootInput"(event, template) {

@@ -297,6 +297,15 @@ ArticleSchema = new SimpleSchema({
   },
   "subjects.$": {
     type: String
+  },
+  synonyms: {
+    type: Array,
+    optional: true,
+    label: "Синонимы",
+    defaultValue: []
+  },
+  "synonyms.$": {
+    type: String
   }
   /*    tags: {
         type: Array, 

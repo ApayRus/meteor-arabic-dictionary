@@ -11,7 +11,6 @@ import { transcription, isNotDiacritic } from "/imports/transcription.js";
 
 Template.ArticleSingle.onCreated(function() {
   Meteor.subscribe("subjects");
-  console.log("template.data", this);
 });
 
 Template.ArticleSingle.helpers({

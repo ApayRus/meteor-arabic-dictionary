@@ -1,28 +1,25 @@
 import { Articles } from "/imports/api/articles.js";
-import { Subjects } from "/imports/api/subjects.js";
+//import { Subjects } from "/imports/api/subjects.js";
+import { arabicWordToRegExPatern } from "/imports/regexPatterns";
 
-Template.Tag.onCreated(function() {
-  Meteor.subscribe("subjects");
-  var self = this;
-  this.tagResults = new ReactiveVar([]);
+Template.TagsSynonyms.onCreated(function() {
   this.tagInput = new ReactiveVar("xyz");
-  if (this.data.subjects == undefined) this.data.subjects = [];
-  this.tagIds = new ReactiveVar(this.data.subjects);
+  if (this.data.synonyms == undefined) this.data.synonyms = [];
+  this.tagIds = new ReactiveVar(this.data.synonyms);
   this.isEditMode = new ReactiveVar(false);
 });
 
-Template.Tag.helpers({
+Template.TagsSynonyms.helpers({
   tagsAutocomplete() {
     const template = Template.instance();
     let searchFor = template.tagInput.get();
     const selectedTagIds = template.tagIds.get();
-    searchFor = new RegExp(template.tagInput.get(), "i");
-    const tagsAutocomplete = Subjects.find(
+    searchFor = new RegExp(template.tagInput.get());
+    const tagsAutocomplete = Articles.find(
       {
-        title: searchFor,
+        "words.word": searchFor,
         deleted: { $ne: true },
-        published: { $ne: false },
-        _id: { $nin: selectedTagIds }
+        published: { $ne: false }
       },
       { limit: 5 }
     );
@@ -33,7 +30,8 @@ Template.Tag.helpers({
     const template = Template.instance();
     const ids = template.tagIds.get();
     const tags = [];
-    let tagsUnordered = Subjects.find({ _id: { $in: ids } }).fetch(); // эта шляпа возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
+    let tagsUnordered = Articles.find({ _id: { $in: ids } }).fetch();
+    // эта шляпа выше возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
     ids.forEach(tagId => {
       tags.push(
         tagsUnordered.filter(elem => {
@@ -48,21 +46,23 @@ Template.Tag.helpers({
   }
 });
 
-Template.Tag.events({
-  "keydown #tagInput"(event, template) {
+Template.TagsSynonyms.events({
+  "keydown .synonyms .tagInput"(event, template) {
     template.isEditMode.set(true);
     setTimeout(() => {
-      template.tagInput.set(event.target.value);
+      template.tagInput.set(arabicWordToRegExPatern(event.target.value).source);
+      Meteor.subscribe("articlesSearchResult", template.tagInput.get());
+      console.log("template.tagInput.get()", template.tagInput.get());
     }, 100);
   },
-  "blur #tagInput"(event, template) {
+  "blur .synonyms .tagInput"(event, template) {
     setTimeout(() => template.isEditMode.set(false), 200);
   },
   "click .tagsList .existingTag"(event, template) {
     let tagId = event.currentTarget.dataset.id;
     addTag(tagId, template);
   },
-  "click .tagsList #createTag"(event, template) {
+  /*   "click .tagsList #createTag"(event, template) {
     Meteor.call(
       "subjects.insert",
       {
@@ -74,16 +74,16 @@ Template.Tag.events({
         addTag(tagId, template);
       }
     );
-  },
+  }, */
   "click .tag .-remove"(event, template) {
     const tagId = +event.currentTarget.dataset.tagid;
-    template.data.subjects.splice(tagId, 1);
-    template.tagIds.set(template.data.subjects);
+    template.data.synonyms.splice(tagId, 1);
+    template.tagIds.set(template.data.synonyms);
   }
 });
 
 function addTag(tagId, template) {
-  template.data.subjects.push(tagId);
-  template.tagIds.set(template.data.subjects);
+  template.data.synonyms.push(tagId);
+  template.tagIds.set(template.data.synonyms);
   template.isEditMode.set(false);
 }

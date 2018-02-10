@@ -1,0 +1,20 @@
+<template name="Tags">
+    <div class="subjects">
+        {{> SelectedTags  removeButton=true tags=tags label="Тематики"}}
+    
+    <div class="rootTag -dropdown">
+        <input type="text" class="form-control tagInput">
+        {{#if isEditMode}}
+        <ul class="tagsList -dropdown-content">
+            {{#each tagsAutocomplete}}
+            <li class="existingTag" data-id="{{_id}}">
+                {{title}}
+            </li>
+            {{else}}
+            <li class="createTag">Создать тэг</li>
+            {{/each}}
+        </ul>
+        {{/if}}
+    </div>
+</div>
+</template>
