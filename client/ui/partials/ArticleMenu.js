@@ -10,7 +10,13 @@ Template.ArticleMenu.helpers({
   //we show autoCorrection button only if article have only 1 field with translation
   //and haven't examples
   showAutoCorrection() {
-    return this.translations.length == 1 && !this.translations[0].examples;
+    const isExamplesEmpty = () => {
+      if (!this.translations[0].examples) return true;
+      else {
+        if (this.translations[0].examples.length == 0) return true;
+      }
+    };
+    return this.translations.length == 1 && isExamplesEmpty();
   }
 });
 
@@ -19,15 +25,12 @@ Template.ArticleMenu.events({
     Meteor.call("articles.remove", this._id);
   },
   "click .autoCorrection"() {
-    if (this.translations.length == 1 && !this.translations[0].examples)
-      Meteor.call(
-        "article.autoCorrection",
-        this._id,
-        this.translations[0].translation,
-        this.words
-      );
-    else
-      console.log("нельзя применить автоправки, в этой статье уже есть правки");
+    Meteor.call(
+      "article.autoCorrection",
+      this._id,
+      this.translations[0].translation,
+      this.words
+    );
   },
   "click .edit"(event) {
     event.preventDefault();
