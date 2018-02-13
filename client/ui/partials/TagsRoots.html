@@ -1,9 +1,9 @@
-<template name="TagsSynonyms">
-    <div class="synonyms tags">
-        <label for="inputSynonym">Синонимы</label>
+<template name="TagsRoots">
+    <div class="roots tags">
+        <label for="inputRoot">Корень</label>
         {{> TagsSelectedSynonyms  removeButton=true tags=tags}}
         <div class="-dropdown-container">
-        <input id="inputSynonym" type="text" class="form-control tagInput" placeholder="+ добавить синоним">
+        <input id="inputRoot" type="text" class="form-control tagInput" placeholder="+ изменить корень">
         {{#if isEditMode}}
         <ul class="tagsList -dropdown-content">
             {{#each tagsAutocomplete}}
@@ -14,5 +14,5 @@
         </ul>
         {{/if}}
         </div>
-</div>
+    </div>
 </template>

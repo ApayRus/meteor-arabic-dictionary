@@ -287,7 +287,7 @@ body {
   position: sticky;
   top: 55px;
 }
-.-dropdown {
+.-dropdown-container {
   position: relative;
   display: inline-block;
 }
@@ -431,12 +431,13 @@ body {
   }
 }
 
-.rootTag {
-  .rootTagsList {
+.tags {
+  .tagsList {
     li:hover {
       background-color: blue;
       color: whitesmoke;
     }
+    cursor: pointer;
     .-arabic-text-big {
       font-size: $sml-arabic-font-size;
     }
@@ -449,11 +450,16 @@ body {
   }
 }
 
+.tagInput{
+  width: 161px;
+}
+
 .selected-tags {
+  display: inline-block;
   .tag {
     display: inline-block;
     padding: 2px 5px;
-    border: 1px solid gray;
+    border: 1px solid lightgray;
     border-radius: 10px;
   }
 }

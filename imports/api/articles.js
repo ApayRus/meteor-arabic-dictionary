@@ -285,9 +285,14 @@ ArticleSchema = new SimpleSchema({
       }
     }
   },
-  rootId: {
-    type: String,
-    optional: true
+  roots: {
+    type: Array,
+    optional: true,
+    label: "Корень",
+    defaultValue: []
+  },
+  "roots.$": {
+    type: String
   },
   subjects: {
     type: Array,

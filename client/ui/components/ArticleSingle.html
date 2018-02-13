@@ -50,20 +50,26 @@
                 <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage">
             </div>
         {{/if}}
-        {{#if rootArticle}}
-            {{#with rootArticle}}
-                <div class="root">
-                    <div class="label label-default">
-                        Корень:
-                    </div>  
-                    <a href="/article/{{_id}}">
-                        {{> Word}}
-                    </a>
-                </div>
-                {{/with}}
+
+        <!-- TAGS -->
+
+        {{#if tagsRoots}}
+            <div>
+                Корень: {{> TagsSelectedSynonyms tags=tagsRoots removeButton=false}}
+            </div>
         {{/if}}
+        {{#if tagsSubjects}}
+            <div>
+                Тематики: {{> TagsSelectedSubjects tags=tagsSubjects removeButton=false}}
+            </div>
+        {{/if}}
+        {{#if tagsSynonyms}}
+            <div>
+                Синонимы: {{> TagsSelectedSynonyms tags=tagsSynonyms removeButton=false}}
+            </div>
+        {{/if}}                
         
-        {{> SelectedTags tags=tags removeButton=false}}
+        
         <!-- 
         picture: {{picture}}
         Image link: {{imageJSON}}

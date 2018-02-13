@@ -1,15 +1,14 @@
 import { Articles } from "/imports/api/articles.js";
-//import { Subjects } from "/imports/api/subjects.js";
 import { arabicWordToRegExPatern } from "/imports/regexPatterns";
 
-Template.TagsSynonyms.onCreated(function() {
+Template.TagsRoots.onCreated(function() {
   this.tagInput = new ReactiveVar("xyz");
-  if (this.data.synonyms == undefined) this.data.synonyms = [];
-  this.tagIds = new ReactiveVar(this.data.synonyms);
+  if (this.data.roots == undefined) this.data.roots = [];
+  this.tagIds = new ReactiveVar(this.data.roots);
   this.isEditMode = new ReactiveVar(false);
 });
 
-Template.TagsSynonyms.helpers({
+Template.TagsRoots.helpers({
   tagsAutocomplete() {
     const template = Template.instance();
     let searchFor = template.tagInput.get();
@@ -45,15 +44,15 @@ Template.TagsSynonyms.helpers({
   }
 });
 
-Template.TagsSynonyms.events({
-  "keydown .synonyms .tagInput"(event, template) {
+Template.TagsRoots.events({
+  "keydown .roots .tagInput"(event, template) {
     template.isEditMode.set(true);
     setTimeout(() => {
       template.tagInput.set(arabicWordToRegExPatern(event.target.value).source);
       Meteor.subscribe("articlesSearchResult", template.tagInput.get());
     }, 100);
   },
-  "blur .synonyms .tagInput"(event, template) {
+  "blur .roots .tagInput"(event, template) {
     setTimeout(() => template.isEditMode.set(false), 200);
   },
   "click .tagsList .existingTag"(event, template) {
@@ -75,13 +74,13 @@ Template.TagsSynonyms.events({
   }, */
   "click .tag .-remove"(event, template) {
     const tagId = +event.currentTarget.dataset.tagid;
-    template.data.synonyms.splice(tagId, 1);
-    template.tagIds.set(template.data.synonyms);
+    template.data.roots.splice(tagId, 1);
+    template.tagIds.set(template.data.roots);
   }
 });
 
 function addTag(tagId, template) {
-  template.data.synonyms.push(tagId);
-  template.tagIds.set(template.data.synonyms);
+  template.data.roots.push(tagId);
+  template.tagIds.set(template.data.roots);
   template.isEditMode.set(false);
 }

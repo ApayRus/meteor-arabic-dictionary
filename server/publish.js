@@ -76,4 +76,8 @@ Meteor.startup(() => {
     // console.log('')
     return Articles.find({ subjects: subjectId }, { limit: 50 });
   });
+  Meteor.publish("articlesByIds", function(ids) {
+    // console.log('')
+    return Articles.find({ _id: { $in: ids } }, { limit: 50 });
+  });
 });

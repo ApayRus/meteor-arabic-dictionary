@@ -1,12 +1,11 @@
-<template name="SelectedTags">
+<template name="TagsSelectedSynonyms">
     {{#if tags}}
         <div class="selected-tags">
-            {{label}}:
             {{#each tags}}
                 <div class="tag">
-                    <a href="/subject/{{_id}}">
+                    <a href="/article/{{_id}}">
                         <span class="glyphicon glyphicon-tag"></span>
-                        {{title}}
+                        {{> Word}}
                     </a>
                     {{#if ../removeButton}}
                     <i class="glyphicon glyphicon-remove -remove" data-tagid="{{@index}}"></i>

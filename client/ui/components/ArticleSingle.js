@@ -1,24 +1,14 @@
-/*import { Meteor} from 'meteor/meteor'; 
-import { Template } from 'meteor/templating';
-import './ArticleSingle.html'; 
-import './ArticleUpdate.js'; */
 import { Articles } from "/imports/api/articles.js";
 import { Subjects } from "/imports/api/subjects.js";
 import { transcription, isNotDiacritic } from "/imports/transcription.js";
-/*Template.ArticleSingle.onCreated(function(){
-    Meteor.subscribe("users"); //надо переделать на подписку на 1го человека, автора статьи
-});*/
 
 Template.ArticleSingle.onCreated(function() {
   Meteor.subscribe("subjects");
+  Meteor.subscribe("articlesByIds", this.data.synonyms);
+  Meteor.subscribe("articlesByIds", this.data.roots);
 });
 
 Template.ArticleSingle.helpers({
-  /*    showApproveButtons(){
-        //console.log("published", this.published)
-        //is Admin and article still not published
-        return this.published === false && Meteor.userId() == "ghZegnrrKqnNFaFxb"
-    },*/
   showApproveButtons() {
     return (
       Meteor.userId() == "ghZegnrrKqnNFaFxb" &&
@@ -38,7 +28,6 @@ Template.ArticleSingle.helpers({
   },
   image() {
     const image = Images.findOne({ _id: this.picture });
-    console.log("image", image);
     return image;
   },
   imageJSON() {
@@ -52,10 +41,38 @@ Template.ArticleSingle.helpers({
   transcr: function(text) {
     if (text.trim()) return "[ " + transcription(text) + " ]";
   },
-  tags() {
+  tagsSubjects() {
     const ids = this.subjects;
     const tags = [];
     let tagsUnordered = Subjects.find({ _id: { $in: ids } }).fetch(); // эта шляпа возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
+    ids.forEach(tagId => {
+      tags.push(
+        tagsUnordered.filter(elem => {
+          return elem._id == tagId;
+        })[0]
+      );
+    });
+    return tags;
+  },
+  tagsSynonyms() {
+    const ids = this.synonyms;
+    const tags = [];
+    let tagsUnordered = Articles.find({ _id: { $in: ids } }).fetch();
+    // эта шляпа { $in: ids } возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
+    ids.forEach(tagId => {
+      tags.push(
+        tagsUnordered.filter(elem => {
+          return elem._id == tagId;
+        })[0]
+      );
+    });
+    return tags;
+  },
+  tagsRoots() {
+    const ids = this.roots;
+    const tags = [];
+    let tagsUnordered = Articles.find({ _id: { $in: ids } }).fetch();
+    // эта шляпа { $in: ids } возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
     ids.forEach(tagId => {
       tags.push(
         tagsUnordered.filter(elem => {

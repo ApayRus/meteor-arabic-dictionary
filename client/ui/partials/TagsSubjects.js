@@ -1,17 +1,13 @@
-//import { Articles } from "/imports/api/articles.js";
 import { Subjects } from "/imports/api/subjects.js";
 
-Template.Tags.onCreated(function() {
-  Meteor.subscribe("subjects");
-  /*   var self = this;
-  this.tagResults = new ReactiveVar([]); */
+Template.TagsSubjects.onCreated(function() {
   this.tagInput = new ReactiveVar("xyz");
   if (this.data.subjects == undefined) this.data.subjects = [];
   this.tagIds = new ReactiveVar(this.data.subjects);
   this.isEditMode = new ReactiveVar(false);
 });
 
-Template.Tags.helpers({
+Template.TagsSubjects.helpers({
   tagsAutocomplete() {
     const template = Template.instance();
     let searchFor = template.tagInput.get();
@@ -48,7 +44,7 @@ Template.Tags.helpers({
   }
 });
 
-Template.Tags.events({
+Template.TagsSubjects.events({
   "keydown .subjects .tagInput"(event, template) {
     template.isEditMode.set(true);
     setTimeout(() => {
