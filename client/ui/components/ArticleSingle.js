@@ -11,7 +11,7 @@ Template.ArticleSingle.onCreated(function() {
 Template.ArticleSingle.helpers({
   showApproveButtons() {
     return (
-      Meteor.userId() == "ghZegnrrKqnNFaFxb" &&
+      Meteor.userId() == "ghZegnrrKqnNFaFxb" && //Roles.userIsInRole(loggedInUser, ['admin'])
       this.published === false &&
       this.deleted !== true
     );
@@ -21,10 +21,6 @@ Template.ArticleSingle.helpers({
   },
   isMiddleHarakat(middleHarakat, index) {
     return middleHarakat && index == 0;
-  },
-  rootArticle() {
-    Meteor.subscribe("articleSingle", this.rootId);
-    return Articles.findOne({ _id: this.rootId });
   },
   image() {
     const image = Images.findOne({ _id: this.picture });

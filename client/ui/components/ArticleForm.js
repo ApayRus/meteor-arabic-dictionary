@@ -7,6 +7,7 @@ Template.ArticleForm.onCreated(function() {
 
 Template.ArticleForm.helpers({
   article() {
+    //сами данные статьи передаются ей как контекст.
     //newWords, newTranslations - это добавление имен к элементам формы,
     //по которым можно будет отслеживать все изменения в форме
     let newWords = this.words.map((elem, index) => {
@@ -80,27 +81,25 @@ Template.ArticleForm.events({
     //we call ArticleSchema.clean - for set AutoValues like editedBy, editedAt etc
     template.data = ArticleSchema.clean(template.data);
     delete template.data["corrections"];
-    //console.log('template.data', template.data)
     doc.modifier.$set = template.data;
 
-    //doc.modifier.$set delete
-    Meteor.call("articles.update", doc);
+    //if this is updating of existing doc
+    if (doc._id) Meteor.call("articles.update", doc);
+    else {
+      Meteor.call("articles.insert", doc, function(err, newDocId) {
+        $("#modalAddArticle").modal("hide");
+      });
+    }
+
     Session.set("showEditFormForArticle", ""); // after saving we hide the edit form
+    template.find("form").reset();
   },
   "click .article-edit-cancel"(event, template) {
     event.preventDefault();
     Session.set("showEditFormForArticle", ""); // after saving we hide the edit form
+    template.find("form").reset();
   }
-  /*     'change select'(event, template){
-        console.log('change select', event.target)
-    }     */
 });
-
-/* Template.SpeachParts.events({
-    'change .speachPart': function(event, template){
-        console.log('change select', event.target)
-    }
-}) */
 
 function changeTemplateData(event, template) {
   //all possible events names:
@@ -133,16 +132,13 @@ function addWord(template) {
 }
 
 function addExample(event, template) {
-  //event.target.id: addExampleFor.translations.0.translation
   const eventArray = event.target.id.split(".");
   const translationIndex = parseInt(eventArray[2]);
-  //console.log("template.data.before", template.data)
   template.data.translations[translationIndex].examples.push({
     example: "",
     translation: ""
   });
   template.reactiveForm.set("article", template.data);
-  //console.log("template.data", template.data)
 }
 
 function removeWord(event, template) {

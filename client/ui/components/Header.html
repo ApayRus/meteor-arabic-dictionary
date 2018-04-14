@@ -18,7 +18,7 @@
                             <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                             &nbsp;Home</a></li>
                         <li>
-                            <a href="/article/add">
+                            <a data-toggle="modal" data-target="#modalAddArticle">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                 &nbsp;Add
                             </a>
@@ -68,4 +68,5 @@
             </div>    
         </nav>
     </header>
+    {{> AddArticleModalForm}}
 </template>

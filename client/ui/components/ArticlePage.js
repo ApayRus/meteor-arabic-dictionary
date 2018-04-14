@@ -1,62 +1,28 @@
 import { Articles } from "/imports/api/articles.js";
 
-/*Template.body.onCreated(function bodyOnCreated() {
-  this.state = new ReactiveDict();
-  Meteor.subscribe('tasks');
-});*/
-
 Template.ArticlePage.onCreated(function() {
   var self = this;
   var id = FlowRouter.getParam("id");
   self.autorun(function() {
     self.subscribe("articleSingle", id);
   });
-  //Meteor.subscribe('articles');
 });
 
 Template.ArticlePage.helpers({
   articles() {
     const id = FlowRouter.getParam("id");
-    const article = Articles.findOne({ _id: id });
-    //Session.set('DocumentTitle', article.words.join(" ").toString())
-    /*     
-    let published = true;
-    let showCorrections = false;
-    const corrections = article.corrections || [];
-    if (article.published === false) {
-      published = false;
+    //we need only 1 article, but then it will be passed to <ArticlesList>
+    //witch requeres an array of articles
+    const articles = [];
+    let article = Articles.findOne({ _id: id });
+    if (article === undefined) {
+      document.location.reload();
     }
-
-    if (corrections.length > 0) {
-      showCorrections = true;
-    }
-
-    return { article, corrections, showCorrections, published }; 
-    */
-    return [article];
+    articles.push(article);
+    console.log("articlePage articles", articles);
+    return articles;
   },
   isAdmin() {
-    return Meteor.userId() == "ghZegnrrKqnNFaFxb";
+    return Meteor.userId() == "ghZegnrrKqnNFaFxb"; //Roles.userIsInRole(loggedInUser, ['admin'])
   }
-});
-
-//Template.ArticleMenu.inheritsHelpersFrom('ArticlePage');
-
-Template.ArticlePage.events({
-  /*     'click .correction .btn-success'(){
-        doc_id = FlowRouter.getParam('id');
-        Meteor.call('articles.accept_correction', doc_id, this);
-    },
-    'click .correction .btn-danger'(){
-        doc_id = FlowRouter.getParam('id');
-        Meteor.call('articles.reject_correction', doc_id, this);
-    },
-    'click .main-article .btn-success'(){
-        doc_id = FlowRouter.getParam('id');
-        Meteor.call('articles.accept', doc_id, this);
-    },
-    'click .main-article .btn-danger'(){
-        doc_id = FlowRouter.getParam('id');
-        Meteor.call('articles.reject', doc_id, this);
-    },   */
 });

@@ -1,8 +1,9 @@
 Template.ArticleMenu.helpers({
   correctionsCount() {
-    if (this.corrections.length > 0)
-      return "Правки: " + this.corrections.length;
-    else return "";
+    if (this.corrections)
+      if (this.corrections.length > 0)
+        return "Правки: " + this.corrections.length;
+      else return "";
   },
   isAdmin() {
     return Meteor.userId() == "ghZegnrrKqnNFaFxb";

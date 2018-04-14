@@ -455,15 +455,16 @@ Meteor.methods({
     if (Meteor.userId() == "ghZegnrrKqnNFaFxb") {
       doc.modifier.$set.lastEvent = {};
       doc.modifier.$set.lastEvent.type = "создал статью";
-      Articles.insert(doc.modifier.$set);
+      var newDocId = Articles.insert(doc.modifier.$set);
       //function(error, result){}
     } else {
       //if user is not Admin, he can add draft of article, for approving by Admin
       doc.modifier.$set.lastEvent = {};
       doc.modifier.$set.lastEvent.type = "предложил статью";
       doc.modifier.$set.published = false;
-      Articles.insert(doc.modifier.$set);
+      var newDocId = Articles.insert(doc.modifier.$set);
     }
+    return newDocId;
   },
 
   "articles.remove"(docId) {
@@ -488,7 +489,8 @@ Meteor.methods({
 ///////////////----HOOKS------/////////////////////
 Articles.after.insert(function(userId, doc) {
   Meteor.call("events.insert", lastEvent(doc));
-
+  /*   let docId = doc._id;
+  FlowRouter.go(`/article/${docId}`); */
   FlowRouter.go("article", { id: doc._id });
 });
 
