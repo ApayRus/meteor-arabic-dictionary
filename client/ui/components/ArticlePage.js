@@ -16,6 +16,8 @@ Template.ArticlePage.helpers({
     const articles = [];
     let article = Articles.findOne({ _id: id });
     if (article === undefined) {
+      // while redirection from /article/x to new created /article/y, there is an error
+      // i can't understand it. and for now I found only this way to fix it
       document.location.reload();
     }
     articles.push(article);
