@@ -34,3 +34,4 @@ ostrio:files
 ostrio:autoform-files@2.0.2
 dburles:mongo-collection-instances
 session@1.1.7
+nimble:restivus

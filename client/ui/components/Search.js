@@ -1,12 +1,12 @@
 import { Articles } from "/imports/api/articles.js";
-import { arabicWordToRegExPatern } from "/imports/regexPatterns";
+import { arabicWordToRegExPattern } from "/imports/regexPatterns";
 
 Template.Search.onCreated(function() {
   var self = this;
   self.autorun(function() {
     self.searchFor = FlowRouter.getParam("searchFor");
     if (self.searchFor) {
-      self.searchFor = arabicWordToRegExPatern(self.searchFor).source;
+      self.searchFor = arabicWordToRegExPattern(self.searchFor).source;
       self.subscribe("articlesSearchResult", self.searchFor);
     }
   });

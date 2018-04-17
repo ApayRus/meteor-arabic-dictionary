@@ -1,4 +1,4 @@
-export function arabicWordToRegExPatern(word) {
+export function arabicWordToRegExPattern(word) {
   const haracats = ["َ", "ِ", "ُ", "ً", "ٍ", "ٌ", "ْ"];
   const haracat = "[" + haracats.join("") + "]?";
   const tashdid = "[" + "ّ" + "]?";
