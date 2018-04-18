@@ -1,5 +1,5 @@
 import { Articles } from "/imports/api/articles.js";
-import { arabicWordToRegExPatern } from "/imports/regexPatterns";
+import { arabicWordToRegExPattern } from "/imports/regexPatterns";
 
 Template.TagsRoots.onCreated(function() {
   this.tagInput = new ReactiveVar("xyz");
@@ -48,7 +48,7 @@ Template.TagsRoots.events({
   "keydown .roots .tagInput"(event, template) {
     template.isEditMode.set(true);
     setTimeout(() => {
-      template.tagInput.set(arabicWordToRegExPatern(event.target.value).source);
+      template.tagInput.set(arabicWordToRegExPattern(event.target.value).source);
       Meteor.subscribe("articlesSearchResult", template.tagInput.get());
     }, 100);
   },

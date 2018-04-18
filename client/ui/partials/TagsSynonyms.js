@@ -1,6 +1,6 @@
 import { Articles } from "/imports/api/articles.js";
 //import { Subjects } from "/imports/api/subjects.js";
-import { arabicWordToRegExPatern } from "/imports/regexPatterns";
+import { arabicWordToRegExPattern } from "/imports/regexPatterns";
 
 Template.TagsSynonyms.onCreated(function() {
   this.tagInput = new ReactiveVar("xyz");
@@ -49,7 +49,7 @@ Template.TagsSynonyms.events({
   "keydown .synonyms .tagInput"(event, template) {
     template.isEditMode.set(true);
     setTimeout(() => {
-      template.tagInput.set(arabicWordToRegExPatern(event.target.value).source);
+      template.tagInput.set(arabicWordToRegExPattern(event.target.value).source);
       Meteor.subscribe("articlesSearchResult", template.tagInput.get());
     }, 100);
   },
