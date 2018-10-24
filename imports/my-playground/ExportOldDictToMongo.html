@@ -1,183 +1,195 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="Rashidu">
+<html lang="en" ng-app="TextToMongo">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
 
 
 
 <body>
- 
-<div class="page-header"><h1>Text file arabic dict base TO mongodb import json</h1></div>  
-      
-<div class="content" ng-controller="MyController">
-    <div class="row">
-        <div class="col-xs-12 col-sm-6">
-          <h3>Input: <span role="button" tabindex="0" class="glyphicon glyphicon-question-sign" id="helping" data-toggle="popover" data-trigger="focus" data-placement="right" title="Подсказка" data-content="Разместите текст словаря в поле ниже, затем нажмите кнопку Split, внизу"></span></h3>
-           <textarea ng-model="inputDict">{{1+1}}</textarea>
-           <button class="btn btn-primary" ng-click="splitButtonClicked()">Split <span class="glyphicon glyphicon-chevron-right"></span>    </button> 
 
-        </div>
-        <div class="col-xs-12 col-sm-6" ng-show="showOutput">
-           <h3>Output JSON:</h3>
-            <textarea ng-model="outputJson">{{xxx}}</textarea>
+    <div class="page-header">
+        <h1>Text file arabic dict base TO mongodb import json</h1>
+    </div>
+
+    <div class="content" ng-controller="MyController">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <h3>Input: <span role="button" tabindex="0" class="glyphicon glyphicon-question-sign" id="helping"
+                        data-toggle="popover" data-trigger="focus" data-placement="right" title="Подсказка"
+                        data-content="Разместите текст словаря в поле ниже, затем нажмите кнопку Split, внизу"></span></h3>
+                <textarea ng-model="inputDict">{{1+1}}</textarea>
+                <button class="btn btn-primary" ng-click="splitButtonClicked()">Split <span class="glyphicon glyphicon-chevron-right"></span>
+                </button>
+
+            </div>
+            <div class="col-xs-12 col-sm-6" ng-show="showOutput">
+                <h3>Output JSON:</h3>
+                <textarea ng-model="outputJson">{{xxx}}</textarea>
+            </div>
         </div>
     </div>
-</div> 
-       
-          
-             
-<script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>                
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
- 
+
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+
     <style>
         textarea {
-            width: 100%; 
+            width: 100%;
             height: 400px;
         }
+
         body {
             padding: 10px;
         }
+
         .glyphicon-question-sign {
             font-size: 14px;
-            cursor:pointer;
+            cursor: pointer;
         }
-
-    </style>  
-    
-    
-<script>
-    
-angular.module('Rashidu', [])
-    .controller('MyController', ['$scope', function($scope) {
-        
-    $scope.showOutput = false;
-
-    $scope.splitButtonClicked = function () {
-        
-        var articles = parseDict($scope.inputDict)
+    </style>
 
 
-        $scope.outputJson = articles.join("\n"); 
-        $scope.showOutput = true 
-    }
+    <script>
 
-    }]);
-    
-$('#helping').popover()
+        angular.module('TextToMongo', [])
+            .controller('MyController', ['$scope', function ($scope) {
 
-//this function parse code of AudioBook to array of objects with the structure [{timingStart,timingEnd,text}] ; separates all code into the phrases objects
-function parseDict( text ){
+                $scope.showOutput = false;
 
-    var articles = []
-/*
-    var template0 = /<!--audio start="(.+?)" end="(.+?)"-->([\s\S]+?)<!--\/audio-->/g
-    var template = /<!--audio start="(.+?)" end="(.+?)"-->([\s\S]+?)<!--\/audio-->/
-*/
-    //var tr_template = /(\d.+?\).+?)\d.+?\)/g; 
+                $scope.splitButtonClicked = function () {
 
-    var articles0 = text.split("\n"); // array with whole phrases 
-    var date = new Date(); 
+                    var articles = parseDict($scope.inputDict)
 
-    articles0.forEach( function(article0){
 
-        var article0 = article0.split("\t");
-        var article = {}; 
-        var words = [];
-        var translations = [];
-        var speachPart = ""; 
-        var middleHarakat = "";
+                    $scope.outputJson = articles.join("\n");
+                    $scope.showOutput = true
+                }
 
-        words.push({ 
-            note: "", 
-            word: article0[1].trim()}
-            );
-        
-        //if (article0[2] || article[3] || article[4] || article[5] )
-        if(article0.slice(2,6).join("").trim()) {
-            if(article0[2].match(/[IVX]/)){
-                speachPart = "глагол, "+article0[2]+" порода"; 
-                middleHarakat = article0[3];
+            }]);
+
+        $('#helping').popover()
+
+        function parseDict(text) {
+
+            var articles = []
+
+            var articles0 = text.split("\n"); // array with whole phrases 
+            var date = new Date();
+
+            articles0.forEach(function (article0) {
+
+                var article0 = article0.split("\t");
+                var article = {};
+                var words = [];
+                var translations = [];
+                var speachPart = "";
+                var middleHarakat = "";
+
                 words.push({
-                    note: "", 
-                    word: article0[5].trim()
-                });                
-            }
-            else {
-                words.push({
-                    note: article0.slice(2,5).join(" "), 
-                    word: article0[5].trim()
-                });                
-            }
-        }
+                    note: "",
+                    word: article0[1].trim()
+                }
+                );
+
+                //if (article0[2] || article[3] || article[4] || article[5] )
+                if (article0.slice(2, 6).join("").trim()) {
+                    if (article0[2].match(/[IVX]/)) {
+                        speachPart = "глагол, " + article0[2] + " порода";
+                        middleHarakat = article0[3];
+                        words.push({
+                            note: "",
+                            word: article0[5].trim()
+                        });
+                    }
+                    else {
+                        words.push({
+                            note: article0.slice(2, 5).join(" "),
+                            word: article0[5].trim()
+                        });
+                    }
+                }
 
 
-        //if (article[6] || article[7] )
-        if(article0.slice(6,8).join("").trim())
-            words.push({
-                note: article0[6], 
-                word: article0[7].trim()
+                //if (article[6] || article[7] )
+                if (article0.slice(6, 8).join("").trim())
+                    words.push({
+                        note: article0[6],
+                        word: article0[7].trim()
+                    });
+
+                //if (article[8] || article[9] )
+                if (article0.slice(8, 10).join("").trim())
+                    words.push({
+                        note: article0[8],
+                        word: article0[9].trim()
+                    });
+
+                /*        
+                // тут я пытался разбивать перевод на отдельные переводы, но это ненадежно 
+                translations = article0[10].split(/\d+\)/);
+                
+                        translations = translations.map(function(tr){
+                            return {translation: tr}
+                        });*/
+
+                translations.push({ translation: article0[10] });
+
+                article._id = article0[0];
+                article.words = words;
+                article.translations = translations;
+                //article.createdBy = "ghZegnrrKqnNFaFxb"; //aparus
+                article.createdByUserId = "c6BKQpLZkKANiGx2p"; //msaif
+                article.createdByUserName = "msaif";
+                article.speachPart = speachPart;
+                if (middleHarakat)
+                    article.middleHarakat = middleHarakat;
+
+                article.createdAt = new Date();
+                article.published = true;
+
+                var artstr = JSON.stringify(article);
+                articles.push(artstr);
+
+                speachPart = "";
+                middleHarakat = "";
+
             });
 
-        //if (article[8] || article[9] )
-        if(article0.slice(8,10).join("").trim())
-            words.push({
-                note: article0[8], 
-                word: article0[9].trim()
-            });
-        
-/*        translations = article0[10].split(/\d+\)/);
+            return articles
 
-        translations = translations.map(function(tr){
-            return {translation: tr}
-        });*/ 
-
-        translations.push( {translation: article0[10]});
-
-        article._id = article0[0];
-        article.words = words;
-        article.translations = translations;
-        //article.createdBy = "ghZegnrrKqnNFaFxb"; //aparus
-        article.createdByUserId = "c6BKQpLZkKANiGx2p"; //msaif
-        article.createdByUserName = "msaif";
-        article.speachPart = speachPart; 
-        if(middleHarakat)
-            article.middleHarakat = middleHarakat; 
-        
-        article.createdAt = new Date();
-        article.published = true;
-
-        var artstr = JSON.stringify(article);
-        articles.push( artstr );
-
-        speachPart = "";
-        middleHarakat = "";
-        
-    }); 
-
-    return articles
-    
-}
+        }
 
 
-</script>
+    </script>
 
 </body>
 
 <!-- 
+    articleExample in json 
+            "words": [
+                {
+                    "note": "info1", "word": "kitab", 
+                    "note": "info2", "word":"kutub"
+                }
+            ]
             "translations" : [ 
             { "translation" : "translation1", 
                 "examples" : [ 
