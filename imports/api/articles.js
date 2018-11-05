@@ -66,6 +66,19 @@ ExampleSchema = new SimpleSchema({
     }
   }
 });
+ImageSchema = new SimpleSchema({
+  image: {
+    type: String,
+    optional: true,
+    trim: true,
+    label: "картинка",
+    autoform: {
+      label: false,
+      placeholder: "schemaLabel",
+      class: "image"
+    }
+  }
+});
 
 TranslationSchema = new SimpleSchema({
   translation: {
@@ -87,7 +100,25 @@ TranslationSchema = new SimpleSchema({
       class: "examples"
     }
   },
-  "examples.$": ExampleSchema
+  "examples.$": ExampleSchema,
+  subjects: {
+    type: Array,
+    optional: true,
+    label: "Тематики",
+    defaultValue: []
+  },
+  "subjects.$": {
+    type: String
+  },
+  images: {
+    type: Array,
+    label: "Images",
+    optional: true,
+    autoform: {
+      class: "images"
+    }
+  },
+  "images.$": ImageSchema
 });
 
 const SpeachParts = [
@@ -293,17 +324,9 @@ ArticleSchema = new SimpleSchema({
   },
   "roots.$": {
     type: String
-  },
-  subjects: {
-    type: Array,
-    optional: true,
-    label: "Тематики",
-    defaultValue: []
-  },
-  "subjects.$": {
-    type: String
-  },
-  synonyms: {
+  }
+
+  /*   synonyms: {
     type: Array,
     optional: true,
     label: "Синонимы",
@@ -311,20 +334,7 @@ ArticleSchema = new SimpleSchema({
   },
   "synonyms.$": {
     type: String
-  }
-  /*    tags: {
-        type: Array, 
-        optional: true,
-        defaultValue: [],
-    }, 
-    'tags.$': {
-        type: String,
-        label: 'Tag',
-        autoform: {
-            type: 'tagsTypeahead',
-            'tag-set': 'default'      //optional. Default is 'default'.
-        }        
-    }*/
+  } */
 });
 
 Articles.attachSchema(ArticleSchema);
@@ -532,8 +542,7 @@ function lastEvent(doc) {
 
 function changedCorrections(docId, userId, correction) {
   let corrections =
-    Articles.findOne({ _id: docId }, { fields: { corrections: 1 } })
-      .corrections || [];
+    Articles.findOne({ _id: docId }, { fields: { corrections: 1 } }).corrections || [];
   let count = 0;
   //console.log('old corrections', corrections);
 
@@ -584,20 +593,15 @@ function parseArticle(text, word) {
       var examples = [];
       var translation = "";
       var examplesBeginnigIndex = elem.search(example_pattern);
-      if (examplesBeginnigIndex > -1)
-        translation = elem.substring(0, examplesBeginnigIndex);
+      if (examplesBeginnigIndex > -1) translation = elem.substring(0, examplesBeginnigIndex);
       else translation = elem.trim();
       while ((match = example_pattern.exec(elem))) {
         var exampleString = match[1];
         //\u0400-\u04FF - cyrillic symbols
         translationBeginningIndex = exampleString.search(/\(?[\u0400-\u04FF]/);
-        var example = exampleString
-          .substring(0, translationBeginningIndex)
-          .trim();
+        var example = exampleString.substring(0, translationBeginningIndex).trim();
         example = reverseAndReplaceTilda(example, word);
-        var exTranslation = exampleString
-          .substring(translationBeginningIndex)
-          .trim();
+        var exTranslation = exampleString.substring(translationBeginningIndex).trim();
         examples.push({ example, translation: exTranslation });
         example_pattern.lastIndex--;
       }

@@ -1,9 +1,9 @@
 <template name="TagsSubjects">
-    <div class="subjects tags">
+    <div class="subjects tags" name="subjectsFor.{{../article}}">
         <label for="inputSubject">Тематики</label>
-        {{> TagsSelectedSubjects  removeButton=true tags=tags}}
+        {{> TagsSelectedSubjects removeButton=true tags=tags}}
         <div class="-dropdown-container">
-        <input id="inputSubject" type="text" class="form-control tagInput" placeholder="+ добавить тематику">
+            <input id="inputSubject" type="text" class="form-control tagInput" placeholder="+ добавить тематику">
             {{#if isEditMode}}
             <ul class="tagsList -dropdown-content">
                 {{#each tagsAutocomplete}}
@@ -16,5 +16,5 @@
             </ul>
             {{/if}}
         </div>
-</div>
+    </div>
 </template>

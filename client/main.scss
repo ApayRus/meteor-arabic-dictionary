@@ -181,11 +181,14 @@ form.article {
     padding-bottom: 30px;
     padding-top: 5px;
   }
-  .add-example {
-    position: absolute;
+  /*.add-example {
+     position: absolute; 
     bottom: 1px;
     right: 1px;
     margin: 5px 20px;
+  }*/
+  .translation-actions {
+    text-align: right;
   }
 }
 
@@ -450,7 +453,7 @@ body {
   }
 }
 
-.tagInput{
+.tagInput {
   width: 161px;
 }
 

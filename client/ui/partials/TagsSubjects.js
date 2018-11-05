@@ -2,8 +2,11 @@ import { Subjects } from "/imports/api/subjects.js";
 
 Template.TagsSubjects.onCreated(function() {
   this.tagInput = new ReactiveVar("xyz");
-  if (this.data.subjects == undefined) this.data.subjects = [];
-  this.tagIds = new ReactiveVar(this.data.subjects);
+  // this.data.translationId = "translations.5.translation"
+  this.translationId = this.data.translationId.split(".")[1];
+  //ссылка на объект статьи, куда мы будем записывать изменения subjects
+  this.subjects = this.data.parentTemplateInstance.data.translations[this.translationId].subjects;
+  this.tagIds = new ReactiveVar(this.subjects);
   this.isEditMode = new ReactiveVar(false);
 });
 
@@ -73,13 +76,13 @@ Template.TagsSubjects.events({
   },
   "click .subjects .tag .-remove"(event, template) {
     const tagId = +event.currentTarget.dataset.tagid;
-    template.data.subjects.splice(tagId, 1);
-    template.tagIds.set(template.data.subjects);
+    template.subjects.splice(tagId, 1);
+    template.tagIds.set(template.subjects);
   }
 });
 
 function addTag(tagId, template) {
-  template.data.subjects.push(tagId);
-  template.tagIds.set(template.data.subjects);
+  template.subjects.push(tagId);
+  template.tagIds.set(template.subjects);
   template.isEditMode.set(false);
 }

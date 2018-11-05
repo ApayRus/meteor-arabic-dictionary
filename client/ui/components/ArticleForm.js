@@ -26,14 +26,23 @@ Template.ArticleForm.helpers({
                     exampleId: `translations.${index}.examples.${index2}`
                   };
                 })
-              : []
+              : [],
+            images: elem.images
+              ? elem.images.map((elem3, index3) => {
+                  return {
+                    image: elem3.image,
+                    imageId: `translations.${index}.images.${index3}`
+                  };
+                })
+              : [],
+            subjects: elem.subjects || []
           };
         })
       : [];
 
     this.words = newWords;
     this.translations = newTranslations;
-    this.picture = Session.get("picture");
+    //this.picture = Session.get("picture");
     Template.instance().reactiveForm.set("article", this);
     const article = Template.instance().reactiveForm.get("article");
     return article;
@@ -43,6 +52,11 @@ Template.ArticleForm.helpers({
   },
   showMiddleHarakat(speachPart, index) {
     return speachPart == "глагол, I порода" && index == 0;
+  },
+  parentTemplateInstance() {
+    //console.log("subjects", subjects);
+    //const instance = ;
+    return Template.instance();
   },
   picture() {
     return Session.get("picture");
@@ -62,6 +76,10 @@ Template.ArticleForm.events({
     event.preventDefault();
     addExample(event, template);
   },
+  "click .add-image"(event, template) {
+    event.preventDefault();
+    addImage(event, template);
+  },
   "change .editField input"(event, template) {
     changeTemplateData(event, template);
   },
@@ -74,6 +92,9 @@ Template.ArticleForm.events({
   "click .remove-example"(event, template) {
     removeExample(event, template);
   },
+  "click .remove-image"(event, template) {
+    removeImage(event, template);
+  },
   "click .article-save"(event, template) {
     event.preventDefault();
     const doc = { _id: "", modifier: { $set: {} } };
@@ -82,6 +103,7 @@ Template.ArticleForm.events({
     template.data = ArticleSchema.clean(template.data);
     delete template.data["corrections"];
     doc.modifier.$set = template.data;
+    console.log("template PARENT", template);
 
     //if this is updating of existing doc
     if (doc._id) Meteor.call("articles.update", doc);
@@ -110,15 +132,14 @@ function changeTemplateData(event, template) {
   //translations.0.examples.0.translation
   const eventArray = event.target.name.split(".");
   if (eventArray.length == 3) {
-    template.data[eventArray[0]][parseInt(eventArray[1])][eventArray[2]] =
-      event.target.value;
+    template.data[eventArray[0]][parseInt(eventArray[1])][eventArray[2]] = event.target.value;
   } else if (eventArray.length == 5) {
-    template.data[eventArray[0]][parseInt(eventArray[1])][eventArray[2]][
-      parseInt(eventArray[3])
-    ][eventArray[4]] =
-      event.target.value;
+    template.data[eventArray[0]][parseInt(eventArray[1])][eventArray[2]][parseInt(eventArray[3])][
+      eventArray[4]
+    ] = event.target.value;
   }
   template.reactiveForm.set("article", template.data);
+  console.log("template.data", template.data);
 }
 
 function addTranslation(template) {
@@ -137,6 +158,18 @@ function addExample(event, template) {
   template.data.translations[translationIndex].examples.push({
     example: "",
     translation: ""
+  });
+  template.reactiveForm.set("article", template.data);
+}
+
+function addImage(event, template) {
+  console.log("event.target", event.target);
+  console.log("template", template);
+
+  const eventArray = event.target.id.split(".");
+  const translationIndex = parseInt(eventArray[2]);
+  template.data.translations[translationIndex].images.push({
+    image: ""
   });
   template.reactiveForm.set("article", template.data);
 }
@@ -163,5 +196,14 @@ function removeExample(event, template) {
   const translationIndex = parseInt(eventArray[2]);
   const exampleIndex = parseInt(eventArray[4]);
   template.data.translations[translationIndex].examples.splice(exampleIndex, 1);
+  template.reactiveForm.set("article", template.data);
+}
+
+function removeImage(event, template) {
+  //id="remove.translations.3.examples.0"
+  const eventArray = event.target.id.split(".");
+  const translationIndex = parseInt(eventArray[2]);
+  const imageIndex = parseInt(eventArray[4]);
+  template.data.translations[translationIndex].images.splice(imageIndex, 1);
   template.reactiveForm.set("article", template.data);
 }

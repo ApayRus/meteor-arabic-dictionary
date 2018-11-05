@@ -1,72 +1,94 @@
 <template name="ArticleForm">
-        <form id="articleForm-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
-          <div class="panel-heading">
-                <div class="panel-title words">
-                    <div class="label label-info speach-part">{{speachPart}}</div><br />
-                    <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
+    <form id="articleForm-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
+        <div class="panel-heading">
+            <div class="panel-title words">
+                <div class="label label-info speach-part">{{speachPart}}</div><br />
+                <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
                     особый шаблон его вывода, например, среднекорневую глассную и масдары -->
-                        {{#each article.words}}
-                                <div class="wordEdit editField" id="{{wordId}}">
-                                    <i class="glyphicon glyphicon-remove remove-word -remove" id="remove.{{wordId}}"></i>
-                                    <input type="text" placeholder="прим." value="{{note}}" name="{{wordId}}.note" class="form-control note">
-                                    <input type="text" placeholder="слово" value="{{word}}" name="{{wordId}}.word" class="form-control word -arabic-text-mid">
-                                </div>
-                            {{#if showMiddleHarakat ../speachPart @index}}
-                                <div class="note middleHarakat" title="среднекорневая гласная настоящего времени">
-                                        <input type="text" placeholder="скгнв" value="{{../middleHarakat}}" name="middleHarakat" class="form-control note">
-                                </div>
-                            {{/if}}
+                {{#each article.words}}
+                <div class="wordEdit editField" id="{{wordId}}">
+                    <i class="glyphicon glyphicon-remove remove-word -remove" id="remove.{{wordId}}"></i>
+                    <input type="text" placeholder="прим." value="{{note}}" name="{{wordId}}.note" class="form-control note">
+                    <input type="text" placeholder="слово" value="{{word}}" name="{{wordId}}.word" class="form-control word -arabic-text-mid">
+                </div>
+                {{#if showMiddleHarakat ../speachPart @index}}
+                <div class="note middleHarakat" title="среднекорневая гласная настоящего времени">
+                    <input type="text" placeholder="скгнв" value="{{../middleHarakat}}" name="middleHarakat" class="form-control note">
+                </div>
+                {{/if}}
+                {{/each}}
+                <div class="add-word">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="translations">
+                {{#each tr in article.translations}}
+                <div class="translation">
+                    <div class="editField editTranslation" id="{{tr.translationId}}">
+                        <input type="text" name="{{tr.translationId}}" value="{{tr.translation}}" class="form-control"
+                            placeholder="перевод">
+                        <i class="glyphicon glyphicon-remove remove-translation -remove" id="remove.{{tr.translationId}}"></i>
+                    </div>
+
+                    <div class="subjects">
+                        {{> TagsSubjects parentTemplateInstance=parentTemplateInstance translationId=tr.translationId
+                        }}
+                    </div>
+
+                    <div class="images images-form-{{article._id}}-{{@index}}">
+                        {{#each tr.images}}
+                        <div class="imageEdit editField" id="{{imageId}}">
+                            <img class="form-control example" width="200" placeholder="preview" src="{{image}}">
+                            <input type="text" placeholder="ссылка на картинку" value="{{image}}" name="{{imageId}}.image"
+                                class="form-control translation">
+                            <i class="glyphicon glyphicon-remove remove-image -remove" id="remove.{{imageId}}"></i>
+                        </div>
                         {{/each}}
-                        <div class="add-word">
-                                <i class="glyphicon glyphicon-plus"></i>
+                        <button class="btn btn-default btn-xs add-image translation-actions" id="addImageFor.{{tr.translationId}}">
+                            <i class="glyphicon glyphicon-plus"></i>Картинка
+                        </button>
+                    </div>
+
+                    <div class="examples examples-form-{{article._id}}-{{@index}}">
+                        {{#each tr.examples}}
+                        <div class="exampleEdit editField" id="{{exampleId}}">
+                            <input type="text" placeholder="пример" value="{{example}}" name="{{exampleId}}.example"
+                                class="form-control example -arabic-text-mid">
+                            <input type="text" placeholder="перевод примера" value="{{translation}}" name="{{exampleId}}.translation"
+                                class="form-control translation">
+                            <i class="glyphicon glyphicon-remove remove-example -remove" id="remove.{{exampleId}}"></i>
                         </div>
+                        {{/each}}
+                        <button class="btn btn-default btn-xs add-example translation-actions" id="addExampleFor.{{tr.translationId}}">
+                            <i class="glyphicon glyphicon-plus"></i>Пример
+                        </button>
+                    </div>
                 </div>
-          </div>
-          <div class="panel-body">
-                <div class="translations">
-                    {{#each article.translations}}
-                        <div class="translation">
-                                <div class="editField editTranslation" id="{{translationId}}">
-                                    <input type="text" name="{{translationId}}" value="{{translation}}" class="form-control" placeholder="перевод">
-                                    <i class="glyphicon glyphicon-remove remove-translation -remove" id="remove.{{translationId}}"></i>
-                                </div>
-        
-                                <div class="examples examples-form-{{../_id}}-{{@index}}">
-                                        {{#each examples}}
-                                            <div class="exampleEdit editField" id="{{exampleId}}">
-                                                    <input type="text" placeholder="пример" value="{{example}}" name="{{exampleId}}.example" class="form-control example -arabic-text-mid">
-                                                    <input type="text" placeholder="перевод примера" value="{{translation}}" name="{{exampleId}}.translation" class="form-control translation">
-                                                    <i class="glyphicon glyphicon-remove remove-example -remove" id="remove.{{exampleId}}"></i>
-                                            </div>
-                                        {{/each}}
-                                        <button class="btn btn-default btn-xs add-example" id="addExampleFor.{{translationId}}">
-                                                <i class="glyphicon glyphicon-plus"></i>Пример
-                                        </button>
-                                </div>
-                        </div>
-                    {{/each}}
-                    <button class="btn btn-default btn-sm add-translation">
-                            <i class="glyphicon glyphicon-plus"></i>Перевод
-                    </button>
-                </div>
-                {{> TagsSubjects}}
-                {{> TagsSynonyms}}
-                {{> TagsRoots}}
-                <!--                 
+                {{/each}}
+                <button class="btn btn-default btn-sm add-translation">
+                    <i class="glyphicon glyphicon-plus"></i>Перевод
+                </button>
+            </div>
+
+            <!-- {{> TagsSynonyms}} -->
+            {{> TagsRoots}}
+            <!--                 
                 <div class="uploadImage">
                     {{> uploadForm}}
                     picture: {{picture}}
                 </div> 
                 -->
-          </div>
-          <div class="panel-footer">
+        </div>
+        <div class="panel-footer">
             <button class="btn btn-primary article-save">Сохранить</button>
             <button class="btn btn-default article-edit-cancel">Отмена</button>
-          </div>
-        </form>
+        </div>
+    </form>
 </template>
-        
-        <!--<script>
+
+<!--<script>
             const atrtcl = { 
                 "_id" : "se4AcxaRqAzeb2Mdy", 
                 "words" : [ 
