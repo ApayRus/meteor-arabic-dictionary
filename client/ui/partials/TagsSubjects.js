@@ -5,16 +5,16 @@ Template.TagsSubjects.onCreated(function() {
   // this.data.elementName = "translations.5.translation"
   //name="translations.6.examples.0"
   const elemNameArray = this.data.elementName.split(".");
-  const translationId = +elemNameArray[1];
+  const translationId = elemNameArray[1];
 
   const templateData = this.data.parentTemplateInstance.data; //ссылка на объект статьи, куда мы будем записывать изменения subjects
+  this.subjects = [];
   if (elemNameArray.length == 3) {
     this.subjects = templateData.translations[translationId].subjects;
   } else if (elemNameArray.length == 4) {
-    const exampleId = +elemNameArray[3];
+    const exampleId = elemNameArray[3];
     this.subjects = templateData.translations[translationId].examples[exampleId].subjects;
   }
-  console.log("this.subjects ", this.subjects);
   this.tagIds = new ReactiveVar(this.subjects);
   this.isEditMode = new ReactiveVar(false);
 });
@@ -95,5 +95,4 @@ function addTag(tagId, template) {
   template.subjects.push(tagId);
   template.tagIds.set(template.subjects);
   template.isEditMode.set(false);
-  console.log("template.subjects ", template.subjects);
 }
