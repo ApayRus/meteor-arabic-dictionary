@@ -40,10 +40,7 @@ Meteor.startup(() => {
     );
   });
 
-  Meteor.publish("articlesWithActiveCorrections", function(
-    startIndex,
-    endIndex
-  ) {
+  Meteor.publish("articlesWithActiveCorrections", function(startIndex, endIndex) {
     return Articles.find(
       {
         $or: [
@@ -74,7 +71,7 @@ Meteor.startup(() => {
   });
   Meteor.publish("articlesBySubject", function(subjectId) {
     // console.log('')
-    return Articles.find({ subjects: subjectId }, { limit: 50 });
+    return Articles.find({ "translations.subjects": subjectId }, { limit: 50 });
   });
   Meteor.publish("articlesByIds", function(ids) {
     // console.log('')

@@ -15,9 +15,7 @@ Template.ArticlesBySubject.helpers({
     const subjectId = Template.instance().subjectId;
     const subject = Subjects.findOne({ _id: subjectId });
     console.log("subject", subject);
-    const articles = Articles.find({
-      subjects: subjectId
-    });
+    const articles = Articles.find({ "translations.subjects": subjectId });
     const count = articles.count();
     return { articles, count, subject };
   }
