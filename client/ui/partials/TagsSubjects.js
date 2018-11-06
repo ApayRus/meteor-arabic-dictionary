@@ -32,7 +32,8 @@ Template.TagsSubjects.helpers({
     const template = Template.instance();
     const ids = template.tagIds.get();
     const tags = [];
-    let tagsUnordered = Subjects.find({ _id: { $in: ids } }).fetch(); // эта шляпа возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
+    let tagsUnordered = Subjects.find({ _id: { $in: ids } }).fetch();
+    // эта шляпа возвращает массив в смешанном порядке, а нам нужен порядок, как их вводили
     ids.forEach(tagId => {
       tags.push(
         tagsUnordered.filter(elem => {
