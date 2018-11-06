@@ -71,7 +71,15 @@ Meteor.startup(() => {
   });
   Meteor.publish("articlesBySubject", function(subjectId) {
     // console.log('')
-    return Articles.find({ "translations.subjects": subjectId }, { limit: 50 });
+    return Articles.find(
+      {
+        $or: [
+          { "translations.subjects": subjectId },
+          { "translations.examples.subjects": subjectId }
+        ]
+      },
+      { limit: 50 }
+    );
   });
   Meteor.publish("articlesByIds", function(ids) {
     // console.log('')

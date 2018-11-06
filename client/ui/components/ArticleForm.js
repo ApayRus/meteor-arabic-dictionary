@@ -17,21 +17,30 @@ Template.ArticleForm.helpers({
       ? this.translations.map((elem, index) => {
           return {
             translation: elem.translation,
-            translationId: `translations.${index}.translation`,
+            translationId: `translations.${index}`,
             examples: elem.examples
               ? elem.examples.map((elem2, index2) => {
                   return {
                     example: elem2.example,
                     translation: elem2.translation,
-                    exampleId: `translations.${index}.examples.${index2}`
+                    exampleId: `translations.${index}.examples.${index2}`,
+                    subjects: elem2.subjects || [],
+                    images: elem2.images
+                      ? elem2.images.map((elem3, index3) => {
+                          return {
+                            image: elem3.image,
+                            imageId: `translations.${index}.examples.${index2}.images.${index3}`
+                          };
+                        })
+                      : []
                   };
                 })
               : [],
             images: elem.images
-              ? elem.images.map((elem3, index3) => {
+              ? elem.images.map((elem4, index4) => {
                   return {
-                    image: elem3.image,
-                    imageId: `translations.${index}.images.${index3}`
+                    image: elem4.image,
+                    imageId: `translations.${index}.images.${index4}`
                   };
                 })
               : [],
@@ -54,8 +63,6 @@ Template.ArticleForm.helpers({
     return speachPart == "глагол, I порода" && index == 0;
   },
   parentTemplateInstance() {
-    //console.log("subjects", subjects);
-    //const instance = ;
     return Template.instance();
   },
   picture() {
@@ -102,6 +109,7 @@ Template.ArticleForm.events({
     //we call ArticleSchema.clean - for set AutoValues like editedBy, editedAt etc
     template.data = ArticleSchema.clean(template.data);
     delete template.data["corrections"];
+
     doc.modifier.$set = template.data;
     console.log("template PARENT", template);
 
@@ -130,6 +138,7 @@ function changeTemplateData(event, template) {
   //translations.0.translation
   //translations.0.examples.0.example
   //translations.0.examples.0.translation
+  //translations.0.examples.1.images.2.image
   const eventArray = event.target.name.split(".");
   if (eventArray.length == 3) {
     template.data[eventArray[0]][parseInt(eventArray[1])][eventArray[2]] = event.target.value;
@@ -137,7 +146,12 @@ function changeTemplateData(event, template) {
     template.data[eventArray[0]][parseInt(eventArray[1])][eventArray[2]][parseInt(eventArray[3])][
       eventArray[4]
     ] = event.target.value;
+  } else if (eventArray.length == 7) {
+    template.data[eventArray[0]][eventArray[1]][eventArray[2]][eventArray[3]][eventArray[4]][
+      eventArray[5]
+    ][eventArray[6]] = event.target.value;
   }
+  console.log("changeTemplateData", template.data);
   template.reactiveForm.set("article", template.data);
   console.log("template.data", template.data);
 }
@@ -166,11 +180,16 @@ function addImage(event, template) {
   console.log("event.target", event.target);
   console.log("template", template);
 
+  //id="addImageFor.translations.0.examples.0"
+  //id="addImageFor.translations.0
   const eventArray = event.target.id.split(".");
-  const translationIndex = parseInt(eventArray[2]);
-  template.data.translations[translationIndex].images.push({
-    image: ""
-  });
+  const translationIndex = +eventArray[2];
+  if (eventArray.length == 3) {
+    template.data.translations[translationIndex].images.push({ image: "" });
+  } else if (eventArray.length == 5) {
+    const exampleIndex = +eventArray[4];
+    template.data.translations[translationIndex].examples[exampleIndex].images.push({ image: "" });
+  }
   template.reactiveForm.set("article", template.data);
 }
 
@@ -200,10 +219,20 @@ function removeExample(event, template) {
 }
 
 function removeImage(event, template) {
-  //id="remove.translations.3.examples.0"
+  //id=remove.translations.0.images.0 //length==5
+  //id=remove.translations.0.examples.0.images.0 //length==7
   const eventArray = event.target.id.split(".");
-  const translationIndex = parseInt(eventArray[2]);
-  const imageIndex = parseInt(eventArray[4]);
-  template.data.translations[translationIndex].images.splice(imageIndex, 1);
+  const translationIndex = +eventArray[2];
+  if (eventArray.length == 5) {
+    const imageIndex = eventArray[4];
+    template.data.translations[translationIndex].images.splice(imageIndex, 1);
+  } else if (eventArray.length == 7) {
+    const exampleIndex = eventArray[4];
+    const imageIndex = eventArray[6];
+    template.data.translations[translationIndex].examples[exampleIndex].images.splice(
+      imageIndex,
+      1
+    );
+  }
   template.reactiveForm.set("article", template.data);
 }

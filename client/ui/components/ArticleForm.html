@@ -30,35 +30,27 @@
                         <input type="text" name="{{tr.translationId}}" value="{{tr.translation}}" class="form-control"
                             placeholder="перевод">
                         <i class="glyphicon glyphicon-remove remove-translation -remove" id="remove.{{tr.translationId}}"></i>
+
                     </div>
 
-                    <div class="subjects">
-                        {{> TagsSubjects parentTemplateInstance=parentTemplateInstance translationId=tr.translationId
-                        }}
-                    </div>
+                    {{> TagsSubjects parentTemplateInstance=parentTemplateInstance elementName=tr.translationId
+                    }}
 
-                    <div class="images images-form-{{article._id}}-{{@index}}">
-                        {{#each tr.images}}
-                        <div class="imageEdit editField" id="{{imageId}}">
-                            <img class="form-control example" width="200" placeholder="preview" src="{{image}}">
-                            <input type="text" placeholder="ссылка на картинку" value="{{image}}" name="{{imageId}}.image"
-                                class="form-control translation">
-                            <i class="glyphicon glyphicon-remove remove-image -remove" id="remove.{{imageId}}"></i>
-                        </div>
-                        {{/each}}
-                        <button class="btn btn-default btn-xs add-image translation-actions" id="addImageFor.{{tr.translationId}}">
-                            <i class="glyphicon glyphicon-plus"></i>Картинка
-                        </button>
-                    </div>
+                    {{> ImageAdd images=tr.images elementId=tr.translationId}}
 
                     <div class="examples examples-form-{{article._id}}-{{@index}}">
-                        {{#each tr.examples}}
-                        <div class="exampleEdit editField" id="{{exampleId}}">
-                            <input type="text" placeholder="пример" value="{{example}}" name="{{exampleId}}.example"
+                        {{#each ex in tr.examples}}
+                        <div class="exampleEdit editField" id="{{ex.exampleId}}">
+                            <input type="text" placeholder="пример" value="{{ex.example}}" name="{{ex.exampleId}}.example"
                                 class="form-control example -arabic-text-mid">
-                            <input type="text" placeholder="перевод примера" value="{{translation}}" name="{{exampleId}}.translation"
+                            <input type="text" placeholder="перевод примера" value="{{ex.translation}}" name="{{ex.exampleId}}.translation"
                                 class="form-control translation">
-                            <i class="glyphicon glyphicon-remove remove-example -remove" id="remove.{{exampleId}}"></i>
+                            <i class="glyphicon glyphicon-remove remove-example -remove" id="remove.{{ex.exampleId}}"></i>
+
+                            {{> TagsSubjects parentTemplateInstance=parentTemplateInstance
+                            elementName=ex.exampleId}}
+
+                            {{> ImageAdd images=ex.images elementId=ex.exampleId}}
                         </div>
                         {{/each}}
                         <button class="btn btn-default btn-xs add-example translation-actions" id="addExampleFor.{{tr.translationId}}">

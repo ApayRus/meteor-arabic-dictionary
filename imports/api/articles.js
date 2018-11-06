@@ -23,22 +23,22 @@ WordSchema = new SimpleSchema({
     type: String,
     optional: true,
     trim: true,
-    label: "примечание",
-    autoform: {
-      label: false,
-      placeholder: "schemaLabel",
-      class: "note"
-    }
+    label: "примечание"
   },
+
   word: {
     type: String,
     trim: true,
-    label: "словоформа",
-    autoform: {
-      label: false,
-      placeholder: "schemaLabel",
-      class: "word"
-    }
+    label: "словоформа"
+  }
+});
+
+ImageSchema = new SimpleSchema({
+  image: {
+    type: String,
+    optional: true,
+    trim: true,
+    label: "картинка"
   }
 });
 
@@ -47,76 +47,51 @@ ExampleSchema = new SimpleSchema({
     type: String,
     optional: true,
     trim: true,
-    label: "пример",
-    autoform: {
-      label: false,
-      placeholder: "schemaLabel",
-      class: "example"
-    }
+    label: "пример"
   },
   translation: {
     type: String,
     optional: true,
     trim: true,
-    label: "перевод примера",
-    autoform: {
-      label: false,
-      placeholder: "schemaLabel",
-      class: "example-translation"
-    }
-  }
-});
-ImageSchema = new SimpleSchema({
-  image: {
-    type: String,
-    optional: true,
-    trim: true,
-    label: "картинка",
-    autoform: {
-      label: false,
-      placeholder: "schemaLabel",
-      class: "image"
-    }
-  }
+    label: "перевод примера"
+  },
+  subjects: {
+    type: Array,
+    optional: true
+  },
+  "subjects.$": { type: String },
+  images: {
+    type: Array,
+    optional: true
+  },
+  "images.$": ImageSchema
 });
 
 TranslationSchema = new SimpleSchema({
   translation: {
     type: String,
-    label: "Перевод",
     optional: true,
-    trim: true,
-    autoform: {
-      label: false,
-      placeholder: "schemaLabel",
-      class: "translation"
-    }
+    trim: true
   },
+
   examples: {
     type: Array,
-    label: "Examples",
-    optional: true,
-    autoform: {
-      class: "examples"
-    }
+    optional: true
   },
   "examples.$": ExampleSchema,
+
   subjects: {
     type: Array,
-    optional: true,
-    label: "Тематики",
-    defaultValue: []
+    optional: true
   },
   "subjects.$": {
     type: String
   },
+
   images: {
     type: Array,
     label: "Images",
-    optional: true,
-    autoform: {
-      class: "images"
-    }
+    optional: true
   },
   "images.$": ImageSchema
 });
