@@ -1,6 +1,7 @@
 import { Articles } from "/imports/api/articles.js";
 import { Events } from "/imports/api/events.js";
 import { Subjects } from "/imports/api/subjects.js";
+import { Morphologies } from "/imports/api/morphologies.js";
 
 Meteor.startup(() => {
   Meteor.publish("user", function(id) {
@@ -56,19 +57,6 @@ Meteor.startup(() => {
     );
   });
 
-  Meteor.publish("events.startIndex.endIndex", function(startIndex, endIndex) {
-    return Events.find(
-      {},
-      {
-        skip: startIndex,
-        limit: endIndex - startIndex,
-        sort: { happenedAt: -1 }
-      }
-    );
-  });
-  Meteor.publish("subjects", function() {
-    return Subjects.find({});
-  });
   Meteor.publish("articlesBySubject", function(subjectId) {
     // console.log('')
     return Articles.find(
@@ -81,8 +69,28 @@ Meteor.startup(() => {
       { limit: 50 }
     );
   });
+
   Meteor.publish("articlesByIds", function(ids) {
     // console.log('')
     return Articles.find({ _id: { $in: ids } }, { limit: 50 });
+  });
+
+  Meteor.publish("morphologies", function() {
+    // console.log('')
+    return Morphologies.find({});
+  });
+
+  Meteor.publish("events.startIndex.endIndex", function(startIndex, endIndex) {
+    return Events.find(
+      {},
+      {
+        skip: startIndex,
+        limit: endIndex - startIndex,
+        sort: { happenedAt: -1 }
+      }
+    );
+  });
+  Meteor.publish("subjects", function() {
+    return Subjects.find({});
   });
 });

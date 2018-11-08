@@ -1,0 +1,76 @@
+<template name="MorphologyList">
+    <div class="container morphology-list -page">
+        <h2>Морфологические подсказки</h2>
+        <section class="row morphology-item header">
+            <div class="col-sm-3">
+                Название
+            </div>
+            <div class="col-sm-8">
+                Описание
+            </div>
+            <div class="col-sm-1">
+
+            </div>
+        </section>
+        {{#each morphology in morphologies}}
+
+        {{#if showEditFormFor morphology._id}}
+        {{> MorphologyForm morphology }}
+        {{else}}
+        {{> MorphologyItem morphology isAdmin}}
+        {{/if}}
+        {{/each}}
+        {{#if showEditFormFor "new"}}
+        {{> MorphologyForm }}
+        {{/if}}
+        <section class="row morphology-item">
+            <div class="col-sm-1 col-sm-offset-11">
+                {{#if isAdmin}}
+                {{> MorphologyAddEditButton icon="plus" type="addMorphologyButton"}}
+                {{/if}}
+            </div>
+        </section>
+    </div>
+</template>
+
+<template name="MorphologyItem">
+    <section class="row morphology-item">
+        <div class="col-sm-3">
+            {{title}}
+        </div>
+        <div class="col-sm-8">
+            {{description}}
+        </div>
+        <div class="col-sm-1">
+            {{#if isAdmin}}
+            {{> MorphologyAddEditButton id=_id icon="edit" type="editMorphologyButton"}}
+            {{/if}}
+        </div>
+    </section>
+</template>
+
+<template name="MorphologyForm">
+    <form class="morphologyForm">
+        <section class="row morphology-item">
+            <div class="col-sm-3">
+                <textarea name="title" placeholder="название" class="form-control">{{title}}</textarea>
+            </div>
+            <div class="col-sm-9">
+                <textarea name="description" placeholder="описание" class="form-control">{{description}}</textarea>
+            </div>
+        </section>
+        <section class="row">
+            <div class="col-sm-3 col-sm-offset-9">
+                <button type="reset" class="btn btn-default btn-xs">Отмена</button>
+                <button type="submit" class="btn btn-primary btn-xs">Сохранить</button>
+                <button id="deleteMorphology-{{id}}" class="btn btn-danger btn-xs deleteMorphologyButton">Удалить</button>
+            </div>
+        </section>
+    </form>
+</template>
+
+<template name="MorphologyAddEditButton">
+    <button id="forMorphology-{{id}}" class="btn btn-primary btn-circle {{type}}">
+        <i class="glyphicon glyphicon-{{icon}}"></i>
+    </button>
+</template>
