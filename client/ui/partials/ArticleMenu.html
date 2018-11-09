@@ -1,30 +1,25 @@
 <template name="ArticleMenu">
-    <div class="article-menu">
+  <div class="article-menu">
+    {{#if deleted}} <span class="glyphicon glyphicon-trash" title="статья удалена"></span> {{/if}}
 
-        {{#if deleted}}
-            <span class="glyphicon glyphicon-trash" title="статья удалена"></span>
-        {{/if}}
+    {{#if isAdmin}}
+    <a class="delete" title="delete" href="#"> <span class="glyphicon glyphicon-remove"></span> </a>
+    {{/if}}
 
-        {{#if isAdmin}}
-            <a class="delete" title="delete" href="#">
-                <span class="glyphicon glyphicon-remove"></span>
-            </a>
-        {{/if}}
+    <a class="edit" href="/article/edit/{{_id}}" title="edit">
+      <span class="glyphicon glyphicon-edit"></span>
+    </a>
 
-        <a class="edit" href="/article/edit/{{_id}}" title="edit">
-            <span class="glyphicon glyphicon-edit"></span>
-        </a>
-
-        <a class="link" href="/article/{{_id}}" title="ссылка на статью">
-            <span class="glyphicon glyphicon-link"></span>
-            {{correctionsCount}}
-        </a>
-
-        {{#if showAutoCorrection}}
-            <a href="" class="autoCorrection" title="Автоматическая правка">
-                <span class="glyphicon glyphicon-fire"></span>
-            </a>
-        {{/if}}
-
-    </div>
+    <a class="link" href="/article/{{_id}}" title="ссылка на статью">
+      <span class="glyphicon glyphicon-link"></span> {{ correctionsCount }}
+    </a>
+    {{#if showAutoCorrection}}
+    <a href="" class="autoCorrection" title="Автоматическая правка">
+      <span class="glyphicon glyphicon-fire"></span>
+    </a>
+    {{/if}}
+    <a class="plainText" href="/article/edit/{{_id}}" title="редактируемый текст">
+      <span class="glyphicon glyphicon-text-size"></span>
+    </a>
+  </div>
 </template>

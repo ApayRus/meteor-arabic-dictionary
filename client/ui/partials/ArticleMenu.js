@@ -1,8 +1,7 @@
 Template.ArticleMenu.helpers({
   correctionsCount() {
     if (this.corrections)
-      if (this.corrections.length > 0)
-        return "Правки: " + this.corrections.length;
+      if (this.corrections.length > 0) return "Правки: " + this.corrections.length;
       else return "";
   },
   isAdmin() {
@@ -26,17 +25,20 @@ Template.ArticleMenu.events({
     Meteor.call("articles.remove", this._id);
   },
   "click .autoCorrection"() {
-    Meteor.call(
-      "article.autoCorrection",
-      this._id,
-      this.translations[0].translation,
-      this.words
-    );
+    Meteor.call("article.autoCorrection", this._id, this.translations[0].translation, this.words);
   },
   "click .edit"(event) {
     event.preventDefault();
     Session.set("showEditFormForArticle", this._id);
-    // console.log("article edit button clicked: this", this);
+  },
+  "click .plainText"(event) {
+    event.preventDefault();
+    const text = jQuery(`#article-${this._id} .panel-body`)
+      .text()
+      .trim();
+    jQuery(`#article-${this._id} .panel-body`).html(
+      `<textarea style="width:100%">${text}</textarea>`
+    );
   }
 });
 
