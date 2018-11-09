@@ -88,16 +88,6 @@ $arabic-font-style: "Scheherazade";
     }*/
 }
 
-.articles-list {
-  /*     section {
-        border-bottom: 1px solid #337ab7;
-        margin-top: 5px;
-    }
-    section:last-child {
-        border-bottom: none;
-    } */
-}
-
 form.article {
   .wordEdit {
     display: inline-block;
@@ -181,12 +171,27 @@ form.article {
     padding-bottom: 30px;
     padding-top: 5px;
   }
-  /*.add-example {
-     position: absolute; 
-    bottom: 1px;
-    right: 1px;
-    margin: 5px 20px;
-  }*/
+  .imagesEdit {
+    .imageColumn {
+      padding: 0;
+    }
+  }
+  .imageEdit {
+    padding: 0;
+    margin: 2px;
+    input.imageLink {
+      font-size: 70%;
+      border: none;
+    }
+    img {
+      max-height: 150px;
+      max-width: 150px;
+      border: none;
+    }
+    .-remove {
+      position: absolute;
+    }
+  }
   .translation-actions {
     text-align: right;
   }
@@ -481,7 +486,7 @@ body {
       visibility: visible;
     }
     &.header {
-      background-color:#f9f9f9;
+      background-color: #f9f9f9;
     }
   }
 }

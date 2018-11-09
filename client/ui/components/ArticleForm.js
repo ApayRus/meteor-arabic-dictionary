@@ -100,6 +100,7 @@ Template.ArticleForm.events({
     removeExample(event, template);
   },
   "click .remove-image"(event, template) {
+    event.preventDefault();
     removeImage(event, template);
   },
   "click .article-save"(event, template) {
