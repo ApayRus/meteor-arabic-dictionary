@@ -31,8 +31,9 @@ Template.ArticleSingle.helpers({
     image0 = JSON.stringify(image.fetch());
     return image0;
   },
-  examplesCount: function(examples) {
-    return examples.length || 0;
+  examplesCount(examples) {
+    if (examples) return examples.length;
+    else return 0;
   },
   transcr: function(text) {
     if (text.trim()) return "[ " + transcription(text) + " ]";
@@ -40,19 +41,24 @@ Template.ArticleSingle.helpers({
   tagsSubjects() {
     const ids = this.subjects;
     const tags = [];
-    let tagsUnordered = Subjects.find({ _id: { $in: ids } }).fetch(); // эта шляпа возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
-    ids.forEach(tagId => {
-      tags.push(
-        tagsUnordered.filter(elem => {
-          return elem._id == tagId;
-        })[0]
-      );
-    });
+    if (ids) {
+      let tagsUnordered = Subjects.find({ _id: { $in: ids } }).fetch(); // эта шляпа возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
+      ids.forEach(tagId => {
+        tags.push(
+          tagsUnordered.filter(elem => {
+            return elem._id == tagId;
+          })[0]
+        );
+      });
+    }
     return tags;
   },
-  tagsSynonyms() {
+  /*   tagsSynonyms() {
     const ids = this.synonyms;
     const tags = [];
+    if(ids){
+
+    }
     let tagsUnordered = Articles.find({ _id: { $in: ids } }).fetch();
     // эта шляпа { $in: ids } возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
     ids.forEach(tagId => {
@@ -63,19 +69,21 @@ Template.ArticleSingle.helpers({
       );
     });
     return tags;
-  },
+  }, */
   tagsRoots() {
     const ids = this.roots;
     const tags = [];
-    let tagsUnordered = Articles.find({ _id: { $in: ids } }).fetch();
-    // эта шляпа { $in: ids } возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
-    ids.forEach(tagId => {
-      tags.push(
-        tagsUnordered.filter(elem => {
-          return elem._id == tagId;
-        })[0]
-      );
-    });
+    if (ids) {
+      let tagsUnordered = Articles.find({ _id: { $in: ids } }).fetch();
+      // эта шляпа { $in: ids } возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
+      ids.forEach(tagId => {
+        tags.push(
+          tagsUnordered.filter(elem => {
+            return elem._id == tagId;
+          })[0]
+        );
+      });
+    }
     return tags;
   }
 });

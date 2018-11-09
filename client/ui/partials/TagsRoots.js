@@ -28,15 +28,17 @@ Template.TagsRoots.helpers({
     const template = Template.instance();
     const ids = template.tagIds.get();
     const tags = [];
-    let tagsUnordered = Articles.find({ _id: { $in: ids } }).fetch();
-    // эта шляпа выше возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
-    ids.forEach(tagId => {
-      tags.push(
-        tagsUnordered.filter(elem => {
-          return elem._id == tagId;
-        })[0]
-      );
-    });
+    if (ids) {
+      let tagsUnordered = Articles.find({ _id: { $in: ids } }).fetch();
+      // эта шляпа выше возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
+      ids.forEach(tagId => {
+        tags.push(
+          tagsUnordered.filter(elem => {
+            return elem._id == tagId;
+          })[0]
+        );
+      });
+    }
     return tags;
   },
   isEditMode() {
