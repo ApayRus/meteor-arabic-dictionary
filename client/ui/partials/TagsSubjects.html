@@ -1,20 +1,22 @@
 <template name="TagsSubjects">
-    <div class="subjects tags" name="subjectsFor.{{../article}}">
-        <label for="inputSubject">Тематики</label>
-        {{> TagsSelectedSubjects removeButton=true tags=tags}}
-        <div class="-dropdown-container">
-            <input id="inputSubject" type="text" class="form-control tagInput" placeholder="+ добавить тематику">
-            {{#if isEditMode}}
-            <ul class="tagsList -dropdown-content">
-                {{#each tagsAutocomplete}}
-                <li class="existingTag" data-id="{{_id}}">
-                    {{title}}
-                </li>
-                {{else}}
-                <li class="createTag">Создать тэг</li>
-                {{/each}}
-            </ul>
-            {{/if}}
-        </div>
+  <div class="subjects tags" name="subjectsFor.{{../article}}">
+    <div class="-dropdown-container">
+      <input
+        id="inputSubject"
+        type="text"
+        class="form-control tagInput"
+        placeholder="+ добавить тематику"
+      />
+      {{#if isEditMode}}
+      <ul class="tagsList -dropdown-content">
+        {{#each tagsAutocomplete}}
+        <li class="existingTag" data-id="{{_id}}">{{ title }}</li>
+        {{else}}
+        <li class="createTag">Создать тэг</li>
+        {{/each}}
+      </ul>
+      {{/if}}
     </div>
+    {{> TagsSelectedSubjects removeButton=true tags=tags}}
+  </div>
 </template>
