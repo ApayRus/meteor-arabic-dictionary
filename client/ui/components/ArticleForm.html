@@ -1,105 +1,151 @@
 <template name="ArticleForm">
-    <form id="articleForm-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
-        <div class="panel-heading">
-            <div class="panel-title words">
-                <div class="label label-info speach-part">{{speachPart}}</div><br />
-                <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
-                    особый шаблон его вывода, например, среднекорневую глассную и масдары -->
-                {{#each article.words}}
-                <div class="wordEdit editField" id="{{wordId}}">
-                    <i class="glyphicon glyphicon-remove remove-word -remove" id="remove.{{wordId}}"></i>
-                    <input type="text" placeholder="прим." value="{{note}}" name="{{wordId}}.note" class="form-control note">
-                    <input type="text" placeholder="слово" value="{{word}}" name="{{wordId}}.word" class="form-control word -arabic-text-mid">
-                </div>
-                {{#if showMiddleHarakat ../speachPart @index}}
-                <div class="note middleHarakat" title="среднекорневая гласная настоящего времени">
-                    <input type="text" placeholder="скгнв" value="{{../middleHarakat}}" name="middleHarakat" class="form-control note">
-                </div>
-                {{/if}}
-                {{/each}}
-                <div class="add-word">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </div>
-            </div>
+  <form
+    id="articleForm-{{_id}}"
+    class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}"
+  >
+    <div class="panel-heading">
+      <div class="panel-title words">
+        <div class="label label-info speach-part">{{ speachPart }}</div>
+        <br />
+        <!--
+          Глагол 1й породы имеет дополнительную информацию для вывода, поэтому
+          особый шаблон его вывода, например, среднекорневую глассную и масдары
+        -->
+        {{#each article.words}}
+        <div class="wordEdit editField" id="{{wordId}}">
+          <i class="glyphicon glyphicon-remove remove-word -remove" id="remove.{{wordId}}"></i>
+          <input
+            type="text"
+            placeholder="прим."
+            value="{{note}}"
+            name="{{wordId}}.note"
+            class="form-control note"
+          />
+          <input
+            type="text"
+            placeholder="слово"
+            value="{{word}}"
+            name="{{wordId}}.word"
+            class="form-control word -arabic-text-mid"
+          />
         </div>
-        <div class="panel-body">
-            <div class="translations">
-                {{#each tr in article.translations}}
-                <div class="translation">
-                    <div class="editField editTranslation" id="{{tr.translationId}}">
-                        <input type="text" name="{{tr.translationId}}" value="{{tr.translation}}" class="form-control"
-                            placeholder="перевод">
-                        <i class="glyphicon glyphicon-remove remove-translation -remove" id="remove.{{tr.translationId}}"></i>
+        {{#if showMiddleHarakat ../speachPart @index}}
+        <div class="note middleHarakat" title="среднекорневая гласная настоящего времени">
+          <input
+            type="text"
+            placeholder="скгнв"
+            value="{{../middleHarakat}}"
+            name="middleHarakat"
+            class="form-control note"
+          />
+        </div>
+        {{/if}} {{/each}}
+        <div class="add-word"><i class="glyphicon glyphicon-plus"></i></div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="translations">
+        {{#each tr in article.translations}}
+        <div class="translation">
+          <div class="editField editTranslation" id="{{tr.translationId}}">
+            <input
+              type="text"
+              name="{{tr.translationId}}.translation"
+              value="{{tr.translation}}"
+              class="form-control"
+              placeholder="перевод"
+            />
+            <i
+              class="glyphicon glyphicon-remove remove-translation -remove"
+              id="remove.{{tr.translationId}}"
+            ></i>
+          </div>
 
-                    </div>
+          {{> TagsSubjects parentTemplateInstance=parentTemplateInstance elementName=tr.translationId
+          }}
 
-                    {{> TagsSubjects parentTemplateInstance=parentTemplateInstance elementName=tr.translationId
-                    }}
+          {{> ImageAdd images=tr.images elementId=tr.translationId}}
 
-                    {{> ImageAdd images=tr.images elementId=tr.translationId}}
+          <div class="examples examples-form-{{article._id}}-{{@index}}">
+            {{#each ex in tr.examples}}
+            <div class="exampleEdit editField" id="{{ex.exampleId}}">
+              <input
+                type="text"
+                placeholder="пример"
+                value="{{ex.example}}"
+                name="{{ex.exampleId}}.example"
+                class="form-control example -arabic-text-mid"
+              />
+              <input
+                type="text"
+                placeholder="перевод примера"
+                value="{{ex.translation}}"
+                name="{{ex.exampleId}}.translation"
+                class="form-control translation"
+              />
+              <i
+                class="glyphicon glyphicon-remove remove-example -remove"
+                id="remove.{{ex.exampleId}}"
+              ></i>
 
-                    <div class="examples examples-form-{{article._id}}-{{@index}}">
-                        {{#each ex in tr.examples}}
-                        <div class="exampleEdit editField" id="{{ex.exampleId}}">
-                            <input type="text" placeholder="пример" value="{{ex.example}}" name="{{ex.exampleId}}.example"
-                                class="form-control example -arabic-text-mid">
-                            <input type="text" placeholder="перевод примера" value="{{ex.translation}}" name="{{ex.exampleId}}.translation"
-                                class="form-control translation">
-                            <i class="glyphicon glyphicon-remove remove-example -remove" id="remove.{{ex.exampleId}}"></i>
-
-                            {{> TagsSubjects parentTemplateInstance=parentTemplateInstance
+              {{> TagsSubjects parentTemplateInstance=parentTemplateInstance
                             elementName=ex.exampleId}}
 
-                            {{> ImageAdd images=ex.images elementId=ex.exampleId}}
-                        </div>
-                        {{/each}}
-                        <button class="btn btn-default btn-xs add-example translation-actions" id="addExampleFor.{{tr.translationId}}">
-                            <i class="glyphicon glyphicon-plus"></i>Пример
-                        </button>
-                    </div>
-                </div>
-                {{/each}}
-                <button class="btn btn-default btn-sm add-translation">
-                    <i class="glyphicon glyphicon-plus"></i>Перевод
-                </button>
+              {{> ImageAdd images=ex.images elementId=ex.exampleId}}
             </div>
+            {{/each}}
+            <button
+              class="btn btn-default btn-xs add-example translation-actions"
+              id="addExampleFor.{{tr.translationId}}"
+            >
+              <i class="glyphicon glyphicon-plus"></i>Пример
+            </button>
+          </div>
+        </div>
+        {{/each}}
+        <button class="btn btn-default btn-sm add-translation">
+          <i class="glyphicon glyphicon-plus"></i>Перевод
+        </button>
+      </div>
 
-            <!-- {{> TagsSynonyms}} -->
-            {{> TagsRoots}}
-            <!--                 
-                <div class="uploadImage">
-                    {{> uploadForm}}
-                    picture: {{picture}}
-                </div> 
-                -->
+      <!-- {{> TagsSynonyms}} -->
+      {{> TagsRoots}}
+      <!--
+        <div class="uploadImage">
+            {{> uploadForm}}
+            picture: {{picture}}
         </div>
-        <div class="panel-footer">
-            <button class="btn btn-primary article-save">Сохранить</button>
-            <button class="btn btn-default article-edit-cancel">Отмена</button>
-        </div>
-    </form>
+      -->
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-primary article-save">Сохранить</button>
+      <button class="btn btn-default article-edit-cancel">Отмена</button>
+    </div>
+  </form>
 </template>
 
-<!--<script>
-            const atrtcl = { 
-                "_id" : "se4AcxaRqAzeb2Mdy", 
-                "words" : [ 
-                    { "note" : "note1", "word" : "word1" }, 
-                    { "note" : "note2", "word" : "word2" } 
-                ], 
-                "translations" : [ 
-                    { "translation" : "translation1", 
-                        "examples" : [ 
-                            { "example" : "exmpl1", "translation" : "exmpl1-tr1" }, 
-                            { "example" : "exmpl2", "translation" : "exmpl2-tr1" } 
-                        ] 
-                    }, 
-                    { "translation" : "translation2", 
-                        "examples" : [ 
-                            { "example" : "exmpl1", "translation" : "exmpl1-tr2" }, 
-                            { "example" : "exmpl2", "translation" : "exmpl2-tr2" } 
-                        ] 
-                    } 
-                ] 
-            }; 
-        </script>-->
+<!--
+  <script>
+          const atrtcl = {
+              "_id" : "se4AcxaRqAzeb2Mdy",
+              "words" : [
+                  { "note" : "note1", "word" : "word1" },
+                  { "note" : "note2", "word" : "word2" }
+              ],
+              "translations" : [
+                  { "translation" : "translation1",
+                      "examples" : [
+                          { "example" : "exmpl1", "translation" : "exmpl1-tr1" },
+                          { "example" : "exmpl2", "translation" : "exmpl2-tr1" }
+                      ]
+                  },
+                  { "translation" : "translation2",
+                      "examples" : [
+                          { "example" : "exmpl1", "translation" : "exmpl1-tr2" },
+                          { "example" : "exmpl2", "translation" : "exmpl2-tr2" }
+                      ]
+                  }
+              ]
+          };
+      </script>
+-->
