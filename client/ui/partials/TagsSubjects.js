@@ -2,14 +2,14 @@ import { Subjects } from "/imports/api/subjects.js";
 
 Template.TagsSubjects.onCreated(function() {
   this.tagInput = new ReactiveVar("xyz");
-  // this.data.elementName = "translations.5.translation"
+  // this.data.elementName = "translations.5"
   //name="translations.6.examples.0"
   const elemNameArray = this.data.elementName.split(".");
   const translationId = elemNameArray[1];
 
   const templateData = this.data.parentTemplateInstance.data; //ссылка на объект статьи, куда мы будем записывать изменения subjects
   this.subjects = [];
-  if (elemNameArray.length == 3) {
+  if (elemNameArray.length == 2) {
     this.subjects = templateData.translations[translationId].subjects;
   } else if (elemNameArray.length == 4) {
     const exampleId = elemNameArray[3];
