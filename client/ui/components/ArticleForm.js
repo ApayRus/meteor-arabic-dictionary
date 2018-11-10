@@ -63,6 +63,7 @@ Template.ArticleForm.helpers({
     return speachPart == "глагол, I порода" && index == 0;
   },
   templateInstance() {
+    //we'll pass it to Tags template
     return Template.instance();
   }
 });
