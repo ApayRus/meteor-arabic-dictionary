@@ -46,57 +46,18 @@
     <div class="panel-body">
       <div class="translations">
         {{#each tr in article.translations}}
-        <div class="translation">
-          <div class="editField editTranslation" id="{{tr.translationId}}">
-            <input
-              type="text"
-              name="{{tr.translationId}}.translation"
-              value="{{tr.translation}}"
-              class="form-control"
-              placeholder="перевод"
-            />
-            <i
-              class="glyphicon glyphicon-remove remove-translation -remove"
-              id="remove.{{tr.translationId}}"
-            ></i>
-          </div>
+        <div class="translation" id="translation-{{tr.id}}">
+          {{> TranslationItem templateInstance=templateInstance item=tr}}
 
-          {{> TagsSubjects parentTemplateInstance=parentTemplateInstance elementName=tr.translationId
-          }}
-
-          {{> ImagesEdit images=tr.images elementId=tr.translationId}}
-
-          <div class="examples examples-form-{{article._id}}-{{@index}}">
+          <div class="examples" id="examples-for-{{tr.id}}">
             {{#each ex in tr.examples}}
-            <div class="exampleEdit editField" id="{{ex.exampleId}}">
-              <input
-                type="text"
-                placeholder="пример"
-                value="{{ex.example}}"
-                name="{{ex.exampleId}}.example"
-                class="form-control example -arabic-text-mid"
-              />
-              <input
-                type="text"
-                placeholder="перевод примера"
-                value="{{ex.translation}}"
-                name="{{ex.exampleId}}.translation"
-                class="form-control translation"
-              />
-              <i
-                class="glyphicon glyphicon-remove remove-example -remove"
-                id="remove.{{ex.exampleId}}"
-              ></i>
-
-              {{> TagsSubjects parentTemplateInstance=parentTemplateInstance
-                            elementName=ex.exampleId}}
-
-              {{> ImagesEdit images=ex.images elementId=ex.exampleId}}
+            <div class="example" id="example-{{ex.id}}">
+              {{> TranslationItem templateInstance=templateInstance item=ex isExample=true}}
             </div>
             {{/each}}
             <button
               class="btn btn-default btn-xs add-example translation-actions"
-              id="addExampleFor.{{tr.translationId}}"
+              id="addExampleFor.{{tr.id}}"
             >
               <i class="glyphicon glyphicon-plus"></i>Пример
             </button>
@@ -108,14 +69,7 @@
         </button>
       </div>
 
-      <!-- {{> TagsSynonyms}} -->
       {{> TagsRoots}}
-      <!--
-        <div class="uploadImage">
-            {{> uploadForm}}
-            picture: {{picture}}
-        </div>
-      -->
     </div>
     <div class="panel-footer">
       <button class="btn btn-primary article-save">Сохранить</button>
@@ -125,24 +79,22 @@
 </template>
 
 <template name="ImagesEdit">
-  <div class="imagesEdit images-for-{{elementId}}">
-    <div class="row">
-      {{#each images}}
-      <div class="col-sm-4 imageColumn">{{> ImageEdit}}</div>
-      {{/each}}
-    </div>
-
-    <button
-      class="btn btn-default btn-xs add-image translation-actions"
-      id="addImageFor.{{elementId}}"
-    >
-      <i class="glyphicon glyphicon-plus"></i>Картинка
-    </button>
+  <div class="row">
+    {{#each images}}
+    <div class="col-sm-4 imageColumn">{{> ImageEdit}}</div>
+    {{/each}}
   </div>
+
+  <button
+    class="btn btn-default btn-xs add-image translation-actions"
+    id="addImageFor.{{elementId}}"
+  >
+    <i class="glyphicon glyphicon-plus"></i>Картинка
+  </button>
 </template>
 
 <template name="ImageEdit">
-  <div class="thumbnail imageEdit editField" id="{{imageId}}">
+  <div class="thumbnail image editField" id="{{imageId}}">
     <i class="glyphicon glyphicon-remove remove-image -remove" id="remove.{{imageId}}"></i>
     <img class="form-control" placeholder="preview" src="{{image}}" />
     <input
@@ -154,6 +106,64 @@
     />
   </div>
 </template>
+
+<!-- TranslationItem means both: translation and example, which are similar -->
+<template name="TranslationItem">
+  <div class="editField" id="{{item.id}}">
+    {{#if isExample }}
+    <input
+      type="text"
+      placeholder="пример"
+      value="{{item.example}}"
+      name="{{item.id}}.example"
+      class="form-control example -arabic-text-mid"
+    />
+    {{/if}}
+    <input
+      type="text"
+      name="{{item.id}}.translation"
+      value="{{item.translation}}"
+      class="form-control"
+      placeholder="перевод"
+    />
+    <i class="glyphicon glyphicon-remove remove-translation -remove" id="remove.{{item.id}}"></i>
+  </div>
+
+  <div class="subjects tags" id="subjectsFor.{{item.id}}">
+    {{> TagsSubjects parentTemplateInstance=templateInstance elementName=item.id}}
+  </div>
+
+  <div class="images imagesFor-{{elementId}}">
+    {{> ImagesEdit images=item.images elementId=item.id}}
+  </div>
+</template>
+
+<!--
+  <template name="ExampleItem">
+    <div class="exampleEdit editField" id="{{ex.id}}">
+      <input
+        type="text"
+        placeholder="пример"
+        value="{{ex.example}}"
+        name="{{ex.id}}.example"
+        class="form-control example -arabic-text-mid"
+      />
+      <input
+        type="text"
+        placeholder="перевод примера"
+        value="{{ex.translation}}"
+        name="{{ex.id}}.translation"
+        class="form-control translation"
+      />
+      <i class="glyphicon glyphicon-remove remove-example -remove" id="remove.{{ex.id}}"></i>
+
+      {{> TagsSubjects parentTemplateInstance=parentTemplateInstance
+                                elementName=ex.id}}
+
+      {{> ImagesEdit images=ex.images elementId=ex.id}}
+    </div>
+  </template>
+-->
 
 <!--
   <script>

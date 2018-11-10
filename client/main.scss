@@ -127,6 +127,33 @@ form.article {
   .editTranslation > input {
     width: 93%;
   }
+  .translation {
+    border: 1px solid brown;
+    .editField > input {
+      width: 94%;
+    }
+  }
+  .example {
+    border: 1px solid pink;
+    margin-left: 30px;
+  }
+  .subjects {
+    border: 1px solid gold;
+  }
+  .images {
+    border: 1px solid lightgreen;
+    .-remove {
+      left: 0px;
+    }
+    .row {
+      margin: 0;
+    }
+  }
+
+  .panel-body {
+    padding-left: 0;
+  }
+
   input {
     &.note {
       padding: 0px 5px;
@@ -171,12 +198,12 @@ form.article {
     padding-bottom: 30px;
     padding-top: 5px;
   }
-  .imagesEdit {
+  .images {
     .imageColumn {
       padding: 0;
     }
   }
-  .imageEdit {
+  .image {
     padding: 0;
     margin: 2px;
     input.imageLink {

@@ -17,13 +17,13 @@ Template.ArticleForm.helpers({
       ? this.translations.map((elem, index) => {
           return {
             translation: elem.translation,
-            translationId: `translations.${index}`,
+            id: `translations.${index}`,
             examples: elem.examples
               ? elem.examples.map((elem2, index2) => {
                   return {
                     example: elem2.example,
                     translation: elem2.translation,
-                    exampleId: `translations.${index}.examples.${index2}`,
+                    id: `translations.${index}.examples.${index2}`,
                     subjects: elem2.subjects || [],
                     images: elem2.images
                       ? elem2.images.map((elem3, index3) => {
@@ -62,11 +62,8 @@ Template.ArticleForm.helpers({
   showMiddleHarakat(speachPart, index) {
     return speachPart == "глагол, I порода" && index == 0;
   },
-  parentTemplateInstance() {
+  templateInstance() {
     return Template.instance();
-  },
-  picture() {
-    return Session.get("picture");
   }
 });
 
