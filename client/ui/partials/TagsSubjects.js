@@ -58,20 +58,20 @@ Template.TagsSubjects.helpers({
 });
 
 Template.TagsSubjects.events({
-  "keydown .subjects .tagInput"(event, template) {
+  "keydown .tagInput"(event, template) {
     template.isEditMode.set(true);
     setTimeout(() => {
       template.tagInput.set(event.target.value);
     }, 100);
   },
-  "blur .subjects .tagInput"(event, template) {
+  "blur .tagInput"(event, template) {
     setTimeout(() => template.isEditMode.set(false), 200);
   },
-  "click .subjects .tagsList .existingTag"(event, template) {
+  "click .tagsList .existingTag"(event, template) {
     let tagId = event.currentTarget.dataset.id;
     addTag(tagId, template);
   },
-  "click .subjects .tagsList .createTag"(event, template) {
+  "click .tagsList .createTag"(event, template) {
     Meteor.call(
       "subjects.insert",
       {
@@ -84,7 +84,7 @@ Template.TagsSubjects.events({
       }
     );
   },
-  "click .subjects .tag .-remove"(event, template) {
+  "click .tag .-remove"(event, template) {
     const tagId = +event.currentTarget.dataset.tagid;
     template.subjects.splice(tagId, 1);
     template.tagIds.set(template.subjects);

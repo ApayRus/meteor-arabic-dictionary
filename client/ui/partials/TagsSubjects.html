@@ -1,22 +1,4 @@
 <template name="TagsSubjects">
-  <div class="subjects tags" name="subjectsFor.{{elementName}}">
-    <div class="-dropdown-container">
-      <input
-        id="inputSubject"
-        type="text"
-        class="form-control tagInput"
-        placeholder="+ добавить тематику"
-      />
-      {{#if isEditMode}}
-      <ul class="tagsList -dropdown-content">
-        {{#each tagsAutocomplete}}
-        <li class="existingTag" data-id="{{_id}}">{{ title }}</li>
-        {{else}}
-        <li class="createTag">Создать тэг</li>
-        {{/each}}
-      </ul>
-      {{/if}}
-    </div>
-    {{> TagsSelectedSubjects removeButton=true tags=tags}}
-  </div>
+  {{> TagInputAutocomplete callToAction="добавить тематику" tagsAutocomplete=tagsAutocomplete isEditMode=isEditMode}}
+  {{> TagsSelectedSubjects removeButton=true tags=tags}}
 </template>
