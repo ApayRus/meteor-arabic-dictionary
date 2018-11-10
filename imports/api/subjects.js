@@ -1,6 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 import SimpleSchema from "simpl-schema";
+//SimpleSchema.extendOptions(["unique"]);
 
 export const Subjects = new Mongo.Collection("subjects");
 
@@ -8,6 +9,7 @@ export const SubjectSchema = new SimpleSchema({
   title: {
     type: String,
     label: "title"
+    /* unique: true */
   },
   createdAt: {
     type: Date,
@@ -50,6 +52,10 @@ Meteor.methods({
   },
   "subjects.insert"(doc) {
     check(doc, Object);
+    /*     const subjectContext = SubjectSchema.namedContext("subject");
+    console.log("subjectContext.validate(doc)", subjectContext.validate(doc));
+    console.log("subjectContext.isValid()", subjectContext.isValid()); */
+
     const newDocId = Subjects.insert(doc);
     return newDocId;
   }
