@@ -1,18 +1,20 @@
 <template name="TagsRoots">
-    <div class="roots tags">
-        <label for="inputRoot">Корень</label>
-        {{> TagsSelectedSynonyms  removeButton=true tags=tags}}
-        <div class="-dropdown-container">
-        <input id="inputRoot" type="text" class="form-control tagInput" placeholder="+ изменить корень">
-        {{#if isEditMode}}
-        <ul class="tagsList -dropdown-content">
-            {{#each tagsAutocomplete}}
-            <li class="existingTag" data-id="{{_id}}">
-                {{> Word}}
-            </li>
-            {{/each}}
-        </ul>
-        {{/if}}
-        </div>
+  <div class="roots tags">
+    <label for="inputRoot">Корень</label> {{> TagsSelectedRoots  removeButton=true tags=tags}}
+    <div class="-dropdown-container">
+      <input
+        id="inputRoot"
+        type="text"
+        class="form-control tagInput"
+        placeholder="+ изменить корень"
+      />
+      {{#if isEditMode}}
+      <ul class="tagsList -dropdown-content">
+        {{#each tagsAutocomplete}}
+        <li class="existingTag" data-id="{{_id}}">{{> Word}}</li>
+        {{/each}}
+      </ul>
+      {{/if}}
     </div>
+  </div>
 </template>

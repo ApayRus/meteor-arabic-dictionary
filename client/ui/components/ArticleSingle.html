@@ -1,110 +1,102 @@
 <template name="ArticleSingle">
+  <div
+    id="article-{{_id}}"
+    class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}"
+  >
+    <div class="panel-heading">
+      <div class="panel-title words">
+        <div class="label label-info speach-part">{{ speachPart }}</div>
+        <!--
+          Глагол 1й породы имеет дополнительную информацию для вывода, поэтому
+          особый шаблон его вывода, например, среднекорневую глассную и масдары
+        -->
 
-<div id="article-{{_id}}" class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}">
-  <div class="panel-heading">
-        <div class="panel-title words">
-            <div class="label label-info speach-part">{{speachPart}}</div>
-            <!-- Глагол 1й породы имеет дополнительную информацию для вывода, поэтому 
-            особый шаблон его вывода, например, среднекорневую глассную и масдары -->
-
-                {{#each words}}
-                    <div class="note">{{note}} </div>
-                    <div class="word -arabic-text-big">{{word}}</div>
-                    <div class="collapse transcription">{{transcr word}}</div>
-                    {{#if isMiddleHarakat ../middleHarakat @index}}
-                        <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
-                                {{../middleHarakat}} 
-                        </div>
-                    {{/if}}
-                {{/each}}
-            <button type="button" class="btn btn-default btn-xs btn-transcript" 
-                data-toggle="collapse" data-target="#article-{{_id}} .transcription">
-                Транскрипция
-            </button>
+        {{#each words}}
+        <div class="note">{{ note }}</div>
+        <div class="word -arabic-text-big">{{ word }}</div>
+        <div class="collapse transcription">{{transcr word}}</div>
+        {{#if isMiddleHarakat ../middleHarakat @index}}
+        <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
+          {{../middleHarakat}}
         </div>
-  </div>
-  <div class="panel-body">
-        <ol class="translations">
-            {{#each translations}}
-                <li class="translation">
-                    {{translation}}
-                    {{#if examplesCount examples}}
-                        <a href="" class="showExamplesButton" data-toggle="collapse" title="примеры" data-target=".examples-{{../_id}}-{{@index}}">
-                            <small><i class="glyphicon glyphicon-asterisk"></i> 
-                            {{examplesCount examples}}</small>
-                        </a>
-                        <ul class="examples collapse examples-{{../_id}}-{{@index}}">
-                            {{#each examples}}
-                                <li>
-                                    <div class="example -arabic-text-mid">{{example}}</div>
-                                    <div class="translation">{{translation}}</div>
-                                </li>
-                            {{/each}}
-                        </ul>
-                    {{/if}}
-                </li>
+        {{/if}} {{/each}}
+        <button
+          type="button"
+          class="btn btn-default btn-xs btn-transcript"
+          data-toggle="collapse"
+          data-target="#article-{{_id}} .transcription"
+        >
+          Транскрипция
+        </button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <ol class="translations">
+        {{#each translations}}
+        <li class="translation">
+          {{ translation }} {{#if examplesCount examples}}
+          <a
+            href=""
+            class="showExamplesButton"
+            data-toggle="collapse"
+            title="примеры"
+            data-target=".examples-{{../_id}}-{{@index}}"
+          >
+            <small><i class="glyphicon glyphicon-asterisk"></i> {{examplesCount examples}}</small>
+          </a>
+          <ul class="examples collapse examples-{{../_id}}-{{@index}}">
+            {{#each examples}}
+            <li>
+              <div class="example -arabic-text-mid">{{ example }}</div>
+              <div class="translation">{{ translation }}</div>
+            </li>
             {{/each}}
-        </ol>
-        {{#if image.link}}
-            <div class="image">
-                <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage">
-            </div>
-        {{/if}}
+          </ul>
+          {{/if}}
+        </li>
+        {{/each}}
+      </ol>
+      {{#if image.link}}
+      <div class="image">
+        <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage" />
+      </div>
+      {{/if}}
 
-        <!-- TAGS -->
+      <!-- TAGS -->
 
-        {{#if tagsRoots}}
-            <div>
-                Корень: {{> TagsSelectedSynonyms tags=tagsRoots removeButton=false}}
-            </div>
-        {{/if}}
-        {{#if tagsSubjects}}
-            <div>
-                Тематики: {{> TagsSelectedSubjects tags=tagsSubjects removeButton=false}}
-            </div>
-        {{/if}}
-        {{#if tagsSynonyms}}
-            <div>
-                Синонимы: {{> TagsSelectedSynonyms tags=tagsSynonyms removeButton=false}}
-            </div>
-        {{/if}}                
-        
-        
-        <!-- 
-        picture: {{picture}}
-        Image link: {{imageJSON}}
-         -->
+      {{#if tagsRoots}}
+      <div>Корень: {{> TagsSelectedRoots tags=tagsRoots removeButton=false}}</div>
+      {{/if}}
+    </div>
+    <div class="panel-footer">
+      {{> ArticleMenu }} {{> ArticleCorrectionMenu}} {{#if showApproveButtons}}
+      {{> ApproveButtons}} {{/if}}
+    </div>
   </div>
-  <div class="panel-footer">
-        {{> ArticleMenu }}
-        {{> ArticleCorrectionMenu}}
-        {{#if showApproveButtons}}
-            {{> ApproveButtons}}
-        {{/if}}
-  </div>
-</div>
 </template>
 
-<!--<script>
-    const atrtcl = { 
-        "_id" : "se4AcxaRqAzeb2Mdy", 
-        "words" : [ 
-            { "note" : "note1", "word" : "word1" }, 
-            { "note" : "note2", "word" : "word2" } 
-        ], 
-        "translations" : [ 
-            { "translation" : "translation1", 
-                "examples" : [ 
-                    { "example" : "exmpl1", "translation" : "exmpl1-tr1" }, 
-                    { "example" : "exmpl2", "translation" : "exmpl2-tr1" } 
-                ] 
-            }, 
-            { "translation" : "translation2", 
-                "examples" : [ 
-                    { "example" : "exmpl1", "translation" : "exmpl1-tr2" }, 
-                    { "example" : "exmpl2", "translation" : "exmpl2-tr2" } 
-                ] 
-            } 
-        ] 
-    }; 
-</script>-->
+<!--
+  <script>
+      const atrtcl = {
+          "_id" : "se4AcxaRqAzeb2Mdy",
+          "words" : [
+              { "note" : "note1", "word" : "word1" },
+              { "note" : "note2", "word" : "word2" }
+          ],
+          "translations" : [
+              { "translation" : "translation1",
+                  "examples" : [
+                      { "example" : "exmpl1", "translation" : "exmpl1-tr1" },
+                      { "example" : "exmpl2", "translation" : "exmpl2-tr1" }
+                  ]
+              },
+              { "translation" : "translation2",
+                  "examples" : [
+                      { "example" : "exmpl1", "translation" : "exmpl1-tr2" },
+                      { "example" : "exmpl2", "translation" : "exmpl2-tr2" }
+                  ]
+              }
+          ]
+      };
+  </script>
+-->

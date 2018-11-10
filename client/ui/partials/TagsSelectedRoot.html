@@ -1,0 +1,16 @@
+<template name="TagsSelectedRoots">
+  {{#if tags}}
+  <div class="selected-tags">
+    {{#each tags}}
+    <div class="tag">
+      <a href="/article/{{_id}}">
+        <!-- <span class="glyphicon glyphicon-tag"></span> -->
+        {{> Word}}
+      </a>
+      {{#if ../removeButton}}
+      <i class="glyphicon glyphicon-remove -remove" data-tagid="{{@index}}"></i> {{/if}}
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+</template>
