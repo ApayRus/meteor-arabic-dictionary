@@ -51,6 +51,7 @@ Template.ArticleForm.helpers({
 
     this.words = newWords;
     this.translations = newTranslations;
+    this.morphologies = this.morphologies || [];
     //this.picture = Session.get("picture");
     Template.instance().reactiveForm.set("article", this);
     const article = Template.instance().reactiveForm.get("article");

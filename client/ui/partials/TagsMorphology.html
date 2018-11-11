@@ -1,0 +1,4 @@
+<template name="TagsMorphology">
+  {{> TagInputAutocomplete addButton=false callToAction="добавить морфологию" tagsAutocomplete=tagsAutocomplete isEditMode=isEditMode}}
+  {{> TagsSelected removeButton=true tags=tags linkBeforeId="/morphologies#"}}
+</template>

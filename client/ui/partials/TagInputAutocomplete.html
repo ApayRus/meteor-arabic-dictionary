@@ -11,7 +11,9 @@
       {{#each tagsAutocomplete}}
       <li class="existingTag" data-id="{{_id}}">{{ title }}</li>
       {{else}}
+      {{#if addButton}}
       <li class="createTag">Создать тэг</li>
+      {{/if}}
       {{/each}}
     </ul>
     {{/if}}

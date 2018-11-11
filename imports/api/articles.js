@@ -299,6 +299,15 @@ ArticleSchema = new SimpleSchema({
   },
   "roots.$": {
     type: String
+  },
+  morphologies: {
+    type: Array,
+    optional: true,
+    label: "Морфологии",
+    defaultValue: []
+  },
+  "morphologies.$": {
+    type: String
   }
 
   /*   synonyms: {

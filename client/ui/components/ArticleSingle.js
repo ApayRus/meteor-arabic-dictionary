@@ -4,6 +4,7 @@ import { transcription, isNotDiacritic } from "/imports/transcription.js";
 
 Template.ArticleSingle.onCreated(function() {
   Meteor.subscribe("subjects");
+  Meteor.subscribe("morphologies");
   Meteor.subscribe("articlesByIds", this.data.synonyms);
   Meteor.subscribe("articlesByIds", this.data.roots);
 });
