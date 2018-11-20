@@ -120,28 +120,44 @@ form.article {
   }
   .editField {
     position: relative;
-    input {
-      display: inline-block;
+    .mainRow {
+      display: flex;
+      /*     input {
+        display: inline-block;
+      } */
+      input.example,
+      input.translation {
+        flex: 10;
+      }
+    }
+    a,
+    a:hover {
+      flex: 1;
+      color: grey;
+      text-decoration: none;
+    }
+    .dropdown {
+      display: flex;
+      align-items: center;
     }
   }
   .editTranslation > input {
     width: 93%;
   }
   .translation {
-    border: 1px solid brown;
+    /* border: 1px solid brown; */
     .editField > input {
       width: 94%;
     }
   }
   .example {
-    border: 1px solid pink;
-    margin-left: 30px;
+    /* border: 1px solid pink; */
   }
   .subjects {
-    border: 1px solid gold;
+    /* border: 1px solid gold; */
   }
   .images {
-    border: 1px solid lightgreen;
+    /* border: 1px solid lightgreen; */
     .-remove {
       left: 0px;
     }

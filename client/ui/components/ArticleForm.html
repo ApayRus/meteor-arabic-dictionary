@@ -110,60 +110,63 @@
 <!-- TranslationItem means both: translation and example, which are similar -->
 <template name="TranslationItem">
   <div class="editField" id="{{item.id}}">
-    {{#if isExample }}
-    <input
-      type="text"
-      placeholder="пример"
-      value="{{item.example}}"
-      name="{{item.id}}.example"
-      class="form-control example -arabic-text-mid"
-    />
-    {{/if}}
-    <input
-      type="text"
-      name="{{item.id}}.translation"
-      value="{{item.translation}}"
-      class="form-control"
-      placeholder="перевод"
-    />
-    <i class="glyphicon glyphicon-remove remove-translation -remove" id="remove.{{item.id}}"></i>
-  </div>
-
-  <div class="subjects tags" id="subjectsFor.{{item.id}}">
-    {{> TagsSubjects parentTemplateInstance=templateInstance elementName=item.id}}
-  </div>
-
-  <div class="images imagesFor-{{elementId}}">
-    {{> ImagesEdit images=item.images elementId=item.id}}
-  </div>
-</template>
-
-<!--
-  <template name="ExampleItem">
-    <div class="exampleEdit editField" id="{{ex.id}}">
+    <div class="mainRow">
+      {{#if isExample }}
       <input
         type="text"
         placeholder="пример"
-        value="{{ex.example}}"
-        name="{{ex.id}}.example"
+        value="{{item.example}}"
+        name="{{item.id}}.example"
         class="form-control example -arabic-text-mid"
       />
+      {{/if}}
       <input
         type="text"
-        placeholder="перевод примера"
-        value="{{ex.translation}}"
-        name="{{ex.id}}.translation"
+        name="{{item.id}}.translation"
+        value="{{item.translation}}"
         class="form-control translation"
+        placeholder="перевод"
       />
-      <i class="glyphicon glyphicon-remove remove-example -remove" id="remove.{{ex.id}}"></i>
+      <!--
+        <i class="glyphicon glyphicon-remove remove-translation -remove" id="remove.{{item.id}}"></i>
+      -->
+      <div class="dropdown">
+        <a
+          id="dLabel"
+          type="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          class="glyphicon glyphicon-option-vertical"
+          href="#"
+        >
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dLabel">
+          <li>
+            <a href="" data-toggle="collapse" data-target="#imagesFor-{{replaceDot item.id}}"
+              >+ картинка</a
+            >
+          </li>
+          <li>
+            <a href="" data-toggle="collapse" data-target="#subjectsFor-{{replaceDot item.id}}"
+              >+ тематика</a
+            >
+          </li>
 
-      {{> TagsSubjects parentTemplateInstance=parentTemplateInstance
-                                elementName=ex.id}}
-
-      {{> ImagesEdit images=ex.images elementId=ex.id}}
+          <li role="separator" class="divider"></li>
+          <li><a class="remove-translation" id="remove.{{item.id}}">- удалить</a></li>
+        </ul>
+      </div>
     </div>
-  </template>
--->
+  </div>
+  <div class="subjects collapse tags" id="subjectsFor-{{replaceDot item.id}}">
+    {{> TagsSubjects parentTemplateInstance=templateInstance elementName=item.id}}
+  </div>
+
+  <div class="images collapse" id="imagesFor-{{replaceDot item.id}}">
+    {{> ImagesEdit images=item.images elementId=item.id}}
+  </div>
+</template>
 
 <!--
   <script>

@@ -69,6 +69,13 @@ Template.ArticleForm.helpers({
   }
 });
 
+Template.TranslationItem.helpers({
+  replaceDot(string) {
+    const output = string.replace(/\./g, "-");
+    console.log("replaceDot", output);
+    return output;
+  }
+});
 Template.ArticleForm.events({
   "click .add-word"(event, template) {
     event.preventDefault();
