@@ -202,21 +202,31 @@ function removeWord(event, template) {
 }
 
 function removeTranslation(event, template) {
-  //id="remove.translations.0.translation"
+  //this handler is for both: remove translation and example
+  //id="remove.translations.0"
+  //id ="remove.translations.0.examples.6"
   const eventArray = event.target.id.split(".");
-  const translationIndex = parseInt(eventArray[2]);
-  template.data.translations.splice(translationIndex, 1);
-  template.reactiveForm.set("article", template.data);
+  if (eventArray.length == 3) {
+    const translationIndex = parseInt(eventArray[2]);
+    template.data.translations.splice(translationIndex, 1);
+    template.reactiveForm.set("article", template.data);
+  }
+  if (eventArray.length == 5) {
+    const translationIndex = parseInt(eventArray[2]);
+    const exampleIndex = parseInt(eventArray[4]);
+    template.data.translations[translationIndex].examples.splice(exampleIndex, 1);
+    template.reactiveForm.set("article", template.data);
+  }
 }
 
-function removeExample(event, template) {
+/* function removeExample(event, template) {
   //id="remove.translations.3.examples.0"
   const eventArray = event.target.id.split(".");
   const translationIndex = parseInt(eventArray[2]);
   const exampleIndex = parseInt(eventArray[4]);
   template.data.translations[translationIndex].examples.splice(exampleIndex, 1);
   template.reactiveForm.set("article", template.data);
-}
+} */
 
 function removeImage(event, template) {
   //id=remove.translations.0.images.0 //length==5
