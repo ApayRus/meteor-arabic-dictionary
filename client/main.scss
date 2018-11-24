@@ -156,6 +156,7 @@ form.article {
   .subjects {
     /* border: 1px solid gold; */
   }
+
   .images {
     /* border: 1px solid lightgreen; */
     .-remove {
@@ -167,7 +168,12 @@ form.article {
   }
 
   .panel-body {
-    padding-left: 0;
+    padding: 5px;
+    .subjects,
+    .images,
+    .examples {
+      margin-top: 2px;
+    }
   }
 
   input {
@@ -212,7 +218,6 @@ form.article {
   .examples {
     position: relative;
     padding-bottom: 30px;
-    padding-top: 5px;
   }
   .images {
     .imageColumn {
@@ -505,14 +510,12 @@ body {
   width: 161px;
 }
 
-.selected-tags {
+.tag {
   display: inline-block;
-  .tag {
-    display: inline-block;
-    padding: 2px 5px;
-    border: 1px solid lightgray;
-    border-radius: 10px;
-  }
+  padding: 2px 5px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  margin-top: 2px;
 }
 
 .morphology-list {
