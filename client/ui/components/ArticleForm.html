@@ -47,12 +47,12 @@
       <div class="translations">
         {{#each tr in article.translations}}
         <div class="translation" id="translation-{{tr.id}}">
-          {{> TranslationItem templateInstance=templateInstance item=tr}}
+          {{> TranslationItem articleId=article._id templateInstance=templateInstance item=tr}}
 
           <div class="examples" id="examples-for-{{tr.id}}">
             {{#each ex in tr.examples}}
             <div class="example" id="example-{{ex.id}}">
-              {{> TranslationItem templateInstance=templateInstance item=ex isExample=true}}
+              {{> TranslationItem articleId=article._id templateInstance=templateInstance item=ex isExample=true}}
             </div>
             {{/each}}
             <button
@@ -131,39 +131,32 @@
         <i class="glyphicon glyphicon-remove remove-translation -remove" id="remove.{{item.id}}"></i>
       -->
       <div class="dropdown">
-        <a
-          id="dLabel"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          class="glyphicon glyphicon-option-vertical"
-          href="#"
-        >
+        <a type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+          <i class="glyphicon glyphicon-option-vertical"></i>
         </a>
-        <ul class="dropdown-menu" aria-labelledby="dLabel">
+        <ul class="dropdown-menu">
           <li>
-            <a href="" data-toggle="collapse" data-target="#imagesFor-{{replaceDot item.id}}"
-              >+ картинка</a
+            <a href="#subjectsFor-{{articleId}}-{{replaceDot item.id}}" data-toggle="collapse"
+              >+ subject</a
             >
           </li>
           <li>
-            <a href="" data-toggle="collapse" data-target="#subjectsFor-{{replaceDot item.id}}"
-              >+ тематика</a
+            <a href="#imagesFor-{{articleId}}-{{replaceDot item.id}}" data-toggle="collapse"
+              >+ image</a
             >
           </li>
 
           <li role="separator" class="divider"></li>
-          <li><a class="remove-translation" id="remove.{{item.id}}">- удалить</a></li>
+          <li><a class="remove-translation" id="remove.{{item.id}}">- delete</a></li>
         </ul>
       </div>
     </div>
   </div>
-  <div class="subjects collapse tags" id="subjectsFor-{{replaceDot item.id}}">
+  <div class="subjects collapse tags" id="subjectsFor-{{articleId}}-{{replaceDot item.id}}">
     {{> TagsSubjects parentTemplateInstance=templateInstance elementName=item.id}}
   </div>
 
-  <div class="images collapse" id="imagesFor-{{replaceDot item.id}}">
+  <div class="images collapse" id="imagesFor-{{articleId}}-{{replaceDot item.id}}">
     {{> ImagesEdit images=item.images elementId=item.id}}
   </div>
 </template>

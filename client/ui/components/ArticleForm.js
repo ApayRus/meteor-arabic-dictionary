@@ -72,11 +72,14 @@ Template.ArticleForm.helpers({
 Template.TranslationItem.helpers({
   replaceDot(string) {
     const output = string.replace(/\./g, "-");
-    console.log("replaceDot", output);
     return output;
   }
 });
 Template.ArticleForm.events({
+  /*   "click .openCollapse"(event) {
+    console.log("click .openCollapse", event.target.dataset.target);
+    jQuery(event.target.dataset.target).collapse();
+  }, */
   "click .add-word"(event, template) {
     event.preventDefault();
     addWord(template);
