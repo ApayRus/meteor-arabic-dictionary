@@ -7,6 +7,7 @@ Template.ArticleSingle.onCreated(function() {
   Meteor.subscribe("morphologies");
   const roots = this.data.roots || [];
   Meteor.subscribe("articlesByIds", roots);
+  Session.set("showArticleInTextarea", "");
 });
 
 Template.ArticleSingle.helpers({
@@ -39,6 +40,12 @@ Template.ArticleSingle.helpers({
   transcr: function(text) {
     if (text.trim()) return "[ " + transcription(text) + " ]";
   },
+  showInTextarea(articleId) {
+    return articleId == Session.get("showArticleInTextarea");
+  },
+  plainTextOfTranslations() {
+    return this.translations[0].translation;
+  },
   tagsSubjects() {
     const ids = this.subjects;
     const tags = [];
@@ -54,23 +61,6 @@ Template.ArticleSingle.helpers({
     }
     return tags;
   },
-  /*   tagsSynonyms() {
-    const ids = this.synonyms;
-    const tags = [];
-    if(ids){
-
-    }
-    let tagsUnordered = Articles.find({ _id: { $in: ids } }).fetch();
-    // эта шляпа { $in: ids } возвращает массив в смешанном порядке, поэтому их надо заново упорядочить
-    ids.forEach(tagId => {
-      tags.push(
-        tagsUnordered.filter(elem => {
-          return elem._id == tagId;
-        })[0]
-      );
-    });
-    return tags;
-  }, */
   tagsRoots() {
     const ids = this.roots;
     const tags = [];

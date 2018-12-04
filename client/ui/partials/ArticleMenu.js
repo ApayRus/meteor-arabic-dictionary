@@ -33,12 +33,9 @@ Template.ArticleMenu.events({
   },
   "click .plainText"(event) {
     event.preventDefault();
-    const text = jQuery(`#article-${this._id} .panel-body`)
-      .text()
-      .trim();
-    jQuery(`#article-${this._id} .panel-body`).html(
-      `<textarea style="width:100%">${text}</textarea>`
-    );
+    Session.get("showArticleInTextarea")
+      ? Session.set("showArticleInTextarea", "")
+      : Session.set("showArticleInTextarea", this._id);
   }
 });
 
