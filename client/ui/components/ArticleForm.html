@@ -52,14 +52,6 @@
               {{> TranslationItem articleId=article._id templateInstance=templateInstance item=ex isExample=true}}
             </div>
             {{/each}}
-            <!--
-              <button
-                class="btn btn-default btn-xs add-example translation-actions"
-                id="addExampleFor.{{tr.id}}"
-              >
-                <i class="glyphicon glyphicon-plus"></i>Пример
-              </button>
-            -->
           </div>
         </div>
         {{/each}}
@@ -83,13 +75,6 @@
     <div class="col-sm-4 imageColumn">{{> ImageEdit}}</div>
     {{/each}}
   </div>
-
-  <button
-    class="btn btn-default btn-xs add-image translation-actions"
-    id="addImageFor.{{elementId}}"
-  >
-    <i class="glyphicon glyphicon-plus"></i>Картинка
-  </button>
 </template>
 
 <template name="ImageEdit">
@@ -140,7 +125,11 @@
             >
           </li>
           <li>
-            <a href="#imagesFor-{{articleId}}-{{replaceDot item.id}}" data-toggle="collapse"
+            <a
+              href="#imagesFor-{{articleId}}-{{replaceDot item.id}}"
+              class="add-image"
+              id="addImageFor.{{item.id}}"
+              data-toggle="collapse"
               >+ картинка</a
             >
           </li>
