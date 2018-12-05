@@ -118,6 +118,9 @@ form.article {
       color: #5bc0de;
     }
   }
+  .example {
+    display: block !important;
+  }
   .editField {
     position: relative;
     .mainRow {
@@ -208,6 +211,7 @@ form.article {
     .example {
       border-top: none;
       border-left: none;
+      display: block;
     }
     .-remove {
       position: absolute;
@@ -335,9 +339,14 @@ body {
 .-opacity-06 {
   opacity: 0.6;
 }
+.-opacity-1 {
+  opacity: 1 !important;
+}
 
 .-page {
   margin-top: 66px;
+  padding: 5px;
+  width: 99%;
 }
 .-sticky {
   position: sticky;

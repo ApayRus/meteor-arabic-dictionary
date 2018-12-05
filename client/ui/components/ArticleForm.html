@@ -1,8 +1,5 @@
 <template name="ArticleForm">
-  <form
-    id="articleForm-{{_id}}"
-    class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}"
-  >
+  <form id="articleForm-{{_id}}" class="panel panel-default article -opacity-1">
     <div class="panel-heading">
       <div class="panel-title words">
         <div class="label label-info speach-part">{{ speachPart }}</div>
@@ -147,7 +144,7 @@
           </li>
 
           <li role="separator" class="divider"></li>
-          <li><a class="remove-translation" id="remove.{{item.id}}">- delete</a></li>
+          <li><a class="remove-translation" id="remove.{{item.id}}">- удалить</a></li>
         </ul>
       </div>
     </div>

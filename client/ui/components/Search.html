@@ -1,14 +1,10 @@
 <template name="Search">
-    <div class="container search-page">
-        <section class="row">
-            <div class="col-sm-6">
-                {{> SearchForm resultCount=result.count searchFor=searchFor}}
-            </div>
-        </section>
-        {{#if Template.subscriptionsReady}}
-            {{> ArticlesList articles=result.articles}}
-        {{else}}
-            <p>Loading...</p>
-        {{/if}}
-    </div>
+  <div class="search-page -page">
+    <section class="row">
+      <div class="col-sm-4">{{> SearchForm resultCount=result.count searchFor=searchFor}}</div>
+    </section>
+    {{#if Template.subscriptionsReady}} {{> ArticlesList articles=result.articles}} {{else}}
+    <p>Loading...</p>
+    {{/if}}
+  </div>
 </template>
