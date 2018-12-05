@@ -1,5 +1,5 @@
 <template name="ArticlesBySubject">
-    <div class="container articles-page -page">
+    <div class="articles-page -page">
         {{#if Template.subscriptionsReady}}
         <h2>Найдено {{result.count}} статей по теме {{result.subject.title}}:</h2>
                 {{> ArticlesList articles=result.articles}}
