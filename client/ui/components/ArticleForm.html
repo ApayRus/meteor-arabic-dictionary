@@ -52,12 +52,14 @@
               {{> TranslationItem articleId=article._id templateInstance=templateInstance item=ex isExample=true}}
             </div>
             {{/each}}
-            <button
-              class="btn btn-default btn-xs add-example translation-actions"
-              id="addExampleFor.{{tr.id}}"
-            >
-              <i class="glyphicon glyphicon-plus"></i>Пример
-            </button>
+            <!--
+              <button
+                class="btn btn-default btn-xs add-example translation-actions"
+                id="addExampleFor.{{tr.id}}"
+              >
+                <i class="glyphicon glyphicon-plus"></i>Пример
+              </button>
+            -->
           </div>
         </div>
         {{/each}}
@@ -141,6 +143,9 @@
             <a href="#imagesFor-{{articleId}}-{{replaceDot item.id}}" data-toggle="collapse"
               >+ картинка</a
             >
+          </li>
+          <li>
+            <a href="#" class="add-example" id="addExampleFor.{{item.id}}">+ пример (ниже)</a>
           </li>
 
           <li role="separator" class="divider"></li>

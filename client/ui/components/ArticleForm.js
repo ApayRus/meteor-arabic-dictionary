@@ -177,12 +177,14 @@ function addWord(template) {
 }
 
 function addExample(event, template) {
+  const emptyExample = { example: "", translation: "" };
   const eventArray = event.target.id.split(".");
-  const translationIndex = parseInt(eventArray[2]);
-  template.data.translations[translationIndex].examples.push({
-    example: "",
-    translation: ""
-  });
+  //["addExampleFor", "translations", "1", "examples", "0"] OR ["addExampleFor", "translations", "1"]
+  const translationIndex = +eventArray[2];
+  const examplesArray = template.data.translations[translationIndex].examples;
+  const exampleIndex = +eventArray[4] + 1 || 0; // место, куда будем вставлять новый элемент
+  console.log(event.target.id, eventArray);
+  examplesArray.splice(exampleIndex, 0, emptyExample);
   template.reactiveForm.set("article", template.data);
 }
 
