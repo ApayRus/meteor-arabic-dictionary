@@ -1,176 +1,220 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="Rashidu">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Document</title>
-</head>
+  </head>
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Latest compiled and minified CSS -->
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous"
+  />
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous"
+  />
 
-<!-- Latest compiled and minified JavaScript -->
+  <!-- Latest compiled and minified JavaScript -->
 
+  <body>
+    <div class="page-header"><h1>old article to new format (one field -> many fields)</h1></div>
 
-
-<body>
- 
-<div class="page-header"><h1>old article to new format (one field -> many fields)</h1></div>  
-      
-<div class="content" ng-controller="MyController">
-    <div class="row">
+    <div class="content" ng-controller="MyController">
+      <div class="row">
         <div class="col-xs-12 col-sm-6">
-          <h3>Input: <span role="button" tabindex="0" class="glyphicon glyphicon-question-sign" id="helping" data-toggle="popover" data-trigger="focus" data-placement="right" title="Подсказка" data-content="Разместите текст словаря в поле ниже, затем нажмите кнопку Split, внизу"></span></h3>
-           <textarea ng-model="inputArticle">{{1+1}}</textarea>
-           <button class="btn btn-primary" ng-click="splitButtonClicked()">Split <span class="glyphicon glyphicon-chevron-right"></span>    </button> 
-
+          <h3>
+            Input:
+            <span
+              role="button"
+              tabindex="0"
+              class="glyphicon glyphicon-question-sign"
+              id="helping"
+              data-toggle="popover"
+              data-trigger="focus"
+              data-placement="right"
+              title="Подсказка"
+              data-content="Разместите текст словаря в поле ниже, затем нажмите кнопку Split, внизу"
+            ></span>
+          </h3>
+          <textarea ng-model="inputArticle">{{ 1 + 1 }}</textarea>
+          <button class="btn btn-primary" ng-click="splitButtonClicked()">
+            Split <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
+          <button class="btn btn-primary" ng-click="preformat1_ButtonClicked()">
+            Preformat 1 <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
+          <button class="btn btn-primary" ng-click="preformat2_ButtonClicked()">
+            Preformat 2 <span class="glyphicon glyphicon-chevron-right"></span>
+          </button>
         </div>
         <div class="col-xs-12 col-sm-6" ng-show="showOutput">
-           <h3>Output JSON:</h3>
-            <textarea ng-model="outputJson">{{xxx}}</textarea>
+          <h3>Output:</h3>
+          <textarea ng-model="outputArticle">{{ xxx }}</textarea>
         </div>
+      </div>
     </div>
-</div> 
-       
-          
-             
-<script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>                
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
- 
+
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+
     <style>
-        textarea {
-            width: 100%; 
-            height: 200px;
+      textarea {
+        width: 100%;
+        height: 200px;
+      }
+      body {
+        padding: 10px;
+      }
+      .glyphicon-question-sign {
+        font-size: 14px;
+        cursor: pointer;
+      }
+    </style>
+
+    <script>
+      angular.module("Rashidu", []).controller("MyController", [
+        "$scope",
+        function($scope) {
+          $scope.splitButtonClicked = function() {
+            var article = parseArticle($scope.inputArticle, "إبرة");
+            $scope.outputArticle = JSON.stringify(article);
+            $scope.showOutput = true;
+          };
+          $scope.preformat1_ButtonClicked = function() {
+            var article = preformatArticle1($scope.inputArticle);
+            $scope.outputArticle = article;
+            $scope.showOutput = true;
+          };
+          $scope.preformat2_ButtonClicked = function() {
+            var article = preformatArticle2($scope.outputArticle, "كلللل");
+            $scope.outputArticle = article;
+            $scope.showOutput = true;
+          };
         }
-        body {
-            padding: 10px;
-        }
-        .glyphicon-question-sign {
-            font-size: 14px;
-            cursor:pointer;
-        }
+      ]);
 
-    </style>  
-    
-    
-<script>
-    
-angular.module('Rashidu', [])
-    .controller('MyController', ['$scope', function($scope) {
+      $("#helping").popover();
 
-    $scope.splitButtonClicked = function () {
+      //word - is replacement for tilda ~
+      function parseArticle(text, word) {
+        var newTranslations = [];
 
-        var article = parseArticle($scope.inputArticle, 'إبرة')
-        $scope.outputJson = JSON.stringify(article);
-        $scope.showOutput = true 
-    }
+        translations0 = text.split(/\d+\s*?\)|\d+\./g); //raw array with translations: begins with 1) or 1.
 
-    }]);
-    
-$('#helping').popover()
-
-
-//this function gets old formated article (when all translations was in one field), 
-//and parse it to object with separated translations and their examples
-function parseArticle( text, word ){
-    
-        var newTranslations = []
-    
-        translations0 = text.split(/\d+\s*?\)/g); //raw array with translations
-    
         var match = "";
-        //\u0621-\u064A - arabic symbols 
-        var example_pattern = /;([\s]+?[\!\?\*\~\u0621-\u064A]+?[\s\S]+?)(;|$)/ig
+        //\u0621-\u064A - arabic symbols
+        var example_pattern = /;([\s]+?[\!\?\*\~\u0621-\u064A]+?[\s\S]+?)(;|$)/gi;
 
-        //в исходной базе словаря тильда стоит "зеркально", 
-        //её надо переместить из начала в конец и наоборот и заменить основным словом статьи
-        var reverseAndReplaceTilda = function(str, word){
-            var strArray = str.split("")
-            if(strArray[0] == "~"){
-                strArray.shift();
-                if(strArray[0]==" ") 
-                    strArray.push(" ");
-                strArray.push("~");
+        translations0.forEach(function(elem, index) {
+          if (elem.trim()) {
+            var examples = [];
+            var translation = "";
+            var examplesBeginnigIndex = elem.search(example_pattern);
+            if (examplesBeginnigIndex > -1) translation = elem.substring(0, examplesBeginnigIndex);
+            else translation = elem.trim();
+            while ((match = example_pattern.exec(elem))) {
+              var exampleString = match[1];
+              //\u0400-\u04FF - cyrillic symbols
+              translationBeginningIndex = exampleString.search(/\(?[\u0400-\u04FF]/);
+              var example = exampleString.substring(0, translationBeginningIndex).trim();
+              example = reverseAndReplaceTilda(example, word);
+              var exTranslation = exampleString.substring(translationBeginningIndex).trim();
+              examples.push({ example, translation: exTranslation });
+              example_pattern.lastIndex--;
             }
-            else if(strArray[strArray.length-1] == "~"){
-                strArray.pop();
-                if(strArray[strArray.length-1] == " ")
-                    strArray.unshift(" ")
-                strArray.unshift("~");
-            }
-            var result = strArray.join("").replace("~",word).replace(/ـ/g, "")
-            return result 
+            newTranslations.push({ translation, examples });
+          }
+        });
+        return newTranslations;
+      }
+
+      //в исходной базе словаря тильда стоит "зеркально",
+      //её надо переместить из начала в конец и наоборот и заменить основным словом статьи
+      function reverseAndReplaceTilda(str, word) {
+        var strArray = str.split("");
+        if (strArray[0] == "~") {
+          strArray.shift();
+          if (strArray[0] == " ") strArray.push(" ");
+          strArray.push("~");
+        } else if (strArray[strArray.length - 1] == "~") {
+          strArray.pop();
+          if (strArray[strArray.length - 1] == " ") strArray.unshift(" ");
+          strArray.unshift("~");
         }
-    
-        translations0.forEach(function(elem, index){
-    
-                if(elem.trim()) {
-                    var examples = []
-                    var translation = ""
-                    var examplesBeginnigIndex = elem.search(example_pattern);
-                    if(examplesBeginnigIndex > -1)
-                        translation = elem.substring(0,examplesBeginnigIndex);
-                    else
-                        translation = elem.trim()
-                    while (match = example_pattern.exec(elem)) {
-                        var exampleString = match[1]
-                        translationBeginningIndex = exampleString.search(/\(?[а-я]/)
-                        var example = exampleString.substring(0, translationBeginningIndex).trim();
-                        example = reverseAndReplaceTilda(example, word); 
-                        var exTranslation = exampleString.substring(translationBeginningIndex).trim();
-                        examples.push({example, translation: exTranslation}); 
-                        example_pattern.lastIndex --;
-                    }
-    
-                    newTranslations.push( {translation, examples} )
-                }
+        var result = strArray
+          .join("")
+          .replace("~", word)
+          .replace(/ـ/g, "");
+        return result;
+      }
+
+      var example_translation = {
+        translations: [
+          {
+            translation: "translation1",
+            examples: [
+              { example: "exmpl1", translation: "exmpl1-tr1" },
+              { example: "exmpl2", translation: "exmpl2-tr1" }
+            ]
+          },
+          {
+            translation: "translation2",
+            examples: [
+              { example: "exmpl1", translation: "exmpl1-tr2" },
+              { example: "exmpl2", translation: "exmpl2-tr2" }
+            ]
+          }
+        ]
+      };
+
+      //scenario is like so:
+      // 1) Split examples from translations (then hand control)
+      // 2) Replace ~ "tilda" (then hand control)
+      // 3) Commit to dictionary
+      function preformatArticle1(text) {
+        translations0 = text.split(/\d+\s*?\)|\d+\./g); //raw array with translations: begins with 1) or 1.
+        var exampleBeginning = /;([\s]+?[!?*~)(.\u0621-\u064A])/gi; //\u0621-\u064A - arabic symbols
+        var preformatedText = translations0.map((elem, index) => {
+          return elem.trim().replace(exampleBeginning, ";\n$1");
+        });
+        return preformatedText.join("\n\n").trim();
+      }
+
+      function preformatArticle2(text, word) {
+        var translationsArray = text.split("\n\n");
+        var translationAndExamplesText = translationsArray
+          .map(elem => {
+            var translationAndExamples = elem.split("\n");
+            var translation = translationAndExamples[0];
+            var examples = translationAndExamples.map(exAndTr => {
+              var trBeginIndex = exAndTr.search(/\(?[\u0400-\u04FF]/); //\u0400-\u04FF - cyrillic symbols
+              var example = exAndTr.substring(0, trBeginIndex).trim();
+              example = reverseAndReplaceTilda(example, word);
+              var translation = exAndTr.substring(trBeginIndex).trim();
+              return `${example}#${translation}`;
             });
-        return newTranslations
-    }
-
-
-
-var example_translation = {
-    "translations" : [ 
-            { "translation" : "translation1", 
-                "examples" : [ 
-                    { "example" : "exmpl1", "translation" : "exmpl1-tr1" }, 
-                    { "example" : "exmpl2", "translation" : "exmpl2-tr1" } 
-                ] 
-            }, 
-            { "translation" : "translation2", 
-                "examples" : [ 
-                    { "example" : "exmpl1", "translation" : "exmpl1-tr2" }, 
-                    { "example" : "exmpl2", "translation" : "exmpl2-tr2" } 
-                ] 
-            } 
-        ]    
-}
-
-var x = {"translations":[
-    {"translation":
-        " плата, зароботная плата, гонорар",
-        "examples":[
-            " السفر ~ плата за проезд",
-            " العمل ~ плата за труд",
-            " يوميّة ~ подённая плата",
-            " ~ بال за плату "]},
-    {"translation":
-        " стоимость",
-        "examples":[
-            " نقل البضائع ~ стоимость перевозки товаров "]},
-    {"translation":" арендная плата;","examples":[]}]}
-
-</script>
-
-</body>
-
-
-
+            examples.shift(); // 0 element is not example, then we delete it
+            return translation + "\n" + examples.join("\n");
+          })
+          .join("\n\n");
+        return translationAndExamplesText.replace(/\n\n\n/g, "\n\n");
+      }
+    </script>
+  </body>
 </html>
