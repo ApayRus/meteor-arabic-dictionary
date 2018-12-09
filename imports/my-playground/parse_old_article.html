@@ -164,24 +164,13 @@
         return result;
       }
 
-      var example_translation = {
-        translations: [
-          {
-            translation: "translation1",
-            examples: [
-              { example: "exmpl1", translation: "exmpl1-tr1" },
-              { example: "exmpl2", translation: "exmpl2-tr1" }
-            ]
-          },
-          {
-            translation: "translation2",
-            examples: [
-              { example: "exmpl1", translation: "exmpl1-tr2" },
-              { example: "exmpl2", translation: "exmpl2-tr2" }
-            ]
-          }
-        ]
-      };
+      //в исходной базе арабский и русский текст перемешаны,
+      //и чтобы знаки препинания выглядели нормально, они стоят наоборот - в начале арабской фразы
+      function getPunctMarksFromBeginning(oldText) {
+        var punctMarks = /^([!?*)(.;:"\s]+)/; //вырезаем знаки препинания вначале строки и потом вставим их в конец
+        const match = oldText.match(punctMarks);
+        return match ? match[0] : "";
+      }
 
       //scenario is like so:
       // 1) Split examples from translations (then hand control)
@@ -201,20 +190,47 @@
         var translationAndExamplesText = translationsArray
           .map(elem => {
             var translationAndExamples = elem.split("\n");
-            var translation = translationAndExamples[0];
+            // var translation = translationAndExamples[0];
             var examples = translationAndExamples.map(exAndTr => {
               var trBeginIndex = exAndTr.search(/\(?[\u0400-\u04FF]/); //\u0400-\u04FF - cyrillic symbols
+
               var example = exAndTr.substring(0, trBeginIndex).trim();
+              var puncMarks = getPunctMarksFromBeginning(example);
+              example = example.replace(puncMarks, "");
               example = reverseAndReplaceTilda(example, word);
+              example = `${example}${puncMarks}`;
               var translation = exAndTr.substring(trBeginIndex).trim();
-              return `${example}#${translation}`;
+              return `${example} اا ${translation}`; 
+              // благодаря этим Алифам в конце арабского текста, 
+              // знаки пунктуации в конце example отображаются правильно 
             });
-            examples.shift(); // 0 element is not example, then we delete it
-            return translation + "\n" + examples.join("\n");
+            // examples.shift();
+            examples[0] = examples[0].replace(" اا ", ""); // 0 element is translation, not example 
+            //console.log("examples", examples);
+            return examples.join("\n");
           })
           .join("\n\n");
-        return translationAndExamplesText.replace(/\n\n\n/g, "\n\n");
+        return translationAndExamplesText;
       }
+
+      var example_translation = {
+        translations: [
+          {
+            translation: "translation1",
+            examples: [
+              { example: "exmpl1", translation: "exmpl1-tr1" },
+              { example: "exmpl2", translation: "exmpl2-tr1" }
+            ]
+          },
+          {
+            translation: "translation2",
+            examples: [
+              { example: "exmpl1", translation: "exmpl1-tr2" },
+              { example: "exmpl2", translation: "exmpl2-tr2" }
+            ]
+          }
+        ]
+      };
     </script>
   </body>
 </html>
