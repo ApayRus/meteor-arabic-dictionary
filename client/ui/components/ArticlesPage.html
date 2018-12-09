@@ -1,13 +1,9 @@
 <template name="ArticlesPage">
-    <div class="articles-page -page">
-        <h2>Articles page</h2>
-        <section class="row">
-            {{> AlertMessageArticlesPage}}
-            {{#if Template.subscriptionsReady}}
-                {{> ArticlesList articles=articles}}
-            {{else}}
-                <p>Loading...</p>
-            {{/if}}
-        </section>
-    </div>
+  <div class="articles-page -page">
+    <h2>Articles page</h2>
+    {{> AlertMessageArticlesPage}} {{#if Template.subscriptionsReady}}
+    {{> ArticlesList articles=articles}} {{else}}
+    <p>Loading...</p>
+    {{/if}}
+  </div>
 </template>
