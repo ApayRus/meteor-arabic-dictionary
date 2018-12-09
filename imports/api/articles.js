@@ -357,28 +357,27 @@ Meteor.methods({
     }
   },
 
-  "article.autoCorrection"(doc_id, oldTranslation, words) {
+  "article.autoCorrection"(doc_id, translationsObject, words) {
     //console.log('addAutoCorrection', doc_id, correction)
-    const userId = Meteor.userId() || "anonymous";
-    let correction = Articles.findOne({ _id: doc_id });
-    correction.editedAt = new Date();
-    correction.editedByUserId = userId;
-    if (Meteor.user()) correction.editedByUserName = Meteor.user().username;
-    else correction.editedByUserName = "anonymous";
-    let word = words[0].word.replace(/[ًٌٍٍَُِّْ]/gi, ""); //removes all diacritics
-    correction.translations = parseArticle(oldTranslation, word);
-    correction.words = words;
-    correction.published = false;
-    console.log(correction);
-    Articles.update(
-      { _id: doc_id },
-      {
-        $set: {
-          lastEvent: { type: "предложил авто правку" },
-          corrections: changedCorrections(doc_id, userId, correction)
+    const userId = Meteor.userId();
+    if(userId){
+      let correction = Articles.findOne({ _id: doc_id });
+      correction.editedAt = new Date();
+      correction.editedByUserId = userId;
+      correction.editedByUserName = Meteor.user().username;
+      correction.translations = translationsObject
+      correction.words = words;
+      correction.published = false;
+      Articles.update(
+        { _id: doc_id },
+        {
+          $set: {
+            lastEvent: { type: "предложил капитальную правку" },
+            corrections: changedCorrections(doc_id, userId, correction)
+          }
         }
-      }
-    );
+      );
+    }
   },
 
   "articles.accept"(doc_id, correction) {
@@ -539,59 +538,4 @@ function changedCorrections(docId, userId, correction) {
   if (count == 0) new_corrections.push(correction);
   //console.log('corrections', corrections);
   return new_corrections;
-}
-
-//this function gets old formated article (when all translations was in one field),
-//and parse it to object with separated translations and their examples
-function parseArticle(text, word) {
-  var newTranslations = [];
-
-  translations0 = text.split(/\d+\s*?\)/g); //raw array with translations
-
-  var match = "";
-  //\u0621-\u064A - arabic symbols
-  var example_pattern = /;([\s]+?[\!\?\*\~\u0621-\u064A]+?[\s\S]+?)(;|$)/gi;
-
-  //в исходной базе словаря тильда стоит "зеркально",
-  //её надо переместить из начала в конец и наоборот и заменить основным словом статьи
-  var reverseAndReplaceTilda = function(str, word) {
-    var strArray = str.split("");
-    if (strArray[0] == "~") {
-      strArray.shift();
-      if (strArray[0] == " ") strArray.push(" ");
-      strArray.push("~");
-    } else if (strArray[strArray.length - 1] == "~") {
-      strArray.pop();
-      if (strArray[strArray.length - 1] == " ") strArray.unshift(" ");
-      strArray.unshift("~");
-    }
-    var result = strArray
-      .join("")
-      .replace("~", word)
-      .replace(/ـ/g, "");
-    return result;
-  };
-
-  translations0.forEach(function(elem, index) {
-    if (elem.trim()) {
-      var examples = [];
-      var translation = "";
-      var examplesBeginnigIndex = elem.search(example_pattern);
-      if (examplesBeginnigIndex > -1) translation = elem.substring(0, examplesBeginnigIndex);
-      else translation = elem.trim();
-      while ((match = example_pattern.exec(elem))) {
-        var exampleString = match[1];
-        //\u0400-\u04FF - cyrillic symbols
-        translationBeginningIndex = exampleString.search(/\(?[\u0400-\u04FF]/);
-        var example = exampleString.substring(0, translationBeginningIndex).trim();
-        example = reverseAndReplaceTilda(example, word);
-        var exTranslation = exampleString.substring(translationBeginningIndex).trim();
-        examples.push({ example, translation: exTranslation });
-        example_pattern.lastIndex--;
-      }
-
-      newTranslations.push({ translation, examples });
-    }
-  });
-  return newTranslations;
 }

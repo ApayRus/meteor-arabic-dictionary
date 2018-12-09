@@ -43,7 +43,7 @@ Template.ArticleSingle.helpers({
   showInTextarea(articleId) {
     return articleId == Session.get("showArticleInTextarea");
   },
-  plainTextOfTranslations() {
+  plainTextOfArticle() {
     return this.translations[0].translation;
   },
   tagsSubjects() {

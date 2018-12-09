@@ -40,6 +40,11 @@ $arabic-font-style: "Scheherazade";
     }
   }
 
+  .plainTextOfArticle {
+    width: 100%;
+    height: 200px;
+  }
+
   /*    .panel-title.words {
         direction: rtl;
     }*/
@@ -53,6 +58,10 @@ $arabic-font-style: "Scheherazade";
   }
   .article-menu {
     display: inline-block;
+    .preformatArticleStep,
+    .plainText {
+      margin-left: 10px;
+    }
   }
   .approve-buttons {
     display: inline-block;

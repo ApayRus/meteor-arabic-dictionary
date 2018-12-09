@@ -57,7 +57,11 @@
         </li>
         {{/each}}
       </ol>
-      {{else}} <textarea>{{ plainTextOfTranslations }}</textarea> {{/unless}} {{#if image.link}}
+      {{else}}
+      <textarea class="plainTextOfArticle" id="plainTextForArticle-{{_id}}">
+        {{ plainTextOfArticle }}</textarea
+      >
+      {{/unless}} {{#if image.link}}
       <div class="image">
         <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage" />
       </div>

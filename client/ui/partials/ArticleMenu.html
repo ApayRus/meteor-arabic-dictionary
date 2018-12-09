@@ -18,8 +18,14 @@
       <span class="glyphicon glyphicon-fire"></span>
     </a>
     {{/if}}
-    <a class="plainText" href="/article/edit/{{_id}}" title="редактируемый текст">
+    <a class="plainText" href="#" title="редактируемый текст">
       <span class="glyphicon glyphicon-text-size"></span>
     </a>
+    {{#if showPreformatStep}}
+    <a class="preformatArticleStep" href="/article/edit/{{_id}}" title="преформатирование">
+      Preformat step: {{ preformatStep }}
+    </a>
+    <div class="preformatStepInfo">{{ preformatStepInfo }}</div>
+    {{/if}}
   </div>
 </template>
