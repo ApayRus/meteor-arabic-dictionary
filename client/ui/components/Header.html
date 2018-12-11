@@ -1,72 +1,68 @@
 <template name="Header">
-    <header>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/"><img src="/img/logo.png" height=30 width=30></a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li><a href="/">
-                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                            &nbsp;Home</a></li>
-                        <li>
-                            <a data-toggle="modal" data-target="#modalAddArticle">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                &nbsp;Add
-                            </a>
-                        </li>
-<!--                        
-                        <li>
-                            <a href="/users">
-                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                &nbsp;Users
-                            </a>
-                        </li>
--->
-                        <li>
-                            <a href="/about">
-                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                &nbsp;О проекте
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/articles/0/100">
-                                <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                &nbsp;Все слова
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/corrections/0/100">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                &nbsp;Правки
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/events/0/50">
-                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                                &nbsp;События
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a id="login-link">
-                                <span class="glyphicon glyphicon-log-in"></span>
-                                &nbsp;&nbsp;{{> loginButtons}}
-                            </a>
-                        </li>
-                    </ul>                              
-                </div>
-            </div>    
-        </nav>
-    </header>
-    {{> AddArticleModalForm}}
+  <header>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar"
+          >
+            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+            <span class="icon-bar"></span> <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="/img/logo.png" height="30" width="30"/></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-left">
+            <li>
+              <a href="/">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span> &nbsp;Home</a
+              >
+            </li>
+            <li>
+              <a data-toggle="modal" data-target="#modalAddArticle">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> &nbsp;Add
+              </a>
+            </li>
+            <!--
+              <li>
+                  <a href="/users">
+                      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                      &nbsp;Users
+                  </a>
+              </li>
+            -->
+            <li>
+              <a href="/about">
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> &nbsp;О
+                проекте
+              </a>
+            </li>
+            <li>
+              <a href="/corrections/0/100">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> &nbsp;Правки
+              </a>
+            </li>
+            <li>
+              <a href="/events/0/50">
+                <span class="glyphicon glyphicon-time" aria-hidden="true"></span> &nbsp;События
+              </a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a id="login-link">
+                <span class="glyphicon glyphicon-log-in"></span> &nbsp;&nbsp;{{> loginButtons}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  {{> AddArticleModalForm}}
 </template>

@@ -1,26 +1,28 @@
 import { Articles } from "/imports/api/articles.js";
 
 Template.ArticlesPage.onCreated(function() {
-  var self = this;
-  self.autorun(function() {
-    const startIndex = parseInt(FlowRouter.getParam("startIndex"));
-    const endIndex = parseInt(FlowRouter.getParam("endIndex"));
-    self.subscribe("articles", startIndex, endIndex);
-  });
+  this.articleIds = new ReactiveVar([]);
 });
 
 Template.ArticlesPage.helpers({
   articles() {
-    const articles = Articles.find({});
+    const articleIds = Template.instance().articleIds.get();
+    const articles = Articles.find({ _id: { $in: articleIds } }).fetch();
+
     return articles;
   }
 });
 
-/*Template.ArticlesPage.events({
-    'submit'(event, instance){
-        event.preventDefault();
-        let searchFor = event.target.searchFor.value;  
-        FlowRouter.go('search', { searchFor });
-
-    }, 
-});*/
+Template.ArticlesPage.events({
+  "click .showArticles"(event, template) {
+    const articleIds = $("#articleIds")
+      .val()
+      .split("\n")
+      .map(elem => elem.trim());
+    console.log(articleIds);
+    template.articleIds.set(articleIds);
+    template.autorun(function() {
+      template.subscribe("articlesByIds", articleIds);
+    });
+  }
+});

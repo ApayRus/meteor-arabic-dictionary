@@ -1,8 +1,10 @@
 <template name="ArticlesPage">
   <div class="articles-page -page">
     <h2>Articles page</h2>
-    {{> AlertMessageArticlesPage}} {{#if Template.subscriptionsReady}}
-    {{> ArticlesList articles=articles}} {{else}}
+    <textarea id="articleIds" class="articleIds" placeholder="вставьте номера статей"> </textarea>
+    <br />
+    <button class="btn btn-md primary showArticles">Показать</button>
+    {{#if Template.subscriptionsReady}} {{> ArticlesList articles=articles}} {{else}}
     <p>Loading...</p>
     {{/if}}
   </div>
