@@ -15,6 +15,7 @@ export function preformatArticle1(text) {
 
 //2) отделяем примеры от их переводов, переставляем тильду и знаки препинания
 export function preformatArticle2(text, word) {
+  var word = word.replace(/[ًٌٍٍَُِّْ]/gi, ""); //removes all diacritics
   var translationsArray = text.split("\n\n");
   var translationAndExamplesText = translationsArray
     .map(elem => {

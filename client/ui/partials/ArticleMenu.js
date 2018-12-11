@@ -47,8 +47,8 @@ Template.ArticleMenu.helpers({
       case 2:
         return `
         Проверьте: 
-        1) Каждая строка начинается с اا символов. 
-        2) Тильда заменилась правильно.
+        1) Каждая строка примеров начинается с اا символов. 
+        2) Тильда ~ заменилась на основное слово.
         3) Знаки препинания стоят корректно. 
         `;
       default:
@@ -79,7 +79,7 @@ Template.ArticleMenu.events({
     //template.data. = step.get() + template.preformatTextOfArticle.get();
     const plainTextOfArticle = $("#plainTextForArticle-" + this._id).val();
     currentStep = step.get();
-    const word = template.data.words[0].word.replace(/[ًٌٍٍَُِّْ]/gi, ""); //removes all diacritics
+    const word = template.data.words[0].word;
     if (currentStep == 1) var preformatedText = preformatArticle1(plainTextOfArticle);
     if (currentStep == 2) var preformatedText = preformatArticle2(plainTextOfArticle, word);
     if (currentStep == 3) {
