@@ -1,6 +1,6 @@
 <template name="ArticleSingle">
   <div
-    id="article-{{_id}}"
+    id="article-{{ _id }}"
     class="panel panel-default article {{#if notPublished}}-opacity-06{{/if}}"
   >
     <div class="panel-heading">
@@ -11,20 +11,19 @@
           особый шаблон его вывода, например, среднекорневую глассную и масдары
         -->
 
-        {{#each words}}
-        <div class="note">{{ note }}</div>
-        <div class="word -arabic-text-big">{{ word }}</div>
-        <div class="collapse transcription">{{transcr word}}</div>
+        {{#each words}} <span class="note">{{ note }}</span>
+        <span class="word -arabic-text-big">{{ word }}</span>
+        <span class="collapse transcription">{{transcr word}}</span>
         {{#if isMiddleHarakat ../middleHarakat @index}}
-        <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
+        <span class="note middleHaracat" title="среднекорневая гласная настоящего времени">
           {{../middleHarakat}}
-        </div>
+        </span>
         {{/if}} {{/each}}
         <button
           type="button"
           class="btn btn-default btn-xs btn-transcript"
           data-toggle="collapse"
-          data-target="#article-{{_id}} .transcription"
+          data-target="#article-{{ _id }} .transcription"
         >
           Транскрипция
         </button>
@@ -58,12 +57,12 @@
         {{/each}}
       </ol>
       {{else}}
-      <textarea class="plainTextOfArticle" id="plainTextForArticle-{{_id}}">
+      <textarea class="plainTextOfArticle" id="plainTextForArticle-{{ _id }}">
         {{ plainTextOfArticle }}</textarea
       >
       {{/unless}} {{#if image.link}}
       <div class="image">
-        <img class="img-responsive img-rounded" src="{{image.link}}" alt="ArticleImage" />
+        <img class="img-responsive img-rounded" src="{{ image.link }}" alt="ArticleImage" />
       </div>
       {{/if}}
 
