@@ -98,8 +98,8 @@ $arabic-font-style: "Scheherazade";
 }
 
 form.article {
-  input.note,
-  input.word {
+  .note,
+  .word {
     display: inline-block;
   }
   .wordEdit {
