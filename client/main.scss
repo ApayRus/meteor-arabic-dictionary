@@ -70,11 +70,10 @@ $arabic-font-style: "Scheherazade";
     margin-top: -5px;
     margin-right: -10px;
   }
-  /*   .note,
-  .word,
-  .transcription {
+  .note,
+  .word {
     display: inline-block;
-  } */
+  }
 
   .transcription.collapse.in {
     display: inline-block;
@@ -98,10 +97,6 @@ $arabic-font-style: "Scheherazade";
 }
 
 form.article {
-  .note,
-  .word {
-    display: inline-block;
-  }
   .wordEdit {
     display: inline-block;
     margin-bottom: 5px;

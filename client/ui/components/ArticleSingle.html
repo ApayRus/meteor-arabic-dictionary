@@ -11,13 +11,14 @@
           особый шаблон его вывода, например, среднекорневую глассную и масдары
         -->
 
-        {{#each words}} <span class="note">{{ note }}</span>
-        <span class="word -arabic-text-big">{{ word }}</span>
-        <span class="collapse transcription">{{transcr word}}</span>
+        {{#each words}}
+        <div class="note">{{ note }}</div>
+        <div class="word -arabic-text-big">{{ word }}</div>
+        <div class="collapse transcription">{{transcr word}}</div>
         {{#if isMiddleHarakat ../middleHarakat @index}}
-        <span class="note middleHaracat" title="среднекорневая гласная настоящего времени">
+        <div class="note middleHaracat" title="среднекорневая гласная настоящего времени">
           {{../middleHarakat}}
-        </span>
+        </div>
         {{/if}} {{/each}}
         <button
           type="button"
