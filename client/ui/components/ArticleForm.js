@@ -143,6 +143,7 @@ Template.ArticleForm.events({
 
 function changeTemplateData(event, template) {
   //all possible events names:
+  //middleHarakat
   //words.0.note
   //words.0.word
   //translations.0.translation
@@ -150,7 +151,9 @@ function changeTemplateData(event, template) {
   //translations.0.examples.0.translation
   //translations.0.examples.1.images.2.image
   const eventArray = event.target.name.split(".");
-  if (eventArray.length == 3) {
+  if (eventArray.length == 1) {
+    template.data[eventArray[0]] = event.target.value;
+  } else if (eventArray.length == 3) {
     template.data[eventArray[0]][parseInt(eventArray[1])][eventArray[2]] = event.target.value;
   } else if (eventArray.length == 5) {
     template.data[eventArray[0]][parseInt(eventArray[1])][eventArray[2]][parseInt(eventArray[3])][
