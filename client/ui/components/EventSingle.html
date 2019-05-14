@@ -1,23 +1,20 @@
 <template name="EventSingle">
-    <li class="list-group-item event">
-        <a href="#">
-            <span class="glyphicon glyphicon-time" title="{{happenedAt}}"></span>
-        </a>
-        
-        <a href="/users/{{user1id}}">
-            <span class="glyphicon glyphicon-user"></span>
-            {{user1name}}
-        </a> 
-        {{type}}
-        <a href="/article/{{articleId}}" class="article">
-            {{articleTitle}}
-            <span class="glyphicon glyphicon-file"></span>
-        </a>
-        {{#if user2id}}
-            <a href="/users/{{user2id}}">
-                <span class="glyphicon glyphicon-user"></span>
-                {{user2name}}
-            </a>
-        {{/if}}
-    </li>
+  <li class="list-group-item event">
+    <small class="text-default">{{ date }}</small>
+    <a href="/users/{{ user1id }}">
+      <span class="glyphicon glyphicon-user"></span>
+      {{ user1name }}
+    </a>
+    {{ type }}
+    <a href="/article/{{ articleId }}" class="article">
+      {{ articleTitle }}
+      <span class="glyphicon glyphicon-file"></span>
+    </a>
+    {{#if user2id}}
+    <a href="/users/{{ user2id }}">
+      <span class="glyphicon glyphicon-user"></span>
+      {{ user2name }}
+    </a>
+    {{/if}}
+  </li>
 </template>
