@@ -1,5 +1,7 @@
+import { hasRole } from '../../../lib/utils'
+
 Template.Header.helpers({
-  isAdmin() {
-    return Meteor.userId() == "ghZegnrrKqnNFaFxb"; //Roles.userIsInRole(loggedInUser, ['admin'])
-  }
-});
+	isAdmin() {
+		return hasRole('admin') //Roles.userIsInRole(loggedInUser, ['admin'])
+	}
+})
